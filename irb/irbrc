@@ -1,0 +1,8 @@
+dirname, basename = File.split(__FILE__)
+
+Dir["#{dirname}/#{basename}.d/*.rb"].sort.each { |rc| load rc }
+
+### LOAD CUSTOM FILE
+if File.readable?(mine = "#{__FILE__}.mine")
+  load mine
+end

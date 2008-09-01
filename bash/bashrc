@@ -1,0 +1,143 @@
+# User .bashrc file for interactive bash(1) shells.
+
+# To enable the settings/commands in this file for login shells as well,
+# this file has to be sourced in /etc/profile.
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# Don't put duplicate lines in the history. See bash(1) for more options
+export HISTCONTROL=ignoredups
+export HISTSIZE=10000
+
+# Check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Enable color support of ls and also add handy aliases
+if [ "$TERM" != "dumb" ]; then
+  eval "`dircolors -b`"
+  alias ls='ls --color=auto'
+  #alias dir='ls --color=auto --format=vertical'
+  #alias vdir='ls --color=auto --format=long'
+fi
+
+# Some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+alias l='ls -ahlF'
+
+# Make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+
+export LESS="-M -i -R"
+
+# Set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+  debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# Set user color
+#
+# 30 = black
+# 31 = dark red
+# 32 = green
+# 33 = orange
+# 34 = blue
+# 35 = magenta
+# 36 = turquoise
+# 37 = gray
+# 38 = light red
+# 39 = white
+MY_COLOR=35  # default
+
+# Customized user setting
+[ -f ~/.my_color ] && . ~/.my_color
+
+export MY_COLOR
+
+# Set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+  xterm-color|xterm)
+    if [ "`id -u`" -eq 0 ]; then
+      p="#"
+    else
+      p=">"
+    fi
+    export PS1="\[\033[7;${MY_COLOR/30/37}m\]\t\[\033[0m\] \u@\h:\w\$(__scm_info)${p} "
+    ;;
+  *)
+    export PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    ;;
+esac
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+  xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+    ;;
+  *)
+    ;;
+esac
+
+# Enable bash completion in interactive shells
+[ -f /etc/bash_completion ] && . /etc/bash_completion
+
+# Alias definitions.
+[ -f /etc/bash_aliases ] && . /etc/bash_aliases
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+
+# Color for grep
+export GREP_COLOR=${MY_COLOR/38/39}
+
+export PATH
+
+function __svn() {
+  [ -d ".svn" ]
+}
+
+function __svn_version() {
+  svnversion
+}
+
+function __svn_repo() {
+  svn info 2> /dev/null | /bin/grep '^Repository Root:' | sed 's:.*/::'
+}
+
+function __svn_stale() {
+  : svn status -u 2> /dev/null | /bin/fgrep -o -m1 '*'
+}
+
+function __git() {
+  git-rev-parse 2> /dev/null
+}
+
+function __git_version() {
+  git-rev-parse --short HEAD 2> /dev/null
+}
+
+function __git_branch() {
+  git-symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
+}
+
+function __git_name() {
+  git-name-rev HEAD 2> /dev/null | cut -d\  -f2-
+  #git-name-rev --name-only HEAD 2> /dev/null
+}
+
+function __scm_info() {
+  if __svn; then
+    i="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
+  else
+    if __git; then
+      v="$(__git_version)"
+      b="$(__git_branch)"
+      i="git:${b:-<$(__git_name)>}@${v:-<init>}"
+    fi
+  fi
+
+  [ -n "$i" ] && echo -n " [$i]"
+}
+
+### LOAD CUSTOM FILE
+[ -f ~/.bashrc.mine ] && . ~/.bashrc.mine

@@ -1,0 +1,119 @@
+= dotme - Manage dotfiles
+
+== DESCRIPTION
+
+DotMe keeps configuration files (a.k.a. dotfiles) under version control (git)
+and installs symbolic links under your home directory. It's controlled via rake
+commands (see USAGE for more information).
+
+Where possible, custom configuration files (<tt><some-name>.mine</tt>) are
+supported and included by whatever mechanism is provided by the configuration
+system.
+
+
+== USAGE
+
+Change to the directory you installed dotme in (see below), e.g.:
+
+  cd ~/dotme
+
+Install symlinks to dotfiles:
+
+  rake install
+
+Update codebase and symlinks (default task):
+
+  rake [update]
+
+Remove symlinks to dotfiles:
+
+  rake uninstall
+
+See a list of all available tasks:
+
+  rake -T
+
+
+== INSTALL
+
+First, you need git[http://git.or.cz/] for dotme to function. Install it,
+if you haven't already, and come back here.
+
+Change to the directory you want to install dotme in, e.g.:
+
+  cd ~
+
+Clone branch master of dotme:
+
+  git clone git://github.com/blackwinter/dotme.git
+
+Change to the new directory and optionally create an include/exclude file:
+
+  cd dotme
+  vi inclexcl
+
+    # i want vim and irb
+    +vim
+    +irb
+
+    # and bash_aliases
+    +bash/bash_aliases
+
+    # but git only without gitignore
+    +git
+    -git/gitignore
+
+Finally, install the symlinks:
+
+  rake install
+
+
+== ISSUES
+
+* <tt>git-config</tt> replaces <tt>~/.gitconfig</tt> symlink with real file [1].
+  So, if you update your git configuration through <tt>git-config --global</tt>,
+  the config file will no longer be tracked by dotme. Instead, edit it directly.
+
+  [1]<b> </b><http://kerneltrap.org/mailarchive/git/2007/7/15/251676>
+
+* <tt>git-config</tt> doesn't expand variables in <tt>~/.gitconfig</tt> file.
+  See e.g. [2]. This means you have to update the <tt>name</tt>, <tt>email</tt>,
+  and <tt>excludesfile</tt> settings in the configuration file. In particular,
+  without the latter being adjusted you won't benefit from the shipped
+  <tt>~/.gitignore</tt> file.
+
+  [2]<b> </b><http://kerneltrap.org/mailarchive/git/2008/8/22/3047784>
+
+
+== CALL TO ACTION
+
+If you want to contribute modifications to existing dotfiles or add some of
+your own, just send me a patch or a pull request. The same goes for any bugs
+or issues you find.
+
+
+== LINKS
+
+* <http://github.com/blackwinter/dotme>
+
+
+== AUTHORS
+
+* Jens Wille <mailto:jens.wille@uni-koeln.de>
+
+
+== LICENSE AND COPYRIGHT
+
+Copyright (C) 2008 Jens Wille
+
+dotme is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+dotme is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+dotme. If not, see <http://www.gnu.org/licenses/>.

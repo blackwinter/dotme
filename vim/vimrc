@@ -1,0 +1,113 @@
+" Vim5 and later versions support syntax highlighting. Uncommenting the next
+" line enables syntax highlighting by default.
+syntax on
+
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+set background=dark
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal g'\"" | endif
+endif
+
+" Uncomment the following to have Vim load indentation rules according to the
+" detected filetype. Per default Debian Vim only load filetype specific
+" plugins.
+"if has("autocmd")
+"  filetype indent on
+"endif
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+set showcmd  	  " Show (partial) command in status line.
+set showmatch  	" Show matching brackets.
+set ignorecase  " Do case insensitive matching
+set smartcase  	" Do smart case matching
+"set incsearch  " Incremental search
+set autowrite  	" Automatically save before commands like :next and :make
+"set hidden     " Hide buffers when they are abandoned
+"set mouse=a  	" Enable mouse usage (all modes) in terminals
+
+" expand tabs to spaces
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+set title
+set titlestring=%F%(\ %m%)%(\ %r%)%(\ %y%)%(\ [%{&fileencoding}]%)%(\ %a%)
+set titlelen=0
+
+set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
+
+set modeline
+set foldmethod=marker
+set autoindent
+
+" define paste-toggle (needed when autoindent is on)
+set pastetoggle=<F11>
+
+" disable auto-comments
+au FileType * set comments=""
+
+" disable highlighting matching parens
+let loaded_matchparen=1
+
+" set different termencoding depending on client
+"if $SSH_CLIENT !~ "^a\.b\.c\.d"
+"  set termencoding=latin1
+"endif
+
+" close open HTML/XML tags (with <CTRL-_>)
+if filereadable("/etc/vim/scripts/closetag.vim")
+  au FileType html let b:closetag_html_style=1
+  au Filetype html,xml,xsl so /etc/vim/scripts/closetag.vim
+endif
+
+" Use your tab key to do all your completion in insert mode!
+" (switch to file name completion with <C-X><C-F>)
+if filereadable("/etc/vim/scripts/SuperTab.vim")
+  so /etc/vim/scripts/SuperTab.vim
+endif
+
+" use ruby completion
+if filereadable("/etc/vim/scripts/rubycomplete.vim")
+  au FileType ruby,eruby so /etc/vim/scripts/rubycomplete.vim|set omnifunc=rubycomplete#Complete|let g:complType = "\<C-X>\<C-O>"|let g:rubycomplete_buffer_loading = 1|let g:rubycomplete_rails = 1|let g:rubycomplete_classes_in_global = 1
+endif
+
+" toggle completion mode
+imap <expr> <F9> ToggleFileCompl()
+imap <expr> <F10> ToggleOmniCompl()
+
+func! ToggleFileCompl()
+  if g:complType == "\<C-X>\<C-F>"
+    let g:complType = "\<C-X>\<C-P>"
+    echo "Keyword Local completion"
+  else
+    let g:complType = "\<C-X>\<C-F>"
+    echo "File name completion"
+  endif
+  return ''
+endfunc
+
+func! ToggleOmniCompl()
+  if g:complType == "\<C-X>\<C-O>"
+    let g:complType = "\<C-X>\<C-P>"
+    echo "Keyword Local completion"
+  else
+    let g:complType = "\<C-X>\<C-O>"
+    echo "Omni completion"
+  endif
+  return ''
+endfunc
+
+" those are ruby files, too
+au BufRead,BufNewFile *.rake set filetype=ruby
+au BufRead,BufNewFile *.cap  set filetype=ruby
+
+""" LOAD CUSTOM FILE
+if filereadable("~/.vimrc.mine")
+  so ~/.vimrc.mine
+endif

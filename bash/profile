@@ -1,0 +1,18 @@
+# User .profile file for the Bourne shell (sh(1)) and
+# Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+
+if [ "`id -u`" -eq 0 ]; then
+  PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11"
+  mesg n
+else
+  PATH="/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games"
+fi
+
+[ -d ~/bin ] && PATH=~/bin:"${PATH}"
+
+export PATH
+
+umask 022
+
+### LOAD CUSTOM FILE
+[ -f ~/.profile.mine ] && . ~/.profile.mine
