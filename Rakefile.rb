@@ -1,6 +1,17 @@
 require 'fileutils'
 require 'rake/rdoctask'
 
+begin
+  require 'rubygems'
+  require 'nuggets/env/user_home'
+rescue LoadError => err
+  warn "#{err}. RubyGem ruby-nuggets required for full functionality."
+
+  def ENV.user_home
+    ENV['HOME'] || File.expand_path('~')
+  end
+end
+
 # {{{ module DotMe
 
 # Manage dotfiles.
@@ -13,7 +24,7 @@ module DotMe
 
   IGNORE = %w[Rakefile.rb README COPYING .gitignore]
 
-  HOME = ENV['HOME'] || File.expand_path('~')
+  HOME = ENV.user_home
 
   def install
     symlinks.sort.each { |target, symlink|
