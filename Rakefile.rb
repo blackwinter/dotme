@@ -1,15 +1,25 @@
+require 'pathname'
 require 'fileutils'
 require 'rake/rdoctask'
 
 begin
   require 'rubygems'
   require 'nuggets/env/user_home'
+  require 'nuggets/file/which'
 rescue LoadError => err
   warn "#{err}. RubyGem ruby-nuggets required for full functionality."
 
   def ENV.user_home
     ENV['HOME'] || File.expand_path('~')
   end
+
+  def File.which(cmd)
+    !%x{#{cmd} --help}.empty?
+  end
+end
+
+if Dir.pwd != dir = File.dirname(__FILE__)
+  abort "Please change into directory '#{dir}' and run again."
 end
 
 # {{{ module DotMe
@@ -25,6 +35,48 @@ module DotMe
   IGNORE = %w[Rakefile.rb README COPYING .gitignore]
 
   HOME = ENV.user_home
+
+  GIT_FOUND = File.which('git')
+
+  # {{{ class Status
+
+  class Status
+
+    STATUSES = []
+
+    @max_length = 0
+
+    class << self
+
+      attr_reader :max_length
+
+      def add(status)
+        STATUSES << status
+
+        length = status.status.to_s.length
+        @max_length = length if @max_length < length
+      end
+
+    end
+
+    attr_reader :status
+
+    def initialize(status)
+      @status = status || :UNKNOWN
+      self.class.add(self)
+    end
+
+    def to_s
+      status.to_s.tr('_', ' ').ljust(self.class.max_length)
+    end
+
+    def ===(other)
+      other === status
+    end
+
+  end
+
+  # }}}
 
   def install
     symlinks.sort.each { |target, symlink|
@@ -57,7 +109,7 @@ module DotMe
       case status
         when :MISMATCH
           msg << ':' << "\n  expected: #{target}" <<
-                        "\n  actual:   #{actual}"
+                        "\n  got:      #{actual}"
         else
           msg << " -> #{target}"
       end
@@ -79,7 +131,7 @@ module DotMe
           when :MISMATCH
             warn "[ERROR=#{status}] Not removing symlink '#{symlink}' - targets don't match:"
             warn "  expected: #{target}"
-            warn "  actual:   #{actual}"
+            warn "  got:      #{actual}"
           when :TRACKED
             begin
               File.unlink(symlink)
@@ -95,20 +147,12 @@ module DotMe
   end
 
   def reset(ask = true)
-    if ask
-      puts 'This will undo all your local modifications (untracked files are kept).'
-      abort unless agree('Are you sure you want that?')
-      abort unless agree('Are you REALLY sure?')
-    end
-
+    abort unless agreed?('This will undo all your local modifications (untracked files are kept).') if ask
     git(:reset)
   end
 
   def pristine
-    puts 'This will undo all your local modifications AND remove all untracked files.'
-    abort unless agree('Are you sure you want that?')
-    abort unless agree('Are you REALLY sure?')
-
+    abort unless agreed?('This will undo all your local modifications AND remove all untracked files.')
     reset(false)
 
     git(:untracked).split("\n").sort.each { |file|
@@ -123,8 +167,8 @@ module DotMe
     hash = {}
 
     dotfiles.each { |path|
-      dotfile = path.split(File::SEPARATOR, 2).last
-      hash[File.expand_path(path)] = File.join(HOME, ".#{dotfile}")
+      file = path.split(File::SEPARATOR, 2).last
+      hash[File.expand_path(path)] = File.join(HOME, ".#{file}")
     }
 
     hash
@@ -150,7 +194,7 @@ module DotMe
   def status_for(symlink, target)
     if File.symlink?(symlink)
       if File.exists?(target)
-        actual = File.readlink(symlink)
+        actual = Pathname.new(File.readlink(symlink)).realpath.to_s
         status = target == actual ? :TRACKED : :MISMATCH
       else
         status = :MISSING
@@ -163,11 +207,11 @@ module DotMe
       end
     end
 
-    [status || :UNKNOWN, actual]
+    [Status.new(status), actual]
   end
 
   def git(cmd, *args)
-    abort "Please install 'git'." unless system('git rev-parse')
+    abort "Please install 'git'." unless GIT_FOUND
 
     # aliases
     case cmd
@@ -267,6 +311,11 @@ module DotMe
     abort ''
   end
 
+  def agreed?(msg)
+    puts msg
+    agree('Are you sure you want that?') && agree('Are you REALLY sure?')
+  end
+
   def dryrun(what, *args)
     if ENV['DRYRUN']
       _return = args.last.delete(:_return) if args.last.is_a?(Hash)
@@ -285,7 +334,7 @@ end
 
 # }}}
 
-desc "=> update"
+desc "[Runs task 'update']"
 task :default => [:update]
 
 desc "Install symlinks to dotfiles."

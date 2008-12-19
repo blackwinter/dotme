@@ -1,10 +1,10 @@
 !! re-map windows keys ;-)
 
 !! left windows key [normal = backslash | shift = bar (pipe)]
-keycode 115 = backslash bar
+keycode 133 = backslash bar
 
 !! right windows key [normal = slash | shift = equal sign]
-keycode 116 = slash equal
+keycode 134 = slash equal
 
 !! menu key [normal = double quotes | shift = dollar sign]
-keycode 117 = quotedbl dollar
+keycode 135 = quotedbl dollar

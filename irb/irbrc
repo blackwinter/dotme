@@ -1,3 +1,12 @@
+# The preferred way now is to replace the contents of this file with
+#
+#   require 'rubygems'
+#   require 'brice/init'
+#
+# and drop the whole .irbrc.d stuff ;-)
+#
+# See http://github.com/blackwinter/brice for more info.
+
 dirname, basename = File.split(__FILE__)
 
 Dir["#{dirname}/#{basename}.d/*.rb"].sort.each { |rc| load rc }
