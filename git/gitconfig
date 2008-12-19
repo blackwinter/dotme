@@ -26,21 +26,27 @@
 [alias]
   a         =      add
   aa        =      add .
+  au        =      add -u .
+  al        = !git config -l | sed -n 's/^alias\\.//p'
   b         =      branch
-  c         =      config
+  c         =      commit -v
   ca        =      commit -v --all
   ci        =      commit -v --interactive
   co        =      checkout
   cb        =      checkout -b
+  cf        =      config
+  cl        =      config -l
   d         =      diff
+  dc        =      diff --cached
   dd        = !git diff | less
   di        =      diff HEAD
+  dp        =      diff HEAD^
   e         =      reset
   ee        =      reset --soft HEAD^
   f         =      fetch
   g         =      grep -E -n
   h         =      help
-  l         = !git log --reverse -10 --pretty=format:\"%Cblue%h %Cgreen%an %Cred%ad %Creset- %s\" | sed 'a\\'
+  l         = !git log --reverse -10 --pretty=tformat:\"%Cblue%h %Cgreen%an %Cred%ai %Creset- %s\"
   ll        =      log --reverse -10
   lp        = !git log --reverse -10 -p | less
   la        = !git log | less
@@ -49,8 +55,9 @@
   lf        = !git whatchanged | less
   m         =      merge
   o         =      remote
+  oo        = !git remote -v | grep @ | cut -f1
   p         =      push
-  pa        = !git remote | xargs git push
+  pa        = !git remote -v | grep @ | cut -f1 | xargs -I '{}' git push '{}' master
   s         =      status
   u         =      pull
   v         =      revert

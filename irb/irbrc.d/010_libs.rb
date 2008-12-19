@@ -3,6 +3,7 @@
   yaml
   tempfile
   benchmark
+  backports
   what_methods
 
   utility_belt/interactive_editor

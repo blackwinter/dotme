@@ -1,23 +1,27 @@
 alias al="alias | /bin/grep --color -F"
 
-# i'm just too lazy, i know...
-alias xgrep="/bin/grep --color -rs --exclude *.svn-base --exclude tempfile*.tmp --exclude all-wcprops --exclude entries"
+alias xgrep="/bin/grep --color -rs --exclude-dir .svn --exclude-dir .git"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 alias egrep="xgrep -E"
 
+alias ruby="ruby -wKu"
 alias diff="diff -C 0"
-
+alias whois="whois -H -T dn"
 alias xmltidy="tidy -xml -i -w 0"
-
 alias cdrecord="cdrecord dev=0,0,0 driveropts=burnproof -v -eject"
 
+alias cl="clear; l"
 alias  d="du -sch"
 alias da="du -sch --apparent-size"
+alias ff="firefox"
+alias  g="git"
+alias  h="host"
+alias k9="kill -9"
 alias pa="ps awwwux"
 alias pe="ps -ef"
-alias  h="host"
-alias cl="clear; l"
+alias rf="rubyforge"
+alias  t="tree"
 
 alias  .a="aptitude"
 alias .as="aptitude search"
@@ -55,18 +59,6 @@ alias  .su="svn update"
 alias  .sV="svn status | /bin/grep '^\?' | awk '{print \$2}'"         # get unversioned files
 alias  .sC="svn status | /bin/grep '^[AM]' | sed 's/.* //'"           # get modified files
 alias  .sI="svn status --no-ignore | /bin/grep '^I' | sed 's/.* //'"  # get ignored files
-
-# show more info
-alias whois="whois -H -T dn"
-
-# One needs to set -Kn when he wants to put iso-8859 letters. matz.
-#alias ruby="ruby -Kn"
-alias ruby="ruby -Ku"
-
-alias k9="kill -9"
-alias rf="rubyforge"
-alias ff="firefox"
-alias  g="git"
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine

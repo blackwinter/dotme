@@ -52,6 +52,9 @@ set pastetoggle=<F11>
 " disable auto-comments
 au FileType * set comments=""
 
+" reset textwidth
+au FileType gitcommit set tw<
+
 " disable highlighting matching parens
 let loaded_matchparen=1
 
@@ -59,6 +62,10 @@ let loaded_matchparen=1
 "if $SSH_CLIENT !~ "^a\.b\.c\.d"
 "  set termencoding=latin1
 "endif
+
+if filereadable("/etc/vim/scripts/ll.vim")
+  so /etc/vim/scripts/ll.vim
+endif
 
 " close open HTML/XML tags (with <CTRL-_>)
 if filereadable("/etc/vim/scripts/closetag.vim")

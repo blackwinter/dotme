@@ -1,6 +1,12 @@
-dirname, basename = File.split(__FILE__)
+# See http://github.com/blackwinter/brice for more info
+begin
+  require 'rubygems'
+  require 'brice/init'
+rescue LoadError
+end
 
-Dir["#{dirname}/#{basename}.d/*.rb"].sort.each { |rc| load rc }
+# Alternatively, put your extensions in ~/.irbrc.d
+Dir["#{__FILE__}.d/*.rb"].sort.each { |rc| load rc }
 
 ### LOAD CUSTOM FILE
 if File.readable?(mine = "#{__FILE__}.mine")
