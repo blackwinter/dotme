@@ -1,3 +1,7 @@
+###############################################################################
+# A component of dotme, the dotfile manager.                                  #
+###############################################################################
+
 class IRB::Context
   %w[prompt_i prompt_s prompt_c prompt_n return_format].each { |name|
     define_method(name) {

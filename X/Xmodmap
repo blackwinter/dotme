@@ -1,3 +1,7 @@
+!##############################################################################
+! A component of dotme, the dotfile manager.                                  #
+!##############################################################################
+
 !! re-map windows keys ;-)
 
 !! left windows key [normal = backslash | shift = bar (pipe)]

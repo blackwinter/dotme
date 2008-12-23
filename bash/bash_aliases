@@ -1,3 +1,7 @@
+###############################################################################
+# A component of dotme, the dotfile manager.                                  #
+###############################################################################
+
 alias al="alias | /bin/grep --color -F"
 
 alias xgrep="/bin/grep --color -rs --exclude-dir .svn --exclude-dir .git"

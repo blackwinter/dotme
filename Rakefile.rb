@@ -1,3 +1,29 @@
+#--
+###############################################################################
+#                                                                             #
+# dotme - The dotfile manager                                                 #
+#                                                                             #
+# Copyright (C) 2008 Jens Wille                                               #
+#                                                                             #
+# Authors:                                                                    #
+#     Jens Wille <jens.wille@uni-koeln.de>                                    #
+#                                                                             #
+# dotme is free software; you can redistribute it and/or modify it under the  #
+# terms of the GNU General Public License as published by the Free Software   #
+# Foundation; either version 3 of the License, or (at your option) any later  #
+# version.                                                                    #
+#                                                                             #
+# dotme is distributed in the hope that it will be useful, but WITHOUT ANY    #
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS   #
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more       #
+# details.                                                                    #
+#                                                                             #
+# You should have received a copy of the GNU General Public License along     #
+# with dotme. If not, see <http://www.gnu.org/licenses/>.                     #
+#                                                                             #
+###############################################################################
+#++
+
 require 'pathname'
 require 'fileutils'
 require 'rake/rdoctask'
@@ -9,11 +35,11 @@ begin
 rescue LoadError => err
   warn "#{err}. RubyGem ruby-nuggets required for full functionality."
 
-  def ENV.user_home
+  def ENV.user_home  #:nodoc:
     ENV['HOME'] || File.expand_path('~')
   end
 
-  def File.which(cmd)
+  def File.which(cmd)  #:nodoc:
     !%x{#{cmd} --help}.empty?
   end
 end
@@ -39,6 +65,8 @@ module DotMe
   GIT_FOUND = File.which('git')
 
   # {{{ class Status
+
+  # Statuses for managed dotfiles.
 
   class Status
 
