@@ -106,6 +106,20 @@ module DotMe
 
   end
 
+  class ::Symbol
+
+    alias_method :_dotme_original_threequal, :===
+
+    def ===(other)
+      if other.is_a?(Status)
+        other.status == self
+      else
+        _dotme_original_threequal(other)
+      end
+    end
+
+  end
+
   # }}}
 
   def install
