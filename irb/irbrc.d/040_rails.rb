@@ -1,3 +1,7 @@
+###############################################################################
+# A component of dotme, the dotfile manager.                                  #
+###############################################################################
+
 # rails settings (cf. <http://www.quotedprintable.com/2007/9/13/my-irbrc>)
 if rails_env = ENV['RAILS_ENV']
   # prompt

@@ -1,3 +1,7 @@
+###############################################################################
+# A component of dotme, the dotfile manager.                                  #
+###############################################################################
+
 begin
   regexp  = ENV['WATCH_FOR_ADDED_METHODS']
   klasses = ENV['WATCH_FOR_ADDED_METHODS_IN']

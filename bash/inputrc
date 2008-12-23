@@ -1,3 +1,7 @@
+###############################################################################
+# A component of dotme, the dotfile manager.                                  #
+###############################################################################
+
 # User .inputrc for libreadline.
 # See readline(3) and `info rluserman' for more information.
 

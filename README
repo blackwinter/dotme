@@ -1,4 +1,4 @@
-= dotme - Manage dotfiles
+= dotme - The dotfile manager
 
 == DESCRIPTION
 
@@ -7,13 +7,13 @@ and installs symbolic links under your home directory. It's controlled via rake
 commands (see USAGE for more information).
 
 Where possible, custom configuration files (<tt><some-name>.mine</tt>) are
-supported and included by whatever mechanism is provided by the configuration
-system.
+supported and included by whatever mechanism is provided by the respective
+configuration system.
 
 
 == USAGE
 
-Change to the directory you installed dotme in (see below), e.g.:
+Change to the directory you installed dotme in (see INSTALL below), e.g.:
 
   cd ~/dotme
 

@@ -1,3 +1,7 @@
+###############################################################################
+# A component of dotme, the dotfile manager.                                  #
+###############################################################################
+
 [user]
 	name  = <Your Name>
 	email = <Your Email>
@@ -55,9 +59,9 @@
   lf        = !git whatchanged | less
   m         =      merge
   o         =      remote
-  oo        = !git remote -v | grep git@ | cut -f1
+  oo        = !git remote -v | grep @ | cut -f1
   p         =      push
-  pa        = !git remote -v | grep git@ | cut -f1 | xargs -I '{}' git push '{}' master
+  pa        = !git remote -v | grep @ | cut -f1 | xargs -I '{}' git push '{}' master
   s         =      status
   u         =      pull
   v         =      revert
