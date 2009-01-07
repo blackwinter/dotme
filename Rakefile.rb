@@ -56,7 +56,7 @@ module DotMe
 
   extend self
 
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 
   IGNORE = %w[Rakefile.rb README COPYING .gitignore]
 
@@ -128,7 +128,10 @@ module DotMe
   end
 
   def update
-    git(:update)
+    with_clean_working_directory do
+      git(:update)
+    end
+
     install
   end
 
@@ -244,6 +247,13 @@ module DotMe
     [Status[status], actual]
   end
 
+  def with_clean_working_directory
+    git(:stash)
+    yield
+  ensure
+    git(:unstash)
+  end
+
   def git(cmd, *args)
     abort "Please install 'git'." unless GIT_FOUND
 
@@ -252,6 +262,12 @@ module DotMe
       when :update
         cmd = 'pull'
         args << 'origin' << 'master'
+      when :stash
+        cmd = 'stash'
+        args << 'save' << '_dotme_update'
+      when :unstash
+        cmd = 'stash'
+        args << 'pop' << '_dotme_update'
       when :reset
         cmd = 'checkout'
         args << '-f'
