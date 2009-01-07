@@ -248,10 +248,10 @@ module DotMe
   end
 
   def with_clean_working_directory
-    git(:stash)
+    git('stash', 'save')
     yield
   ensure
-    git(:unstash)
+    git('stash', 'pop')
   end
 
   def git(cmd, *args)
@@ -262,12 +262,6 @@ module DotMe
       when :update
         cmd = 'pull'
         args << 'origin' << 'master'
-      when :stash
-        cmd = 'stash'
-        args << 'save' << '_dotme_update'
-      when :unstash
-        cmd = 'stash'
-        args << 'pop' << '_dotme_update'
       when :reset
         cmd = 'checkout'
         args << '-f'
