@@ -72,16 +72,7 @@ module DotMe
 
     STATUSES = Hash.new { |h, k| h[k] = k ? new(k) : h[:UNKNOWN] }
 
-    @max_length = 0
-
     class << self
-
-      attr_reader :max_length
-
-      def update_max_length(status)
-        length = status.to_s.length
-        @max_length = length if @max_length < length
-      end
 
       def [](status)
         status.is_a?(Status) ? status : STATUSES[status]
@@ -93,11 +84,10 @@ module DotMe
 
     def initialize(status)
       @status = status
-      self.class.update_max_length(status)
     end
 
     def to_s
-      status.to_s.tr('_', ' ').ljust(self.class.max_length)
+      status.to_s.tr('_', ' ')
     end
 
     def ===(other)
