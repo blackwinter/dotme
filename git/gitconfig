@@ -64,6 +64,7 @@
   pa        = !git remote -v | grep @ | cut -f1 | xargs -I '{}' git push '{}' master
   s         =      status
   u         =      pull
+  ua        = !git remote | xargs -I '{}' git pull '{}' master
   v         =      revert
   w         =      show --pretty=fuller
   x         =      commit -v -a --amend
