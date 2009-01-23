@@ -12,7 +12,7 @@ else
   PATH="/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games"
 fi
 
-[ -d ~/bin ] && PATH="~/bin:$PATH"
+[ -d ~/bin ] && PATH="$HOME/bin:$PATH"
 
 export PATH
 

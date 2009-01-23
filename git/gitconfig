@@ -50,7 +50,7 @@
   f         =      fetch
   g         =      grep -E -n
   h         =      help
-  l         = !git log --reverse -10 --pretty=tformat:\"%Cblue%h %Cgreen%an %Cred%ai %Creset- %s\"
+  l         = !git log --reverse -10 --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\"
   ll        =      log --reverse -10
   lp        = !git log --reverse -10 -p | less
   la        = !git log | less
