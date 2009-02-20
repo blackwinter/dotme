@@ -421,4 +421,4 @@ Rake::RDocTask.new(:doc) { |t|
   ]
 }
 
-# vi:foldmethod=marker
+# vim:ft=ruby:fdm=marker:fen
