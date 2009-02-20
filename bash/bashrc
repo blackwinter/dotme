@@ -64,8 +64,8 @@ else
 fi
 
 case "$TERM" in
-  xterm-color|xterm)
-    export PS1="\[\033[7;${MY_COLOR/30/37}m\]\t\[\033[0m\] \u@\h:\w\$(__scm_info)${prompt_indicator} "
+  xterm-color|xterm|screen)
+    export PS1="\[\033[7;${MY_COLOR/30/37}m\]\t\[\033[0m\] \u@\h\${WINDOW:+#\$WINDOW}:\w\$(__scm_info)${prompt_indicator} "
     ;;
   *)
     export PS1="\u@\h:\w${prompt_indicator} "
@@ -74,8 +74,8 @@ esac
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-  xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+  xterm*|rxvt*|screen)
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}${WINDOW:+#$WINDOW}: ${PWD}\007"'
     ;;
   *)
     ;;

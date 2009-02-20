@@ -2,93 +2,101 @@
 " A component of dotme, the dotfile manager.                                  #
 "##############################################################################
 
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
+" Useful for debugging
+"set verbose=2
+
+" Add some directories to search for runtime files
+set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,$VIMRUNTIME,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
+
+" Enable syntax highlighting
 syntax on
 
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
+" Using a dark background within the editing area and syntax highlighting
 set background=dark
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
+" Have Vim jump to the last position when reopening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal g'\"" | endif
 endif
 
-" Uncomment the following to have Vim load indentation rules according to the
-" detected filetype. Per default Debian Vim only load filetype specific
-" plugins.
-"if has("autocmd")
-"  filetype indent on
-"endif
+" Have Vim load indentation rules according to the detected filetype.
+if has("autocmd")
+  filetype indent on
+endif
 
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd  	  " Show (partial) command in status line.
-set showmatch  	" Show matching brackets.
-set ignorecase  " Do case insensitive matching
-set smartcase  	" Do smart case matching
-"set incsearch  " Incremental search
-set autowrite  	" Automatically save before commands like :next and :make
+set autowrite   " Automatically save before commands like :next and :make
 "set hidden     " Hide buffers when they are abandoned
-"set mouse=a  	" Enable mouse usage (all modes) in terminals
+set ignorecase  " Do case insensitive matching
+"set incsearch  " Incremental search
+"set mouse=a    " Enable mouse usage (all modes) in terminals
+"set mousehide  " Hide the mouse pointer while typing
+set showcmd     " Show (partial) command in status line.
+set showmatch   " Show matching brackets.
+set smartcase   " Do smart case matching
 
-" expand tabs to spaces
+set autoindent
+set confirm
+set nofoldenable
+set foldmethod=syntax
+set history=1000
+set modeline
+set scrolloff=3
+set sidescroll=1
+set sidescrolloff=3
+set wildmode=longest,list,full
+
+" Expand tabs to spaces
 set expandtab
-set tabstop=2
 set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
 set title
-set titlestring=%F%(\ %m%)%(\ %r%)%(\ %y%)%(\ [%{&fileencoding}]%)%(\ %a%)
 set titlelen=0
+set titlestring=%F%(\ %m%)%(\ %r%)%(\ %y%)%(\ [%{&fileencoding}]%)%(\ %a%)
 
 set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
 
-set modeline
-set foldmethod=marker
-set autoindent
+" Highlight trailing whitespace
+highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
+match RedundantSpaces /\s\+$\| \+\ze\t/
 
-" define paste-toggle (needed when autoindent is on)
+" Define paste-toggle (needed when autoindent is on)
 set pastetoggle=<F11>
 
-" disable auto-comments
+" Disable auto-comments
 au FileType * set comments=""
 
-" reset textwidth
+" Reset textwidth for Git commit files
 au FileType gitcommit set tw<
 
-" disable highlighting matching parens
+" Disable highlighting matching parens
 let loaded_matchparen=1
 
-" set different termencoding depending on client
+" Set different termencoding depending on client
 "if $SSH_CLIENT !~ "^a\.b\.c\.d"
 "  set termencoding=latin1
 "endif
 
-if filereadable("/etc/vim/scripts/ll.vim")
-  so /etc/vim/scripts/ll.vim
-endif
+" Close open HTML/XML tags (with <CTRL-_>)
+au FileType html let b:closetag_html_style=1
+au Filetype html,xml,xsl ru macros/closetag.vim
 
-" close open HTML/XML tags (with <CTRL-_>)
-if filereadable("/etc/vim/scripts/closetag.vim")
-  au FileType html let b:closetag_html_style=1
-  au Filetype html,xml,xsl so /etc/vim/scripts/closetag.vim
-endif
+" Load plugins
+ru! macros/matchit.vim macros/project.vim macros/slime.vim
+
+" Find the longest line in a file
+ru macros/ll.vim
 
 " Use your tab key to do all your completion in insert mode!
 " (switch to file name completion with <C-X><C-F>)
-if filereadable("/etc/vim/scripts/SuperTab.vim")
-  so /etc/vim/scripts/SuperTab.vim
-endif
+ru macros/supertab.vim
 
-" use ruby completion
-if filereadable("/etc/vim/scripts/rubycomplete.vim")
-  au FileType ruby,eruby so /etc/vim/scripts/rubycomplete.vim|set omnifunc=rubycomplete#Complete|let g:complType = "\<C-X>\<C-O>"|let g:rubycomplete_buffer_loading = 1|let g:rubycomplete_rails = 1|let g:rubycomplete_classes_in_global = 1
-endif
+" Use Ruby completion
+au FileType ruby,eruby ru autoload/rubycomplete.vim|set omnifunc=rubycomplete#Complete|let g:complType="\<C-X>\<C-O>"|let g:rubycomplete_buffer_loading=1|let g:rubycomplete_rails=1|let g:rubycomplete_classes_in_global=1
 
-" toggle completion mode
+" Toggle completion mode
 imap <expr> <F9> ToggleFileCompl()
 imap <expr> <F10> ToggleOmniCompl()
 
@@ -114,9 +122,42 @@ func! ToggleOmniCompl()
   return ''
 endfunc
 
-" those are ruby files, too
-au BufRead,BufNewFile *.rake set filetype=ruby
-au BufRead,BufNewFile *.cap  set filetype=ruby
+" Those are Ruby files, too
+au BufRead,BufNewFile Rakefile,*.rake,Capfile,*.cap set filetype=ruby
+
+" <home> toggles between start of line and start of text
+imap <khome> <home>
+nmap <khome> <home>
+inoremap <silent> <home> <C-O>:call Home()<CR>
+nnoremap <silent> <home> :call Home()<CR>
+function Home()
+    let curcol = wincol()
+    normal ^
+    let newcol = wincol()
+    if newcol == curcol
+        normal 0
+    endif
+endfunction
+
+" Scroll faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+vnoremap <C-e> 3<C-e>
+vnoremap <C-y> 3<C-y>
+
+map <C-up> <C-y>
+map <C-down> <C-e>
+imap <C-up> <C-x><C-y>
+imap <C-down> <C-x><C-e>
+
+nmap n nzz
+nmap N Nzz
+
+nnoremap ' `
+nnoremap ` '
+
+nmap <F5> zi
+nmap <S-F5> zM
 
 """ LOAD CUSTOM FILE
 if filereadable("~/.vimrc.mine")
