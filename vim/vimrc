@@ -160,6 +160,6 @@ nmap <F5> zi
 nmap <S-F5> zM
 
 """ LOAD CUSTOM FILE
-if filereadable("~/.vimrc.mine")
-  so ~/.vimrc.mine
+if filereadable($HOME . "/.vimrc.mine")
+  so $HOME/.vimrc.mine
 endif
