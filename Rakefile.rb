@@ -63,6 +63,7 @@ module DotMe
   HOME = ENV.user_home
 
   GIT_FOUND = File.which('git')
+  GIT_VERSION = GIT_FOUND ? %x{git --version}[/[\d.]+/] : ''
 
   # {{{ class Status
 
@@ -248,10 +249,10 @@ module DotMe
   end
 
   def with_clean_working_directory
-    git('stash', 'save')
+    git(:stash)
     yield
   ensure
-    git('stash', 'pop')
+    git(:unstash)
   end
 
   def git(cmd, *args)
@@ -265,6 +266,21 @@ module DotMe
       when :reset
         cmd = 'checkout'
         args << '-f'
+      when :stash
+        if GIT_VERSION >= '1.5.3'
+          cmd = 'stash'
+          args << 'save'
+        else
+          return
+        end
+      when :unstash
+        if GIT_VERSION >= '1.5.5'
+          cmd = 'stash'
+          args << 'pop'
+        else
+          git('stash', 'apply') if GIT_VERSION >= '1.5.3'
+          return
+        end
       when :tracked
         cmd = 'ls-files'
         _return = %w[
