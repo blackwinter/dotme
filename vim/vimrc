@@ -95,7 +95,9 @@ ru macros/ll.vim
 ru macros/supertab.vim
 
 " Use Ruby completion
-au FileType ruby,eruby ru autoload/rubycomplete.vim|set omnifunc=rubycomplete#Complete|let g:complType="\<C-X>\<C-O>"|let g:rubycomplete_buffer_loading=1|let g:rubycomplete_rails=1|let g:rubycomplete_classes_in_global=1
+if has("ruby")
+  au FileType ruby,eruby ru autoload/rubycomplete.vim|set omnifunc=rubycomplete#Complete|let g:complType="\<C-X>\<C-O>"|let g:rubycomplete_buffer_loading=1|let g:rubycomplete_rails=1|let g:rubycomplete_classes_in_global=1
+endif
 
 " Toggle completion mode
 imap <expr> <F9> ToggleFileCompl()
