@@ -10,9 +10,7 @@
   excludesfile = ~/.gitignore
 
 [color]
-  branch    = auto
-  diff      = true
-  status    = true
+  ui        = true
 [color "branch"]
   current   = yellow reverse
   local     = yellow
@@ -32,7 +30,9 @@
   aa        =      add .
   au        =      add -u .
   al        = !git config -l | sed -n 's/^alias\\.//p'
-  b         =      branch
+  b         =      branch -v
+  bm        =      branch -v --merged
+  bn        =      branch -v --no-merged
   c         =      commit -v
   ca        =      commit -v --all
   ci        =      commit -v --interactive
@@ -45,28 +45,36 @@
   dd        = !git diff | less
   di        =      diff HEAD
   dp        =      diff HEAD^
-  e         =      reset
+  e         =      reset HEAD
   ee        =      reset --soft HEAD^
   f         =      fetch
   g         =      grep -E -n
   h         =      help
   l         = !git log --reverse -10 --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\"
   ll        =      log --reverse -10
+  lol       =      log --pretty=oneline --abbrev-commit --graph --decorate
   lp        = !git log --reverse -10 -p | less
   la        = !git log | less
   lv        = !git log -p | less
   lc        =      whatchanged --reverse -10
   lf        = !git whatchanged | less
   m         =      merge
-  o         =      remote
-  oo        = !git remote -v | grep @ | cut -f1
+  o         =      remote -v | sort -u
+  oo        = !git remote -v | sort -u | grep @ | cut -f1
   p         =      push
-  pa        = !git remote -v | grep @ | cut -f1 | xargs -I '{}' git push '{}' master
+  pa        = !git remote -v | sort -u | grep @ | cut -f1 | xargs -I '{}' git push '{}' master
+  r         =      reset
   s         =      status
+  st        =      stash
+  sts       =      stash save
+  stt       =      stash pop
+  sta       =      stash apply
+  stl       =      stash list
   u         =      pull
   ua        = !git remote | xargs -I '{}' git pull '{}' master
   v         =      revert
   w         =      show --pretty=fuller
-  x         =      commit -v -a --amend
-  z         =      checkout-index -u -f
-  zz        =      checkout -f
+  x         =      commit -v --amend
+  xa        =      commit -v --amend -a
+  z         =      checkout-index -u -f --
+  zz        =      checkout -f --
