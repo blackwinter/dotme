@@ -61,10 +61,10 @@
   lc        =      whatchanged --reverse -10
   lf        = !git whatchanged | less
   m         =      merge
-  o         =      remote -v | sort -u
-  oo        = !git remote -v | sort -u | grep @ | cut -f1
+  o         =      remote -v
+  oo        = !git remote -v | grep @ | cut -f1 | sort -u
   p         =      push
-  pa        = !git remote -v | sort -u | grep @ | cut -f1 | xargs -I '{}' git push '{}' master
+  pa        = !git remote -v | grep @ | cut -f1 | sort -u | xargs -I '{}' git push '{}' master
   r         =      reset
   s         =      status
   st        =      stash
