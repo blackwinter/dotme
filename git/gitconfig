@@ -56,6 +56,8 @@
   lp        = !git log --reverse -10 -p | less
   la        = !git log | less
   lv        = !git log -p | less
+  lg        = "!sh -c 'a=\"$1\"; shift; git log --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\" --grep=\"$a\" -E \"$@\"' -"
+  lgv       = "!sh -c 'git lg \"$@\" --pretty=medium' -"
   lc        =      whatchanged --reverse -10
   lf        = !git whatchanged | less
   m         =      merge
