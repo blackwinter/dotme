@@ -107,36 +107,38 @@ function __svn_repo() {
   svn info 2> /dev/null | /bin/grep '^Repository Root:' | sed 's:.*/::'
 }
 
-function __svn_stale() {
+function __svn_stale() {  # client-side
   : svn status -u 2> /dev/null | /bin/fgrep -o -m1 '*'
 }
 
 function __git() {
-  git-rev-parse 2> /dev/null
+  git rev-parse 2> /dev/null
 }
 
 function __git_version() {
-  git-rev-parse --short HEAD 2> /dev/null
+  git rev-parse --short HEAD 2> /dev/null
 }
 
 function __git_branch() {
-  git-symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
+  git symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
 }
 
 function __git_name() {
-  git-name-rev HEAD 2> /dev/null | cut -d\  -f2-
-  #git-name-rev --name-only HEAD 2> /dev/null
+  git name-rev --name-only HEAD 2> /dev/null
+}
+
+function __git_stale() {  # server-side
+  git status | /bin/fgrep -m1 'Your branch is ahead of' \
+             | sed 's/.* by \([0-9]\+\) commits.*/+\1/'
 }
 
 function __scm_info() {
   if __svn; then
     i="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
-  else
-    if __git; then
-      v="$(__git_version)"
-      b="$(__git_branch)"
-      i="git:${b:-<$(__git_name)>}@${v:-<init>}"
-    fi
+  elif __git; then
+    v="$(__git_version)"
+    b="$(__git_branch)"
+    i="git:${b:-<$(__git_name)>}@${v:-<init>}$(__git_stale)"
   fi
 
   [ -n "$i" ] && echo -n " [$i]"
