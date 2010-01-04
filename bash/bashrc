@@ -133,6 +133,8 @@ function __git_stale() {  # server-side
 }
 
 function __scm_info() {
+  local i v b;
+
   if __svn; then
     i="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
   elif __git; then
