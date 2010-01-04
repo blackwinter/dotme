@@ -128,6 +128,9 @@ endfunc
 " Those are Ruby files, too
 au BufRead,BufNewFile Rakefile,*.rake,Capfile,*.cap set filetype=ruby
 
+" Ruby allows punctuation in keywords
+au FileType ruby set iskeyword+=33,63
+
 " <home> toggles between start of line and start of text
 imap <khome> <home>
 nmap <khome> <home>
