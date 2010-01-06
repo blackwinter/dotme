@@ -129,7 +129,7 @@ function __git_name() {
 
 function __git_stale() {  # server-side
   git status | /bin/fgrep -m1 'Your branch is ahead of' \
-             | sed 's/.* by \([0-9]\+\) commits.*/+\1/'
+             | sed 's/.* by \([0-9]\+\) commit.*/+\1/'
 }
 
 function __scm_info() {
