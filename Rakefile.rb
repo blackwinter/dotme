@@ -205,8 +205,11 @@ module DotMe
     hash = {}
 
     dotfiles.each { |path|
-      file = path.split(File::SEPARATOR, 2).last
-      hash[File.expand_path(path)] = File.join(HOME, ".#{file}")
+      parts   = path.split(File::SEPARATOR)
+      target  = File.join(parts[0..1])
+      symlink = File.join(HOME, ".#{parts[1] || parts[0]}")
+
+      hash[File.expand_path(target)] = symlink
     }
 
     hash
