@@ -47,7 +47,8 @@ Clone branch master of dotme:
 
   git clone git://github.com/blackwinter/dotme.git
 
-Change to the new directory and optionally create an include/exclude file:
+Change to the new directory and create an include/exclude file (optional,
+but recommended):
 
   cd dotme
   vi inclexcl
