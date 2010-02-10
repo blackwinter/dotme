@@ -42,7 +42,7 @@
   cl        =      config -l
   d         =      diff
   dc        =      diff --cached
-  dd        = !git diff | less
+  dd        = !GIT_PAGER=less git diff
   di        =      diff HEAD
   dp        =      diff HEAD^
   e         =      reset HEAD
@@ -53,13 +53,13 @@
   l         = !git log --reverse -10 --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\"
   ll        =      log --reverse -10
   lol       =      log --pretty=oneline --abbrev-commit --graph --decorate
-  lp        = !git log --reverse -10 -p | less
-  la        = !git log | less
-  lv        = !git log -p | less
+  lp        = !GIT_PAGER=less git log --reverse -p -10
+  la        = !GIT_PAGER=less git log --reverse
+  lv        = !GIT_PAGER=less git log --reverse -p
   lg        = "!sh -c 'a=\"$1\"; shift; git log --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\" --grep=\"$a\" -E \"$@\"' -"
   lgv       = "!sh -c 'git lg \"$@\" --pretty=medium' -"
   lc        =      whatchanged --reverse -10
-  lf        = !git whatchanged | less
+  lf        = !GIT_PAGER=less git whatchanged
   m         =      merge
   o         =      remote -v
   oo        = !git remote -v | grep @ | cut -f1 | sort -u
