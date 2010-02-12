@@ -126,7 +126,7 @@ func! ToggleOmniCompl()
 endfunc
 
 " Those are Ruby files, too
-au BufRead,BufNewFile Rakefile,*.rake,Capfile,*.cap set filetype=ruby
+au BufRead,BufNewFile Rakefile,*.rake,Capfile,*.cap,*.ru set filetype=ruby
 
 " Ruby allows punctuation in keywords
 au FileType ruby set iskeyword+=33,63
