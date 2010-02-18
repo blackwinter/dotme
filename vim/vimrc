@@ -2,6 +2,9 @@
 " A component of dotme, the dotfile manager.                                  #
 "##############################################################################
 
+" Use Vim defaults instead of 100% vi compatibility
+set nocompatible
+
 " Useful for debugging
 "set verbose=2
 
