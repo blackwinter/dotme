@@ -29,7 +29,7 @@
   a         =      add
   aa        =      add .
   au        =      add -u .
-  al        = !git config -l | sed -n 's/^alias\\.//p'
+  al        = !git cl | sed -n 's/^alias\\.//p'
   b         =      branch -v
   bm        =      branch -v --merged
   bn        =      branch -v --no-merged
@@ -42,7 +42,7 @@
   cl        =      config -l
   d         =      diff
   dc        =      diff --cached
-  dd        = !GIT_PAGER=less git diff
+  dd        = !GIT_PAGER=less git d
   di        =      diff HEAD
   dp        =      diff HEAD^
   e         =      reset HEAD
@@ -50,21 +50,21 @@
   f         =      fetch
   g         =      grep -E -n
   h         =      help
-  l         = !git log --reverse -10 --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\"
+  l         = !git ll --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\"
   ll        =      log --reverse -10
   lol       =      log --pretty=oneline --abbrev-commit --graph --decorate
-  lp        = !GIT_PAGER=less git log --reverse -p -10
   la        = !GIT_PAGER=less git log --reverse
-  lv        = !GIT_PAGER=less git log --reverse -p
+  lp        = !git lv -10
+  lv        = !git la -p
   lg        = "!sh -c 'a=\"$1\"; shift; git log --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\" --grep=\"$a\" -E \"$@\"' -"
   lgv       = "!sh -c 'git lg \"$@\" --pretty=medium' -"
   lc        =      whatchanged --reverse -10
   lf        = !GIT_PAGER=less git whatchanged
   m         =      merge
   o         =      remote -v
-  oo        = !git remote -v | grep @ | cut -f1 | sort -u
+  oo        = !git o | grep @ | cut -f1 | sort -u
   p         =      push
-  pa        = !git remote -v | grep @ | cut -f1 | sort -u | xargs -I '{}' git push '{}' master
+  pa        = !git oo | xargs -I '{}' git push '{}' master
   r         =      reset
   s         =      status
   st        =      stash
