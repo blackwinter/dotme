@@ -18,23 +18,26 @@ export HISTSIZE=10000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Enable color support of ls and also add handy aliases
-if [ "$TERM" != "dumb" ]; then
-  eval "`dircolors -b`"
-  alias ls='ls --color=auto'
-  #alias dir='ls --color=auto --format=vertical'
-  #alias vdir='ls --color=auto --format=long'
+# Enable color support of ls
+if [ "$TERM" != 'dumb' ]; then
+  if ls --help 2> /dev/null | grep -q -- --color; then
+    [ -x "$(which dircolors)" ] && eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+  else
+    # assume *BSD
+    alias ls='ls -G'
+  fi
 fi
 
-# Some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-alias l='ls -ahlF'
+# Some handy ls aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias  l='ls -ahlF'
 
 # Make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[ -x "$(which lesspipe)" ] && eval "$(lesspipe)"
 
-export LESS="-M -i -R"
+export LESS='-M -i -R'
 
 # Set user color
 #
@@ -57,10 +60,10 @@ MY_COLOR=35  # default
 export MY_COLOR
 
 # Set a fancy prompt (non-color, unless we know we "want" color)
-if [ "`id -u`" -eq 0 ]; then
-  prompt_indicator="#"
+if [ "$(id -u)" -eq 0 ]; then
+  prompt_indicator='#'
 else
-  prompt_indicator=">"
+  prompt_indicator='>'
 fi
 
 case "$TERM" in
@@ -96,7 +99,7 @@ export CDPATH="$CDPATH:$HOME"
 
 # SCM stuff
 function __svn() {
-  test -d ".svn"
+  [ -d '.svn' ]
 }
 
 function __svn_version() {
@@ -104,11 +107,11 @@ function __svn_version() {
 }
 
 function __svn_repo() {
-  svn info 2> /dev/null | /bin/grep '^Repository Root:' | sed 's:.*/::'
+  svn info 2> /dev/null | sed -n '/^Repository Root:/s:.*/::p'
 }
 
 function __svn_stale() {  # client-side
-  : svn status -u 2> /dev/null | /bin/fgrep -o -m1 '*'
+  : svn status --show-updates 2> /dev/null | $(which grep) -F -o -m1 '*'
 }
 
 function __git() {
@@ -128,22 +131,21 @@ function __git_name() {
 }
 
 function __git_stale() {  # server-side
-  git status | /bin/fgrep -m1 'Your branch is ahead of' \
-             | sed 's/.* by \([0-9]\+\) commit.*/+\1/'
+  git status | sed -n '/Your branch is ahead of/s/.* by \([0-9]\+\) commit.*/+\1/p'
 }
 
 function __scm_info() {
-  local i v b;
+  local info version branch
 
   if __svn; then
-    i="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
+    info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
   elif __git; then
-    v="$(__git_version)"
-    b="$(__git_branch)"
-    i="git:${b:-<$(__git_name)>}@${v:-<init>}$(__git_stale)"
+    version="$(__git_version)"
+    branch="$(__git_branch)"
+    info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
   fi
 
-  [ -n "$i" ] && echo -n " [$i]"
+  [ -n "$info" ] && echo -n " [$info]"
 }
 
 ### LOAD CUSTOM FILE

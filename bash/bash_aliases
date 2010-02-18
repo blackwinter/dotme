@@ -2,9 +2,9 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-alias al="alias | /bin/grep --color -F"
+alias al="alias | $(which grep) -F --color"
 
-alias xgrep="/bin/grep --color -rs --exclude-dir .svn --exclude-dir .git"
+alias xgrep="$(which grep) --color -rs --exclude-dir .svn --exclude-dir .git"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 alias egrep="xgrep -E"
@@ -60,10 +60,10 @@ alias  .sl="svn log -r 1:HEAD"
 alias  .so="svn checkout"
 alias  .ss="svn status --show-updates"
 alias  .su="svn update"
-alias  .sV="svn status | /bin/grep '^\?' | awk '{print \$2}'"         # unVersioned files
-alias  .sC="svn status | /bin/grep '^[AM]' | sed 's/.* //'"           # Changed files
-alias  .sF="svn status | /bin/grep '^C' | sed 's/.* //'"              # conFlicted files
-alias  .sI="svn status --no-ignore | /bin/grep '^I' | sed 's/.* //'"  # Ignored files
+alias  .sV="svn status | awk '/^\?/  {print \$2}'"           # unVersioned files
+alias  .sC="svn status | awk '/^[AM]/{print \$2}'"           # Changed files
+alias  .sF="svn status | awk '/^C/   {print \$2}'"           # conFlicted files
+alias  .sI="svn status --no-ignore | awk '/^I/{print \$2}'"  # Ignored files
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine
