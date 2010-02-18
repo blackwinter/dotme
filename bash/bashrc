@@ -131,7 +131,7 @@ function __git_name() {
 }
 
 function __git_stale() {  # server-side
-  git status | sed -n '/Your branch is ahead of/s/.* by \([0-9]\+\) commit.*/+\1/p'
+  git status 2> /dev/null | sed -n '/Your branch is ahead of/s/.* by \([0-9]\+\) commit.*/+\1/p'
 }
 
 function __scm_info() {
