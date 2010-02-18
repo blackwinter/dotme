@@ -56,7 +56,7 @@ module DotMe
 
   extend self
 
-  VERSION = '0.0.3'
+  VERSION = '0.0.4'
 
   IGNORE = %w[Rakefile.rb README COPYING .gitignore inclexcl.sample]
 
