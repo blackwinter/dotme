@@ -130,7 +130,7 @@ module DotMe
 
   def update
     with_clean_working_directory do
-      git(:update)
+      git(:update) && git(:fetch)
     end
 
     install
