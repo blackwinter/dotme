@@ -62,6 +62,7 @@
   lv   = !git la -p
   ly   =      log --pretty=tformat:\"%Cred%h %Cgreen%ai %Cblue%an %Creset- %s\"
   m    =      merge
+  msg  =      commit --allow-empty -m
   o    =      remote -v
   oo   = !git o | grep @ | cut -f1 | sort -u
   p    =      push
