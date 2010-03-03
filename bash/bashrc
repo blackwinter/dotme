@@ -119,7 +119,8 @@ function __git() {
 }
 
 function __git_version() {
-  git rev-parse --short HEAD 2> /dev/null
+  git rev-parse --short HEAD 2> /dev/null | tr -d '\n'
+  git diff --quiet || echo M
 }
 
 function __git_branch() {
