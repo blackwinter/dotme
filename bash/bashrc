@@ -115,7 +115,7 @@ function __svn_stale() {
 }
 
 function __git() {
-  git rev-parse 2> /dev/null
+  [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ]
 }
 
 function __git_version() {
