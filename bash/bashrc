@@ -139,6 +139,18 @@ function __git_stale() {
   }' | tr -d '\n'
 }
 
+function __hg() {
+  hg identify &> /dev/null
+}
+
+function __hg_branch() {
+  hg branch
+}
+
+function __hg_version() {
+  hg summary --quiet | awk '{print $2}'
+}
+
 function __scm_info() {
   local info version branch
 
@@ -148,6 +160,8 @@ function __scm_info() {
     version="$(__git_version)"
     branch="$(__git_branch)"
     info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
+  elif __hg; then
+    info="hg:$(__hg_branch)@$(__hg_version)"
   fi
 
   [ -n "$info" ] && echo -n " [$info]"
