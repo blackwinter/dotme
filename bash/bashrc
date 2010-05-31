@@ -120,8 +120,8 @@ function __git() {
 
 function __git_version() {
   git rev-parse --short HEAD 2> /dev/null | tr -d '\n'
-  git diff --quiet || echo -n 'M'
-  git diff --quiet --cached || echo -n '*'
+  git diff --quiet           2> /dev/null || echo -n 'M'
+  git diff --quiet --cached  2> /dev/null || echo -n '*'
 }
 
 function __git_branch() {
