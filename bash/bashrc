@@ -98,74 +98,7 @@ export PATH
 export CDPATH="$CDPATH:$HOME"
 
 # SCM stuff
-function __svn() {
-  [ -d '.svn' ]
-}
-
-function __svn_version() {
-  svnversion
-}
-
-function __svn_repo() {
-  svn info 2> /dev/null | sed -n '/^Repository Root:/s:.*/::p'
-}
-
-function __svn_stale() {
-  : svn status --show-updates 2> /dev/null | $(which grep) -F -o -m1 '*'
-}
-
-function __git() {
-  [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ]
-}
-
-function __git_version() {
-  git rev-parse --short HEAD 2> /dev/null | tr -d '\n'
-  git diff --quiet           2> /dev/null || echo -n 'M'
-  git diff --quiet --cached  2> /dev/null || echo -n '*'
-}
-
-function __git_branch() {
-  git symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
-}
-
-function __git_name() {
-  git name-rev --name-only HEAD 2> /dev/null
-}
-
-function __git_stale() {
-  git status 2> /dev/null | sed -n '/^# Your branch is /{
-    s/.* ahead o.* \([0-9]\+\) .*/+\1/p;
-    s/.* behind .* \([0-9]\+\) .*/-\1/p
-  }' | tr -d '\n'
-}
-
-function __hg() {
-  hg identify &> /dev/null
-}
-
-function __hg_branch() {
-  hg branch
-}
-
-function __hg_version() {
-  hg summary --quiet | awk '{print $2}'
-}
-
-function __scm_info() {
-  local info version branch
-
-  if __svn; then
-    info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
-  elif __git; then
-    version="$(__git_version)"
-    branch="$(__git_branch)"
-    info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
-  elif __hg; then
-    info="hg:$(__hg_branch)@$(__hg_version)"
-  fi
-
-  [ -n "$info" ] && echo -n " [$info]"
-}
+[ -f ~/.bash_scm_info ] && . ~/.bash_scm_info || function __scm_info() { :; }
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bashrc.mine ] && . ~/.bashrc.mine
