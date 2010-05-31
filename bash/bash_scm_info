@@ -77,5 +77,5 @@ function __hg_branch() {
 }
 
 function __hg_version() {
-  hg summary --quiet | awk '{print $2}'
+  hg summary --quiet | awk '/parent:/{print $2}'
 }
