@@ -4,12 +4,14 @@
 
 alias al="alias | $(which grep) -F --color"
 
-alias xgrep="$(which grep) --color -rs --exclude-dir .svn --exclude-dir .git"
+alias xgrep="$(which grep) --color -rs --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 alias egrep="xgrep -E"
 
 alias ruby="ruby -wKu"
+alias ruby-dev="ruby -Ilib -rubygems -W1"
+
 alias diff="diff -C 0"
 alias whois="whois -H -T dn"
 alias xmltidy="tidy -xml -i -w 0"
@@ -24,7 +26,6 @@ alias  h="host"
 alias k9="kill -9"
 alias pa="ps awwwux"
 alias pe="ps -ef"
-alias rf="rubyforge"
 alias  t="tree"
 
 alias  .a="aptitude"
@@ -50,6 +51,7 @@ alias .ga="sudo gem sources --add"
 
 alias   .s="svn"
 alias  .sa="svn add"
+alias  .se="svn mergeinfo --show-revs eligible"
 alias  .si="svn commit"
 alias  .sd="svn diff"
 alias  .sH="svn diff -rHEAD"
