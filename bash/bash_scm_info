@@ -53,7 +53,7 @@ function __git_version() {
 }
 
 function __git_branch() {
-  git symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
+  git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
 }
 
 function __git_name() {
@@ -79,3 +79,5 @@ function __hg_branch() {
 function __hg_version() {
   hg summary --quiet | awk '/parent:/{print $2}'
 }
+
+# vim:ft=sh
