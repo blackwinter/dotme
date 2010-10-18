@@ -31,6 +31,7 @@
   al   = !git cl | sed -n 's/^alias\\.//p'
   au   =      add -u .
   b    =      branch -v
+  bc   = !git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
   bm   =      branch -v --merged
   bn   =      branch -v --no-merged
   c    =      commit -v
@@ -66,7 +67,7 @@
   o    =      remote -v
   oo   = !git o | grep @ | cut -f1 | sort -u
   p    =      push
-  pa   = !git oo | xargs -I '{}' git push '{}' master
+  pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
   r    =      reset
   s    =      status
   ss   =      status --short
@@ -76,7 +77,8 @@
   sts  =      stash save
   stt  =      stash pop
   u    =      pull
-  ua   = !git remote | xargs -I '{}' git pull '{}' master && git fetch
+  ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
+  ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
   v    =      revert
   w    =      show --pretty=fuller
   x    =      commit -v --amend
