@@ -84,8 +84,8 @@ let loaded_matchparen=1
 "endif
 
 " Close open HTML/XML tags (with <CTRL-_>)
-au FileType html,eruby let b:closetag_html_style=1
-au Filetype html,eruby,xml,xsl ru macros/closetag.vim
+au FileType html,xhtml,eruby let b:closetag_html_style=1
+au Filetype html,xhtml,eruby,xml,xsl ru macros/closetag.vim
 
 " Load plugins
 ru! macros/matchit.vim macros/project.vim macros/slime.vim
