@@ -5,6 +5,7 @@
 *.o
 *.lo
 *.la
+*.so
 #*#
 .*.rej
 *.rej

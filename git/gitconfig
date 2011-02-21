@@ -68,6 +68,7 @@
   oo   = !git o | grep @ | cut -f1 | sort -u
   p    =      push
   pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
+  pt   = !git oo | xargs -I '{}' git push --tags '{}'
   r    =      reset
   s    =      status
   ss   =      status --short
