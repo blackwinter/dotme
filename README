@@ -71,19 +71,24 @@ Finally, install the symlinks:
 
 == ISSUES
 
-* <tt>git-config</tt> replaces <tt>~/.gitconfig</tt> symlink with real file [1].
-  So, if you update your git configuration through <tt>git-config --global</tt>,
-  the config file will no longer be tracked by dotme. Instead, edit it directly.
+* <tt>git-config</tt> replaces <tt>~/.gitconfig</tt> symlink with real file
+  (thread[http://kerneltrap.org/mailarchive/git/2007/7/15/251676]). So, if you
+  update your git configuration through <tt>git-config --global</tt>, the
+  config file will no longer be tracked by dotme. Instead, edit it directly.
 
-  [1]<b> </b><http://kerneltrap.org/mailarchive/git/2007/7/15/251676>
+  UPDATE: Seems to no longer be valid. Not sure since which Git version, though
+  (at least v1.7.4).
 
 * <tt>git-config</tt> doesn't expand variables in <tt>~/.gitconfig</tt> file.
-  See e.g. [2]. This means you have to update the <tt>name</tt>, <tt>email</tt>,
-  and <tt>excludesfile</tt> settings in the configuration file. In particular,
+  See e.g. {this thread}[http://kerneltrap.org/mailarchive/git/2008/8/22/3047784].
+  This means you have to update the <tt>name</tt>, <tt>email</tt>, and
+  <tt>excludesfile</tt> settings in the configuration file. In particular,
   without the latter being adjusted you won't benefit from the shipped
   <tt>~/.gitignore</tt> file.
 
-  [2]<b> </b><http://kerneltrap.org/mailarchive/git/2008/8/22/3047784>
+  UPDATE: Since Git v1.6.5.5[http://www.kernel.org/pub/software/scm/git/docs/RelNotes/1.6.5.5.txt],
+  it expands a few variables that name paths in configuration files when they
+  start with <tt>~/</tt> or <tt>~username/</tt>.
 
 
 == CALL TO ACTION
