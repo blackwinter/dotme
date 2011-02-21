@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+  <title>Module: DotMe</title>
+
+  <link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body id="top" class="module">
+
+  <div id="metadata">
+    <div id="home-metadata">
+      <div id="home-section" class="section">
+        <h3 class="section-header">
+          <a href="./index.html">Home</a>
+          <a href="./index.html#classes">Classes</a>
+          <a href="./index.html#methods">Methods</a>
+        </h3>
+      </div>
+    </div>
+
+    <div id="file-metadata">
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li><a href="./Rakefile_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="Rakefile.rb">Rakefile.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div id="class-metadata">
+      
+
+      
+
+      
+      <!-- Namespace Contents -->
+      <div id="namespace-list-section" class="section">
+        <h3 class="section-header">Namespace</h3>
+        <ul class="link-list">
+          
+          <li><span class="type">CLASS</span> <a href="DotMe/Status.html">DotMe::Status</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+      <!-- Method Quickref -->
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li><a href="#method-i-agree">#agree</a></li>
+          
+          <li><a href="#method-i-agreed-3F">#agreed?</a></li>
+          
+          <li><a href="#method-i-dotfiles">#dotfiles</a></li>
+          
+          <li><a href="#method-i-dryrun">#dryrun</a></li>
+          
+          <li><a href="#method-i-git">#git</a></li>
+          
+          <li><a href="#method-i-glob2re">#glob2re</a></li>
+          
+          <li><a href="#method-i-inclexcl">#inclexcl</a></li>
+          
+          <li><a href="#method-i-install">#install</a></li>
+          
+          <li><a href="#method-i-pristine">#pristine</a></li>
+          
+          <li><a href="#method-i-reset">#reset</a></li>
+          
+          <li><a href="#method-i-status">#status</a></li>
+          
+          <li><a href="#method-i-status_for">#status_for</a></li>
+          
+          <li><a href="#method-i-symlinks">#symlinks</a></li>
+          
+          <li><a href="#method-i-uninstall">#uninstall</a></li>
+          
+          <li><a href="#method-i-update">#update</a></li>
+          
+          <li><a href="#method-i-with_clean_working_directory">#with_clean_working_directory</a></li>
+          
+        </ul>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="./README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class/Module Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li><a href="./DotMe.html">DotMe</a></li>
+        
+          <li><a href="./DotMe/Status.html">DotMe::Status</a></li>
+        
+          <li><a href="./Symbol.html">Symbol</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1 class="module">DotMe</h1>
+
+    <div id="description" class="description">
+      
+<p>Manage dotfiles.</p>
+
+    </div><!-- description -->
+
+    
+    <div id="5Buntitled-5D" class="documentation-section">
+      
+
+      
+
+      
+      <!-- Constants -->
+      <div id="constants-list" class="section">
+        <h3 class="section-header">Constants</h3>
+        <dl>
+        
+          <dt><a name="GIT_FOUND">GIT_FOUND</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="GIT_VERSION">GIT_VERSION</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="HOME">HOME</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="IGNORE">IGNORE</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+          <dt><a name="VERSION">VERSION</a></dt>
+          
+          <dd class="description"></dd>
+          
+        
+        </dl>
+      </div>
+      
+
+      
+
+      <!-- Methods -->
+      
+      <div id="public-instance-method-details" class="method-section section">
+        <h3 class="section-header">Public Instance Methods</h3>
+
+      
+        <div id="dotfiles-method" class="method-detail ">
+          <a name="method-i-dotfiles"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">dotfiles</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="dotfiles-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 218</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dotfiles</span>
+  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">inclexcl</span>(<span class="ruby-identifier">git</span>(<span class="ruby-value">:tracked</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>) <span class="ruby-operator">-</span> <span class="ruby-constant">IGNORE</span>)
+  <span class="ruby-identifier">custom</span> = []
+
+  <span class="ruby-identifier">files</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-identifier">mine</span> = <span class="ruby-node">&quot;#{file}.mine&quot;</span>)
+      <span class="ruby-identifier">custom</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">mine</span>
+    <span class="ruby-keyword">end</span>
+  }
+
+  <span class="ruby-identifier">files</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">custom</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- dotfiles-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- dotfiles-method -->
+
+      
+        <div id="install-method" class="method-detail ">
+          <a name="method-i-install"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">install</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>}}}</p>
+            
+
+            
+            <div class="method-source-code" id="install-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">install</span>
+  <span class="ruby-identifier">symlinks</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span>, <span class="ruby-identifier">symlink</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">dryrun</span>(<span class="ruby-value">:symlink</span>, <span class="ruby-identifier">target</span>, <span class="ruby-identifier">symlink</span>) {
+      <span class="ruby-identifier">status</span>, <span class="ruby-identifier">actual</span> = <span class="ruby-identifier">status_for</span>(<span class="ruby-identifier">symlink</span>, <span class="ruby-identifier">target</span>)
+
+      <span class="ruby-keyword">begin</span>
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink</span>(<span class="ruby-identifier">target</span>, <span class="ruby-identifier">symlink</span>)
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;[ADDED] #{symlink} -&gt; #{target}&quot;</span>
+      <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">EEXIST</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">err</span>
+        <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] #{err}&quot;</span>
+      <span class="ruby-keyword">end</span>
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- install-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- install-method -->
+
+      
+        <div id="pristine-method" class="method-detail ">
+          <a name="method-i-pristine"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">pristine</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="pristine-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">pristine</span>
+  <span class="ruby-identifier">abort</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-string">'This will undo all your local modifications AND remove all untracked files.'</span>)
+  <span class="ruby-identifier">reset</span>(<span class="ruby-keyword">false</span>)
+
+  <span class="ruby-identifier">git</span>(<span class="ruby-value">:untracked</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">dryrun</span>(<span class="ruby-value">:rm_r</span>, <span class="ruby-identifier">file</span>) {
+      <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_r</span>(<span class="ruby-identifier">file</span>)
+      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;[REMOVED] #{file}&quot;</span>
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- pristine-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- pristine-method -->
+
+      
+        <div id="reset-method" class="method-detail ">
+          <a name="method-i-reset"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">reset</span><span
+              class="method-args">(ask = true)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="reset-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 187</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>(<span class="ruby-identifier">ask</span> = <span class="ruby-keyword">true</span>)
+  <span class="ruby-identifier">abort</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-string">'This will undo all your local modifications (untracked files are kept).'</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">ask</span>
+  <span class="ruby-identifier">git</span>(<span class="ruby-value">:reset</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- reset-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- reset-method -->
+
+      
+        <div id="status-method" class="method-detail ">
+          <a name="method-i-status"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">status</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="status-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 139</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">status</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">git</span>(<span class="ruby-value">:status</span>)
+  <span class="ruby-identifier">puts</span>
+
+  <span class="ruby-identifier">symlinks</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span>, <span class="ruby-identifier">symlink</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">status</span>, <span class="ruby-identifier">actual</span> = <span class="ruby-identifier">status_for</span>(<span class="ruby-identifier">symlink</span>, <span class="ruby-identifier">target</span>)
+    <span class="ruby-identifier">msg</span> = <span class="ruby-node">&quot;[#{status}] #{symlink}&quot;</span>
+
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">status</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-value">:MISMATCH</span>
+        <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">':'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\n  expected: #{target}&quot;</span> <span class="ruby-operator">&lt;&lt;</span>
+                      <span class="ruby-node">&quot;\n  got:      #{actual}&quot;</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; -&gt; #{target}&quot;</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- status-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- status-method -->
+
+      
+        <div id="symlinks-method" class="method-detail ">
+          <a name="method-i-symlinks"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">symlinks</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="symlinks-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 204</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">symlinks</span>
+  <span class="ruby-identifier">hash</span> = {}
+
+  <span class="ruby-identifier">dotfiles</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">parts</span>   = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">SEPARATOR</span>)
+    <span class="ruby-identifier">target</span>  = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">parts</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">1</span>])
+    <span class="ruby-identifier">symlink</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">HOME</span>, <span class="ruby-node">&quot;.#{parts[1] || parts[0]}&quot;</span>)
+
+    <span class="ruby-identifier">hash</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">target</span>)] = <span class="ruby-identifier">symlink</span>
+  }
+
+  <span class="ruby-identifier">hash</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- symlinks-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- symlinks-method -->
+
+      
+        <div id="uninstall-method" class="method-detail ">
+          <a name="method-i-uninstall"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">uninstall</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="uninstall-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">uninstall</span>
+  <span class="ruby-identifier">symlinks</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">target</span>, <span class="ruby-identifier">symlink</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">dryrun</span>(<span class="ruby-value">:unlink</span>, <span class="ruby-identifier">symlink</span>) {
+      <span class="ruby-identifier">status</span>, <span class="ruby-identifier">actual</span> = <span class="ruby-identifier">status_for</span>(<span class="ruby-identifier">symlink</span>, <span class="ruby-identifier">target</span>)
+
+      <span class="ruby-keyword">case</span> <span class="ruby-identifier">status</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:UNTRACKED</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing '#{symlink}' - NOT A SYMLINK&quot;</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:NOT_FOUND</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing '#{symlink}' - NOT FOUND&quot;</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:MISMATCH</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing symlink '#{symlink}' - targets don't match:&quot;</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;  expected: #{target}&quot;</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;  got:      #{actual}&quot;</span>
+        <span class="ruby-keyword">when</span> <span class="ruby-value">:TRACKED</span>
+          <span class="ruby-keyword">begin</span>
+            <span class="ruby-constant">File</span>.<span class="ruby-identifier">unlink</span>(<span class="ruby-identifier">symlink</span>)
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;[REMOVED] #{symlink} -&gt; #{target}&quot;</span>
+          <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOENT</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">err</span>
+            <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR] #{err}&quot;</span>
+          <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] #{symlink}&quot;</span>
+      <span class="ruby-keyword">end</span>
+    }
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- uninstall-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- uninstall-method -->
+
+      
+        <div id="update-method" class="method-detail ">
+          <a name="method-i-update"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">update</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="update-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>
+  <span class="ruby-identifier">with_clean_working_directory</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">git</span>(<span class="ruby-value">:update</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">git</span>(<span class="ruby-value">:fetch</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">install</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- update-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- update-method -->
+
+      
+      </div><!-- public-instance-method-details -->
+    
+      <div id="private-instance-method-details" class="method-section section">
+        <h3 class="section-header">Private Instance Methods</h3>
+
+      
+        <div id="agree-method" class="method-detail ">
+          <a name="method-i-agree"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">agree</span><span
+              class="method-args">(msg)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="agree-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 351</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">agree</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;#{msg} (yes/no) &quot;</span>
+
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">$stdin</span>.<span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'y'</span>
+      <span class="ruby-keyword">true</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">'n'</span>
+      <span class="ruby-keyword">false</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">'Please enter &quot;[y]es&quot; or &quot;[n]o&quot;.'</span>
+      <span class="ruby-identifier">agree</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">rescue</span> <span class="ruby-constant">Interrupt</span>
+  <span class="ruby-identifier">abort</span> <span class="ruby-string">''</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- agree-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- agree-method -->
+
+      
+        <div id="agreed-3F-method" class="method-detail ">
+          <a name="method-i-agreed-3F"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">agreed?</span><span
+              class="method-args">(msg)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="agreed-3F-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 367</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-identifier">msg</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span>
+  <span class="ruby-identifier">agree</span>(<span class="ruby-string">'Are you sure you want that?'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">agree</span>(<span class="ruby-string">'Are you REALLY sure?'</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- agreed-3F-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- agreed-3F-method -->
+
+      
+        <div id="dryrun-method" class="method-detail ">
+          <a name="method-i-dryrun"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">dryrun</span><span
+              class="method-args">(what, *args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="dryrun-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 372</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dryrun</span>(<span class="ruby-identifier">what</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">'DRYRUN'</span>]
+    <span class="ruby-identifier">_return</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:_return</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+
+    <span class="ruby-identifier">warn</span> [<span class="ruby-string">'[DRYRUN]'</span>, <span class="ruby-identifier">what</span>, *<span class="ruby-identifier">args</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
+
+    <span class="ruby-identifier">_return</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">yield</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- dryrun-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- dryrun-method -->
+
+      
+        <div id="git-method" class="method-detail ">
+          <a name="method-i-git"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">git</span><span
+              class="method-args">(cmd, *args)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="git-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 261</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git</span>(<span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">abort</span> <span class="ruby-string">&quot;Please install `git'.&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">GIT_FOUND</span>
+
+  <span class="ruby-comment"># aliases</span>
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">cmd</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:update</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'pull'</span>
+      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'origin'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'master'</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:reset</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'checkout'</span>
+      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-f'</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:stash</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">'1.5.3'</span>
+        <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'stash'</span>
+        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'save'</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-keyword">return</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:unstash</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">'1.5.5'</span>
+        <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'stash'</span>
+        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'pop'</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">git</span>(<span class="ruby-string">'stash'</span>, <span class="ruby-string">'apply'</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">'1.5.3'</span>
+        <span class="ruby-keyword">return</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:tracked</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'ls-files'</span>
+      <span class="ruby-identifier">_return</span> = <span class="ruby-node">]foo/x foo/y bar/y bar/z/a bar/z/b]</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:untracked</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'ls-files'</span>
+      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-o'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'--directory'</span>
+      <span class="ruby-identifier">_return</span> = <span class="ruby-node">]foo/x.mine bar/y.mine blah]</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">dryrun</span>(<span class="ruby-value">:git</span>, <span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span> <span class="ruby-operator">+</span> [<span class="ruby-value">:_return</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">_return</span>]) {
+    <span class="ruby-node">%{git #{[cmd, *args].join(' ')}}</span>
+  }
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- git-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- git-method -->
+
+      
+        <div id="glob2re-method" class="method-detail ">
+          <a name="method-i-glob2re"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">glob2re</span><span
+              class="method-args">(pattern)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="glob2re-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 339</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">glob2re</span>(<span class="ruby-identifier">pattern</span>)
+  <span class="ruby-node">%{
+    \A
+    #{
+      pattern.
+        gsub(/\?/, '.').
+        gsub(/\*/, '.*?')
+    }
+    (?:/|\z)
+  }</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- glob2re-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- glob2re-method -->
+
+      
+        <div id="inclexcl-method" class="method-detail ">
+          <a name="method-i-inclexcl"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">inclexcl</span><span
+              class="method-args">(files)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="inclexcl-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 301</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inclexcl</span>(<span class="ruby-identifier">files</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-string">'inclexcl'</span>)
+    <span class="ruby-identifier">incl</span>, <span class="ruby-identifier">excl</span>, <span class="ruby-identifier">replace</span> = [], [], <span class="ruby-keyword">false</span>
+
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">'inclexcl'</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\A\s*/</span>, <span class="ruby-string">''</span>)
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\s*\z/</span>, <span class="ruby-string">''</span>)
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">empty?</span>
+
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-node">/\A([#+-])/</span>, <span class="ruby-string">''</span>)
+      <span class="ruby-identifier">prefix</span> = <span class="ruby-node">$1</span>  <span class="ruby-comment"># save capture</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-string">'#'</span>
+
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\/\z/</span>, <span class="ruby-string">''</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">'/'</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR] Illegal pattern - #{pattern}&quot;</span>
+        <span class="ruby-keyword">next</span>
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">matches</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">file</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">glob2re</span>(<span class="ruby-identifier">pattern</span>)
+      }
+
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-string">'-'</span>
+        <span class="ruby-identifier">excl</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">matches</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">replace</span> = <span class="ruby-keyword">true</span>
+        <span class="ruby-identifier">incl</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">matches</span>
+      <span class="ruby-keyword">end</span>
+    }
+
+    <span class="ruby-identifier">files</span>  = <span class="ruby-identifier">incl</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">replace</span>
+    <span class="ruby-identifier">files</span> <span class="ruby-operator">-=</span> <span class="ruby-identifier">excl</span>
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">files</span>.<span class="ruby-identifier">uniq</span>
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- inclexcl-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- inclexcl-method -->
+
+      
+        <div id="status_for-method" class="method-detail ">
+          <a name="method-i-status_for"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">status_for</span><span
+              class="method-args">(symlink, target)</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            <p>{{{ Utility methods</p>
+            
+
+            
+            <div class="method-source-code" id="status_for-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 235</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">status_for</span>(<span class="ruby-identifier">symlink</span>, <span class="ruby-identifier">target</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">symlink?</span>(<span class="ruby-identifier">symlink</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">target</span>)
+      <span class="ruby-identifier">actual</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">readlink</span>(<span class="ruby-identifier">symlink</span>)).<span class="ruby-identifier">realpath</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-identifier">status</span> = <span class="ruby-identifier">target</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">actual</span> <span class="ruby-operator">?</span> <span class="ruby-value">:TRACKED</span> <span class="ruby-operator">:</span> <span class="ruby-value">:MISMATCH</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">status</span> = <span class="ruby-value">:MISSING</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">symlink</span>)
+      <span class="ruby-identifier">status</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-operator">?</span> <span class="ruby-value">:ALIEN</span> <span class="ruby-operator">:</span> <span class="ruby-value">:UNTRACKED</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">status</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">target</span>) <span class="ruby-operator">?</span> <span class="ruby-value">:NOT_FOUND</span> <span class="ruby-operator">:</span> <span class="ruby-value">:UNTRACKED</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
+  [<span class="ruby-constant">Status</span>[<span class="ruby-identifier">status</span>], <span class="ruby-identifier">actual</span>]
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- status_for-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- status_for-method -->
+
+      
+        <div id="with_clean_working_directory-method" class="method-detail ">
+          <a name="method-i-with_clean_working_directory"></a>
+
+          
+          <div class="method-heading">
+            <span class="method-name">with_clean_working_directory</span><span
+              class="method-args">()</span>
+            <span class="method-click-advice">click to toggle source</span>
+          </div>
+          
+
+          <div class="method-description">
+            
+            
+            
+
+            
+            <div class="method-source-code" id="with_clean_working_directory-source">
+<pre>
+<span class="ruby-comment"># File Rakefile.rb, line 254</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">with_clean_working_directory</span>
+  <span class="ruby-identifier">git</span>(<span class="ruby-value">:stash</span>)
+  <span class="ruby-keyword">yield</span>
+<span class="ruby-keyword">ensure</span>
+  <span class="ruby-identifier">git</span>(<span class="ruby-value">:unstash</span>)
+<span class="ruby-keyword">end</span></pre>
+            </div><!-- with_clean_working_directory-source -->
+            
+          </div>
+
+          
+
+          
+        </div><!-- with_clean_working_directory-method -->
+
+      
+      </div><!-- private-instance-method-details -->
+    
+    </div><!-- 5Buntitled-5D -->
+  
+
+  </div><!-- documentation -->
+
+  <div id="validator-badges">
+    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+      Rdoc Generator</a> 2</small>.</p>
+  </div>
+
+</body>
+</html>
+
