@@ -26,7 +26,7 @@
 
 require 'pathname'
 require 'fileutils'
-require 'rake/rdoctask'
+require 'rdoc/task'
 
 begin
   require 'rubygems'
@@ -420,13 +420,12 @@ task :uninstall do
   DotMe.uninstall
 end
 
-Rake::RDocTask.new(:doc) { |t|
+RDoc::Task.new(:doc) { |t|
   t.rdoc_dir   = 'doc'
   t.rdoc_files = %w[README COPYING Rakefile.rb]
   t.options    = [
-    '--title', 'dotme Application documentation',
-    '--main', 'README', '--charset', 'UTF-8',
-    '--line-numbers', '--inline-source', '--all'
+    '--title', "dotme Application documentation (v#{DotMe::VERSION})",
+    '--main', 'README', '--charset', 'UTF-8', '--line-numbers', '--all'
   ]
 }
 
