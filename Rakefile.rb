@@ -3,7 +3,7 @@
 #                                                                             #
 # dotme - The dotfile manager                                                 #
 #                                                                             #
-# Copyright (C) 2008-2010 Jens Wille                                          #
+# Copyright (C) 2008-2011 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@uni-koeln.de>                                    #
@@ -45,7 +45,7 @@ rescue LoadError => err
 end
 
 if Dir.pwd != dir = File.dirname(__FILE__)
-  abort "Please change into directory '#{dir}' and run again."
+  abort "Please change into directory `#{dir}' and run again."
 end
 
 # {{{ module DotMe
@@ -56,7 +56,7 @@ module DotMe
 
   extend self
 
-  VERSION = '0.0.7'
+  VERSION = '0.0.8'
 
   IGNORE = %w[Rakefile.rb README COPYING .gitignore inclexcl.sample]
 
@@ -259,7 +259,7 @@ module DotMe
   end
 
   def git(cmd, *args)
-    abort "Please install 'git'." unless GIT_FOUND
+    abort "Please install `git'." unless GIT_FOUND
 
     # aliases
     case cmd
@@ -387,8 +387,7 @@ end
 
 # }}}
 
-desc "[Runs task 'update']"
-task :default => [:update]
+task :default => :update
 
 desc "Install symlinks to dotfiles."
 task :install do
