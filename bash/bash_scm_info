@@ -14,8 +14,13 @@ function __scm_info() {
   if __svn; then
     info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
   elif __git; then
-    version="$(__git_version)"
-    branch="$(__git_branch)"
+    if __git_head; then
+      version="$(__git_version)"
+      branch="$(__git_branch)"
+    else
+      branch="$(__git_branch2)"
+    fi
+
     info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
   elif __hg; then
     info="hg:$(__hg_branch)@$(__hg_version)"
@@ -46,6 +51,10 @@ function __git() {
   [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ]
 }
 
+function __git_head() {
+  git show-ref --head &> /dev/null
+}
+
 function __git_version() {
   git rev-parse --short HEAD 2> /dev/null | tr -d '\n'
   git diff --quiet           2> /dev/null || echo -n 'M'
@@ -54,6 +63,10 @@ function __git_version() {
 
 function __git_branch() {
   git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
+}
+
+function __git_branch2() {
+  git symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
 }
 
 function __git_name() {
