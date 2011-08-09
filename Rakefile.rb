@@ -26,7 +26,11 @@
 
 require 'pathname'
 require 'fileutils'
-require 'rdoc/task'
+
+begin
+  require 'rdoc/task'
+rescue LoadError
+end
 
 begin
   require 'rubygems'
@@ -419,33 +423,35 @@ task :uninstall do
   DotMe.uninstall
 end
 
-rdoc_task = RDoc::Task.new(:doc) { |t|
-  t.rdoc_dir   = 'doc'
-  t.rdoc_files = %w[README COPYING Rakefile.rb]
-  t.options    = [
-    '--title', "dotme Application documentation (v#{DotMe::VERSION})",
-    '--main', 'README', '--charset', 'UTF-8', '--line-numbers', '--all'
-  ]
-}
-
-desc "Publish RDoc documentation"
-task 'doc:publish' => :doc do
-  remote = %x{git branch -r}[%r{(\S+)/#{Regexp.escape(branch = 'gh-pages')}$}, 1]
-  url    = %x{git remote -v}[%r{^#{Regexp.escape(remote)}\s+(\S+)}, 1]
-
-  rm_rf dir = ".#{branch}"
-
-  sh 'git', 'clone', '-n', '-o', remote, url, dir
-
-  Dir.chdir(dir) {
-    sh 'git', 'checkout', '-b', branch, "#{remote}/#{branch}"
-
-    cp_r Dir["../#{rdoc_task.rdoc_dir}/*"], '.'
-
-    sh 'git', 'add', '.'
-    sh 'git', 'commit', '-m', 'Updated documentation.'
-    sh 'git', 'push', remote, branch
+if Object.const_defined?(:RDoc)
+  rdoc_task = RDoc::Task.new(:doc) { |t|
+    t.rdoc_dir   = 'doc'
+    t.rdoc_files = %w[README COPYING Rakefile.rb]
+    t.options    = [
+      '--title', "dotme Application documentation (v#{DotMe::VERSION})",
+      '--main', 'README', '--charset', 'UTF-8', '--line-numbers', '--all'
+    ]
   }
+
+  desc "Publish RDoc documentation"
+  task 'doc:publish' => :doc do
+    remote = %x{git branch -r}[%r{(\S+)/#{Regexp.escape(branch = 'gh-pages')}$}, 1]
+    url    = %x{git remote -v}[%r{^#{Regexp.escape(remote)}\s+(\S+)}, 1]
+
+    rm_rf dir = ".#{branch}"
+
+    sh 'git', 'clone', '-n', '-o', remote, url, dir
+
+    Dir.chdir(dir) {
+      sh 'git', 'checkout', '-b', branch, "#{remote}/#{branch}"
+
+      cp_r Dir["../#{rdoc_task.rdoc_dir}/*"], '.'
+
+      sh 'git', 'add', '.'
+      sh 'git', 'commit', '-m', 'Updated documentation.'
+      sh 'git', 'push', remote, branch
+    }
+  end
 end
 
 # vim:ft=ruby:fdm=marker:fen
