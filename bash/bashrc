@@ -10,9 +10,12 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+export LC_ALL='en_US.UTF-8'
+export TIMEFORMAT='%U + %S # %R'
+
 # Don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
-export HISTSIZE=20000
+export HISTSIZE=50000
 
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
