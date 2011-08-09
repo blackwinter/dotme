@@ -78,14 +78,14 @@
   stp  =      stash save --patch
   sts  =      stash save
   stt  =      stash pop
-  stw  =      stash show --patch
+  stw  =      stash show --patch --no-prefix
   t    =      tag
   tl   =      tag -n1 -l
   u    =      pull
   ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
   v    =      revert
-  w    =      show --pretty=fuller
+  w    =      show --pretty=fuller --no-prefix
   x    =      commit -v --amend
   xa   =      commit -v --amend -a
   z    =      checkout-index -u -f --
