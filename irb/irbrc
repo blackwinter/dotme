@@ -6,13 +6,13 @@
 begin
   require 'rubygems'
   require 'brice/init'
-rescue LoadError
+rescue LoadError => err
+  warn "Error loading brice: #{err} (#{err.class})"
 end
 
 # Alternatively, put your extensions in ~/.irbrc.d
 Dir["#{__FILE__}.d/*.rb"].sort.each { |rc| load rc }
 
 ### LOAD CUSTOM FILE
-if File.readable?(mine = "#{__FILE__}.mine")
-  load mine
-end
+mine = "#{__FILE__}.mine"
+load mine if File.readable?(mine)
