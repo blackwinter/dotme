@@ -79,6 +79,8 @@
   sts  =      stash save
   stt  =      stash pop
   stw  =      stash show --patch
+  t    =      tag
+  tl   =      tag -n1 -l
   u    =      pull
   ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
