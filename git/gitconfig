@@ -41,11 +41,11 @@
   ci   =      commit -v --interactive
   cl   =      config -l
   co   =      checkout
-  d    =      diff
-  dc   =      diff --cached
+  d    =      diff --no-prefix
+  dc   =      diff --no-prefix --cached
   dd   = !GIT_PAGER=less git d
-  di   =      diff HEAD
-  dp   =      diff HEAD^
+  di   =      diff --no-prefix HEAD
+  dp   =      diff --no-prefix HEAD^
   e    =      reset HEAD
   ee   =      reset --soft HEAD^
   f    =      fetch
@@ -75,8 +75,10 @@
   st   =      stash
   sta  =      stash apply
   stl  =      stash list
+  stp  =      stash save --patch
   sts  =      stash save
   stt  =      stash pop
+  stw  =      stash show --patch
   u    =      pull
   ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
