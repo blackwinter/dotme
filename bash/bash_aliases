@@ -13,6 +13,7 @@ alias ruby="ruby -wKu"
 alias ruby-dev="ruby -W1 -Ilib -rubygems"
 alias ruby19-dev="ruby19 -W1 -Ilib"
 
+alias help="help -m"
 alias diff="diff -C 0"
 alias whois="whois -H -T dn"
 alias ipsort="sort -n -t. -k 1,1 -k 2,2 -k 3,3 -k 4,4"
