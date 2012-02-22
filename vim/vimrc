@@ -57,7 +57,7 @@ set softtabstop=2
 set tabstop=2
 
 set title
-set titlelen=0
+set titlelen=40
 set titlestring=%F%(\ %m%)%(\ %r%)%(\ %y%)%(\ [%{&fileencoding}]%)%(\ %a%)
 
 set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
@@ -129,7 +129,7 @@ func! ToggleOmniCompl()
 endfunc
 
 " Those are Ruby files, too
-au BufRead,BufNewFile Rakefile,*.rake,Capfile,*.cap,*.ru set filetype=ruby
+au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru,*.rpdf,*.prawn,*.zippy set filetype=ruby
 
 " Ruby allows punctuation in keywords
 au FileType ruby set iskeyword+=33,63
@@ -167,6 +167,9 @@ nnoremap ` '
 
 nmap <F5> zi
 nmap <S-F5> zM
+
+noremap  <F12> <ESC>:redraw!<CR>
+inoremap <F12> <ESC>:redraw!<CR>a
 
 """ LOAD CUSTOM FILE
 if filereadable($HOME . "/.vimrc.mine")
