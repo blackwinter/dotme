@@ -71,7 +71,32 @@ fi
 
 case "$TERM" in
   xterm-color|xterm|screen)
-    export PS1="\[\033[7;${MY_COLOR/30/37}m\]\t\[\033[0m\] \u@\h\${WINDOW:+#\$WINDOW}:\w\$(__scm_info)${prompt_indicator} "
+    function __prompt_ps1() {
+      local rc=$?
+
+      # time
+      echo -ne "$5\033[7;${MY_COLOR/30/37}m$6${1:-$(date +%H:%M:%S)}$5\033[0m$6"
+
+      # user & host
+      echo -ne " ${2:-$USER}@${3:-$HOSTNAME}"
+
+      # screen window
+      [ -n "$WINDOW" ] && echo -ne "#$WINDOW"
+
+      # path
+      echo -ne ":${4:-$PWD}"
+
+      # SCM info
+      __scm_info
+
+      # exit status
+      [ $rc -ne 0 ] && echo -ne " ($5\033[31m$6$rc$5\033[0m$6)"
+
+      # finish
+      echo -ne "${prompt_indicator} "
+    }
+
+    export PS1="\$(__prompt_ps1 \t \u \h \w \[ \])"
     ;;
   *)
     export PS1="\u@\h:\w${prompt_indicator} "
