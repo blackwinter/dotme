@@ -1,31 +1,83 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-  <title>dotme Application documentation (v0.1.0)</title>
+<title>dotme Application documentation (v0.1.1)</title>
 
-  <link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
 
-</head>
-<body class="indexpage">
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
 
+
+<body>
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
   
-  <h1>dotme Application documentation (v0.1.0)</h1>
-
+    <li class="file"><a href="./COPYING.html">COPYING</a>
   
-  <div id="main">
-    
+    <li class="file"><a href="./README.html">README</a>
+  
+  </ul>
+</nav>
 
-<h2>DESCRIPTION</h2>
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./DotMe.html">DotMe</a>
+  
+    <li><a href="./DotMe/Status.html">DotMe::Status</a>
+  
+    <li><a href="./Symbol.html">Symbol</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<h1 id="label-dotme+-+The+dotfile+manager">dotme - The dotfile manager</h1>
+
+<h2 id="label-DESCRIPTION">DESCRIPTION</h2>
 
 <p><a href="DotMe.html">DotMe</a> keeps configuration files (a.k.a. dotfiles)
 under version control (git) and installs symbolic links under your home
@@ -33,10 +85,10 @@ directory. It’s controlled via rake commands (see USAGE for more
 information).</p>
 
 <p>Where possible, custom configuration files
-(<tt>&lt;some-name&gt;.mine</tt>) are supported and included by whatever
-mechanism is provided by the respective configuration system.</p>
+(<code>&lt;some-name&gt;.mine</code>) are supported and included by
+whatever mechanism is provided by the respective configuration system.</p>
 
-<h2>USAGE</h2>
+<h2 id="label-USAGE">USAGE</h2>
 
 <p>Change to the directory you installed dotme in (see INSTALL below), e.g.:</p>
 
@@ -58,7 +110,7 @@ mechanism is provided by the respective configuration system.</p>
 
 <pre>rake -T</pre>
 
-<h2>INSTALL</h2>
+<h2 id="label-INSTALL">INSTALL</h2>
 
 <p>First, you need <a href="http://git.or.cz/">git</a> for dotme to function.
 Install it, if you haven’t already, and come back here.</p>
@@ -92,58 +144,58 @@ vi inclexcl
 
 <pre>rake install</pre>
 
-<h2>ISSUES</h2>
+<h2 id="label-ISSUES">ISSUES</h2>
 <ul><li>
-<p><tt>git-config</tt> replaces <tt>~/.gitconfig</tt> symlink with real file
-(<a
+<p><code>git-config</code> replaces <code>~/.gitconfig</code> symlink with
+real file (<a
 href="http://kerneltrap.org/mailarchive/git/2007/7/15/251676">thread</a>).
-So, if you update your git configuration through <tt>git-config
---global</tt>, the config file will no longer be tracked by dotme. Instead,
-edit it directly.</p>
+So, if you update your git configuration through <code>git-config
+--global</code>, the config file will no longer be tracked by dotme.
+Instead, edit it directly.</p>
 
 <p>UPDATE: Seems to no longer be valid. Not sure since which Git version,
 though (at least v1.7.4).</p>
 </li><li>
-<p><tt>git-config</tt> doesn’t expand variables in <tt>~/.gitconfig</tt>
-file. See e.g. <a
+<p><code>git-config</code> doesn’t expand variables in
+<code>~/.gitconfig</code> file. See e.g. <a
 href="http://kerneltrap.org/mailarchive/git/2008/8/22/3047784">this
-thread</a>. This means you have to update the <tt>name</tt>,
-<tt>email</tt>, and <tt>excludesfile</tt> settings in the configuration
-file. In particular, without the latter being adjusted you won’t benefit
-from the shipped <tt>~/.gitignore</tt> file.</p>
+thread</a>. This means you have to update the <code>name</code>,
+<code>email</code>, and <code>excludesfile</code> settings in the
+configuration file. In particular, without the latter being adjusted you
+won’t benefit from the shipped <code>~/.gitignore</code> file.</p>
 
 <p>UPDATE: Since Git <a
 href="http://www.kernel.org/pub/software/scm/git/docs/RelNotes/1.6.5.5.txt">v1.6.5.5</a>,
 it expands a few variables that name paths in configuration files when they
-start with <tt>~/</tt> or <tt>~username/</tt>.</p>
+start with <code>~/</code> or <code>~username/</code>.</p>
 </li></ul>
 
-<h2>CALL TO ACTION</h2>
+<h2 id="label-CALL+TO+ACTION">CALL TO ACTION</h2>
 
 <p>If you want to contribute modifications to existing dotfiles or add some of
 your own, just send me a patch or a pull request. The same goes for any
 bugs or issues you find.</p>
 
-<h2>LINKS</h2>
+<h2 id="label-LINKS">LINKS</h2>
 
 <p></p>
-<table class="rdoc-list"><tr><td class="rdoc-term"><p>Documentation</p></td>
-<td>
+<dl class="rdoc-list note-list"><dt>Documentation
+<dd>
 <p><a
 href="http://blackwinter.github.com/dotme">blackwinter.github.com/dotme</a></p>
-</td></tr><tr><td class="rdoc-term"><p>Source code</p></td>
-<td>
+</dd><dt>Source code
+<dd>
 <p><a
 href="http://github.com/blackwinter/dotme">github.com/blackwinter/dotme</a></p>
-</td></tr></table>
+</dd></dl>
 
-<h2>AUTHORS</h2>
+<h2 id="label-AUTHORS">AUTHORS</h2>
 <ul><li>
 <p>Jens Wille &lt;<a
 href="mailto:jens.wille@uni-koeln.de">jens.wille@uni-koeln.de</a>&gt;</p>
 </li></ul>
 
-<h2>LICENSE AND COPYRIGHT</h2>
+<h2 id="label-LICENSE+AND+COPYRIGHT">LICENSE AND COPYRIGHT</h2>
 
 <p>Copyright (C) 2008-2011 Jens Wille</p>
 
@@ -161,85 +213,12 @@ more details.</p>
 along with dotme. If not, see &lt;<a
 href="http://www.gnu.org/licenses/">www.gnu.org/licenses/</a>&gt;.</p>
 
-  </div>
-  
+</div>
 
-  
-  
-  <h2>Files</h2>
-  <ul>
-    
-      <li class="file"><a href="COPYING.html">COPYING</a></li>
-    
-      <li class="file"><a href="README.html">README</a></li>
-    
-  </ul>
-  
 
-  <h2 id="classes">Classes/Modules</h2>
-  <ul>
-    
-    <li class="module"><a href="DotMe.html">DotMe</a></li>
-    
-    <li class="class"><a href="DotMe/Status.html">DotMe::Status</a></li>
-    
-    <li class="class"><a href="Symbol.html">Symbol</a></li>
-    
-  </ul>
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
 
-  <h2 id="methods">Methods</h2>
-  <ul>
-    
-      <li><a href="DotMe/Status.html#method-c-5B-5D">::[] &mdash; DotMe::Status</a></li>
-    
-      <li><a href="DotMe/Status.html#method-c-new">::new &mdash; DotMe::Status</a></li>
-    
-      <li><a href="Symbol.html#method-i-3D-3D-3D">#=== &mdash; Symbol</a></li>
-    
-      <li><a href="DotMe/Status.html#method-i-3D-3D-3D">#=== &mdash; DotMe::Status</a></li>
-    
-      <li><a href="Symbol.html#method-i-_dotme_original_threequal">#_dotme_original_threequal &mdash; Symbol</a></li>
-    
-      <li><a href="DotMe.html#method-i-agree">#agree &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-agreed-3F">#agreed? &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-dotfiles">#dotfiles &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-dryrun">#dryrun &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-git">#git &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-glob2re">#glob2re &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-inclexcl">#inclexcl &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-install">#install &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-pristine">#pristine &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-reset">#reset &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-status">#status &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-status_for">#status_for &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-symlinks">#symlinks &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe/Status.html#method-i-to_s">#to_s &mdash; DotMe::Status</a></li>
-    
-      <li><a href="DotMe.html#method-i-uninstall">#uninstall &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-update">#update &mdash; DotMe</a></li>
-    
-      <li><a href="DotMe.html#method-i-with_clean_working_directory">#with_clean_working_directory &mdash; DotMe</a></li>
-    
-  </ul>
-
-  <div id="validator-badges">
-    <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-    <p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
-      Rdoc Generator</a> 2</small>.</p>
-  </div>
-</body>
-</html>
