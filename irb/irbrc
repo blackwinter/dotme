@@ -2,6 +2,8 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
+$stdout.set_encoding('locale') if defined?(Encoding)
+
 # See http://github.com/blackwinter/brice for more info
 begin
   require 'rubygems'
