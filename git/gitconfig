@@ -41,6 +41,7 @@
   ci   =      commit -v --interactive
   cl   =      config -l
   co   =      checkout
+  cp   =      cherry-pick -x
   d    =      diff --no-prefix
   dc   =      diff --no-prefix --cached
   dd   = !GIT_PAGER=less git d
@@ -70,6 +71,7 @@
   pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
   pt   = !git oo | xargs -I '{}' git push --tags '{}'
   r    =      reset
+  ri   = "!sh -c 'git rebase -i $1^' -"
   s    =      status
   ss   =      status --short
   st   =      stash
