@@ -96,7 +96,7 @@ case "$TERM" in
       echo -ne "${prompt_indicator} "
     }
 
-    export PS1="\$(__prompt_ps1 \t \u \h \w \[ \])"
+    export PS1="\$(__prompt_ps1 '\t' '\u' '\h' '\w' \[ \])"
     ;;
   *)
     export PS1="\u@\h:\w${prompt_indicator} "
