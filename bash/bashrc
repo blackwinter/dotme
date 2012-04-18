@@ -126,7 +126,8 @@ export PATH
 export CDPATH="$CDPATH:$HOME"
 
 # SCM stuff
-[ -f ~/.bash_scm_info ] && . ~/.bash_scm_info || function __scm_info() { :; }
+function __no_scm_info() { function __scm_info() { :; }; }
+[ -f ~/.bash_scm_info ] && . ~/.bash_scm_info || __no_scm_info
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bashrc.mine ] && . ~/.bashrc.mine
