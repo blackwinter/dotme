@@ -68,10 +68,10 @@ alias  .sl="svn log -r 1:HEAD"
 alias  .so="svn checkout"
 alias  .ss="svn status --show-updates"
 alias  .su="svn update"
-alias  .sV="svn status | awk '/^\?/  {print \$2}'"           # unVersioned files
-alias  .sC="svn status | awk '/^[AM]/{print \$2}'"           # Changed files
-alias  .sF="svn status | awk '/^C/   {print \$2}'"           # conFlicted files
-alias  .sI="svn status --no-ignore | awk '/^I/{print \$2}'"  # Ignored files
+alias  .sV="svn status | \grep '^\?'   | cut -c9-"           # unVersioned
+alias  .sC="svn status | \grep '^[AM]' | cut -c9-"           # Changed
+alias  .sF="svn status | \grep '^C'    | cut -c9-"           # conFlicted
+alias  .sI="svn status --no-ignore | \grep '^I' | cut -c9-"  # Ignored
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine
