@@ -2,9 +2,9 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-alias al="alias | $(which grep) -F --color"
+alias al="alias | \grep -F --color"
 
-alias xgrep="$(which grep) --color -rs --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
+alias xgrep="\grep --color -Rs --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 alias egrep="xgrep -E"
@@ -14,7 +14,7 @@ alias ruby-dev="ruby -W1 -Ilib -rubygems"
 alias ruby19-dev="ruby19 -W1 -Ilib"
 
 alias help="help -m"
-alias diff="diff -C 0"
+alias diff="diff -u"
 alias whois="whois -H -T dn"
 alias ipsort="sort -n -t. -k 1,1 -k 2,2 -k 3,3 -k 4,4"
 alias xmltidy="tidy -xml -i -w 0"
