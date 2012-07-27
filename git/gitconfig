@@ -2,13 +2,6 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-[user]
-	name  = <Your Name>
-	email = <Your Email>
-
-[core]
-  excludesfile = ~/.gitignore
-
 [color]
   ui        = true
 [color "branch"]
@@ -92,3 +85,9 @@
   xa   =      commit -v --amend -a
   z    =      checkout-index -u -f --
   zz   =      checkout -f --
+
+[core]
+  excludesfile = ~/.gitignore
+
+[include]
+  path = ~/.gitconfig.mine
