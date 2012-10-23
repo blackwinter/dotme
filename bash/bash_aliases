@@ -41,6 +41,7 @@ alias .uu="sudo aptitude update && sudo aptitude safe-upgrade --full-resolver"
 alias .uf="sudo aptitude update && sudo aptitude full-upgrade"
 alias .ar="sudo aptitude remove"
 alias .ap="sudo aptitude purge"
+alias .ac="sudo apt-get clean"
 alias .af="apt-file search"
 alias .al="apt-file list"
 
