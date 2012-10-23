@@ -59,7 +59,7 @@
   m    =      merge
   msg  =      commit --allow-empty -m
   o    =      remote -v
-  oo   = !git o | grep @ | cut -f1 | sort -u
+  oo   = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
   p    =      push
   pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
   pt   = !git oo | xargs -I '{}' git push --tags '{}'
