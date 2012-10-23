@@ -69,6 +69,7 @@
   ss   =      status --short
   st   =      stash
   sta  =      stash apply
+  std  =      stash drop
   stl  =      stash list
   stp  =      stash save --patch
   sts  =      stash save
@@ -81,6 +82,7 @@
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
   v    =      revert
   w    =      show --pretty=fuller --no-prefix
+  ww   = !GIT_PAGER=less git w
   x    =      commit -v --amend
   xa   =      commit -v --amend -a
   z    =      checkout-index -u -f --
