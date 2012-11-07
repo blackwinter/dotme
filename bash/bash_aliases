@@ -4,7 +4,9 @@
 
 alias al="alias | \grep -F --color"
 
-alias xgrep="\grep --color -Rs --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
+GREP_OPTIONS="-R"
+
+alias xgrep="\grep --color -s --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 alias egrep="xgrep -E"
