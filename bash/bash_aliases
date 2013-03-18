@@ -11,7 +11,7 @@ alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 alias egrep="xgrep -E"
 
-alias ruby="ruby -wKu"
+alias ruby="ruby -w"
 alias ruby-dev="ruby -W1 -Ilib -rubygems"
 alias ruby19-dev="ruby19 -W1 -Ilib"
 
