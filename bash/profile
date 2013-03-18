@@ -21,4 +21,4 @@ export PATH
 umask 022
 
 ### LOAD CUSTOM FILE
-[ -f ~/.profile.mine ] && . ~/.profile.mine
+[ -f "$HOME/.profile.mine" ] && . "$HOME/.profile.mine" || true

@@ -58,7 +58,7 @@ MY_COLOR=35  # default
 
 # Customized user setting
 # E.g.: MY_COLOR=3$(date +%u) ;-)
-[ -f ~/.my_color ] && . ~/.my_color
+[ -f "$HOME/.my_color" ] && . "$HOME/.my_color"
 
 export MY_COLOR
 
@@ -117,7 +117,7 @@ esac
 
 # Alias definitions.
 [ -f /etc/bash_aliases ] && . /etc/bash_aliases
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
+[ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
 
 # Color for grep
 export GREP_COLOR=${MY_COLOR/38/39}
@@ -127,7 +127,7 @@ export CDPATH="$CDPATH:$HOME"
 
 # SCM stuff
 function __no_scm_info() { function __scm_info() { :; }; }
-[ -f ~/.bash_scm_info ] && . ~/.bash_scm_info || __no_scm_info
+[ -f "$HOME/.bash_scm_info" ] && . "$HOME/.bash_scm_info" || __no_scm_info
 
 ### LOAD CUSTOM FILE
-[ -f ~/.bashrc.mine ] && . ~/.bashrc.mine
+[ -f "$HOME/.bashrc.mine" ] && . "$HOME/.bashrc.mine" || true
