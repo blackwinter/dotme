@@ -70,7 +70,7 @@ function __git_branch2() {
 }
 
 function __git_name() {
-  git name-rev --name-only HEAD 2> /dev/null
+  git describe HEAD 2> /dev/null
 }
 
 function __git_stale() {
