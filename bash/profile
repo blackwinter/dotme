@@ -5,6 +5,8 @@
 # User .profile file for the Bourne shell (sh(1)) and
 # Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
 
+[ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+
 if [ "`id -u`" -eq 0 ]; then
   PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11"
   mesg n
@@ -12,7 +14,7 @@ else
   PATH="/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games"
 fi
 
-[ -d ~/bin ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 export PATH
 
