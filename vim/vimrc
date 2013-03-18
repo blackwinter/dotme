@@ -62,6 +62,14 @@ set titlestring=%F%(\ %m%)%(\ %r%)%(\ %y%)%(\ [%{&fileencoding}]%)%(\ %a%)
 
 set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
 
+set cryptmethod=blowfish
+
+set directory=~/.vim/tmp,.,/tmp
+set backupdir=~/.vim/tmp,.,/tmp
+set undodir=~/.vim/tmp,.,/tmp
+
+set undofile
+
 " Highlight trailing whitespace
 highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
 match RedundantSpaces /\s\+$\| \+\ze\t/
