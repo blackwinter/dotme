@@ -7,7 +7,7 @@ $stdout.set_encoding('locale') if defined?(Encoding)
 # See http://github.com/blackwinter/brice for more info
 begin
   require 'rubygems'
-  require 'brice/init'
+  require 'brice/loud'
 rescue LoadError => err
   warn "Error loading brice: #{err} (#{err.class})"
 end
