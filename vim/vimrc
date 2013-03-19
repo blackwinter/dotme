@@ -9,7 +9,7 @@ set nocompatible
 "set verbose=2
 
 " Add some directories to search for runtime files
-set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,$VIMRUNTIME,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
+set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim-scripts,$VIMRUNTIME,/usr/share/vim-scripts/after,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
 
 " Enable syntax highlighting
 syntax on
