@@ -3,10 +3,10 @@
 #                                                                             #
 # dotme - The dotfile manager                                                 #
 #                                                                             #
-# Copyright (C) 2008-2011 Jens Wille                                          #
+# Copyright (C) 2008-2013 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
-#     Jens Wille <jens.wille@uni-koeln.de>                                    #
+#     Jens Wille <jens.wille@gmail.com>                                       #
 #                                                                             #
 # dotme is free software; you can redistribute it and/or modify it under the  #
 # terms of the GNU Affero General Public License as published by the Free     #
