@@ -43,6 +43,8 @@
 </nav>
 
 
+  
+
   <div id="file-metadata">
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
@@ -58,43 +60,44 @@
     
     
     
+    
     <!-- Method Quickref -->
 <nav id="method-list-section" class="section">
   <h3 class="section-header">Methods</h3>
 
   <ul class="link-list">
     
-    <li><a href="#method-i-agree">#agree</a>
+    <li ><a href="#method-i-agree">#agree</a>
     
-    <li><a href="#method-i-agreed-3F">#agreed?</a>
+    <li ><a href="#method-i-agreed-3F">#agreed?</a>
     
-    <li><a href="#method-i-dotfiles">#dotfiles</a>
+    <li ><a href="#method-i-dotfiles">#dotfiles</a>
     
-    <li><a href="#method-i-dryrun">#dryrun</a>
+    <li ><a href="#method-i-dryrun">#dryrun</a>
     
-    <li><a href="#method-i-git">#git</a>
+    <li ><a href="#method-i-git">#git</a>
     
-    <li><a href="#method-i-glob2re">#glob2re</a>
+    <li ><a href="#method-i-glob2re">#glob2re</a>
     
-    <li><a href="#method-i-inclexcl">#inclexcl</a>
+    <li ><a href="#method-i-inclexcl">#inclexcl</a>
     
-    <li><a href="#method-i-install">#install</a>
+    <li ><a href="#method-i-install">#install</a>
     
-    <li><a href="#method-i-pristine">#pristine</a>
+    <li ><a href="#method-i-pristine">#pristine</a>
     
-    <li><a href="#method-i-reset">#reset</a>
+    <li ><a href="#method-i-reset">#reset</a>
     
-    <li><a href="#method-i-status">#status</a>
+    <li ><a href="#method-i-status">#status</a>
     
-    <li><a href="#method-i-status_for">#status_for</a>
+    <li ><a href="#method-i-status_for">#status_for</a>
     
-    <li><a href="#method-i-symlinks">#symlinks</a>
+    <li ><a href="#method-i-symlinks">#symlinks</a>
     
-    <li><a href="#method-i-uninstall">#uninstall</a>
+    <li ><a href="#method-i-uninstall">#uninstall</a>
     
-    <li><a href="#method-i-update">#update</a>
+    <li ><a href="#method-i-update">#update</a>
     
-    <li><a href="#method-i-with_clean_working_directory">#with_clean_working_directory</a>
+    <li ><a href="#method-i-with_clean_working_directory">#with_clean_working_directory</a>
     
   </ul>
 </nav>
@@ -122,6 +125,8 @@
     <li><a href="./DotMe.html">DotMe</a>
   
     <li><a href="./DotMe/Status.html">DotMe::Status</a>
+  
+    <li><a href="./RDoc.html">RDoc</a>
   
     <li><a href="./Symbol.html">Symbol</a>
   
@@ -196,11 +201,14 @@
         <div class="method-heading">
           <span class="method-name">dotfiles</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -235,13 +243,16 @@
         <div class="method-heading">
           <span class="method-name">install</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
           
           <p>}}}</p>
+          
           
 
           
@@ -276,11 +287,14 @@
         <div class="method-heading">
           <span class="method-name">pristine</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -289,7 +303,7 @@
           <div class="method-source-code" id="pristine-source">
             <pre><span class="ruby-comment"># File Rakefile.rb, line 196</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">pristine</span>
-  <span class="ruby-identifier">abort</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-string">'This will undo all your local modifications AND remove all untracked files.'</span>)
+  <span class="ruby-identifier">abort</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-string">&#39;This will undo all your local modifications AND remove all untracked files.&#39;</span>)
   <span class="ruby-identifier">reset</span>(<span class="ruby-keyword">false</span>)
 
   <span class="ruby-identifier">git</span>(<span class="ruby-value">:untracked</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
@@ -314,11 +328,14 @@
         <div class="method-heading">
           <span class="method-name">reset</span><span
             class="method-args">(ask = true)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -327,7 +344,7 @@
           <div class="method-source-code" id="reset-source">
             <pre><span class="ruby-comment"># File Rakefile.rb, line 191</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>(<span class="ruby-identifier">ask</span> = <span class="ruby-keyword">true</span>)
-  <span class="ruby-identifier">abort</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-string">'This will undo all your local modifications (untracked files are kept).'</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">ask</span>
+  <span class="ruby-identifier">abort</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-string">&#39;This will undo all your local modifications (untracked files are kept).&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">ask</span>
   <span class="ruby-identifier">git</span>(<span class="ruby-value">:reset</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- reset-source -->
@@ -345,11 +362,14 @@
         <div class="method-heading">
           <span class="method-name">status</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -367,7 +387,7 @@
 
     <span class="ruby-keyword">case</span> <span class="ruby-identifier">status</span>
       <span class="ruby-keyword">when</span> <span class="ruby-value">:MISMATCH</span>
-        <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">':'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\n  expected: #{target}&quot;</span> <span class="ruby-operator">&lt;&lt;</span>
+        <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;:&#39;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;\n  expected: #{target}&quot;</span> <span class="ruby-operator">&lt;&lt;</span>
                       <span class="ruby-node">&quot;\n  got:      #{actual}&quot;</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">msg</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot; -&gt; #{target}&quot;</span>
@@ -391,11 +411,14 @@
         <div class="method-heading">
           <span class="method-name">symlinks</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -431,11 +454,14 @@
         <div class="method-heading">
           <span class="method-name">uninstall</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -450,11 +476,11 @@
 
       <span class="ruby-keyword">case</span> <span class="ruby-identifier">status</span>
         <span class="ruby-keyword">when</span> <span class="ruby-value">:UNTRACKED</span>
-          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing '#{symlink}' - NOT A SYMLINK&quot;</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing &#39;#{symlink}&#39; - NOT A SYMLINK&quot;</span>
         <span class="ruby-keyword">when</span> <span class="ruby-value">:NOT_FOUND</span>
-          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing '#{symlink}' - NOT FOUND&quot;</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing &#39;#{symlink}&#39; - NOT FOUND&quot;</span>
         <span class="ruby-keyword">when</span> <span class="ruby-value">:MISMATCH</span>
-          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing symlink '#{symlink}' - targets don't match:&quot;</span>
+          <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR=#{status}] Not removing symlink &#39;#{symlink}&#39; - targets don&#39;t match:&quot;</span>
           <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;  expected: #{target}&quot;</span>
           <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;  got:      #{actual}&quot;</span>
         <span class="ruby-keyword">when</span> <span class="ruby-value">:TRACKED</span>
@@ -485,11 +511,14 @@
         <div class="method-heading">
           <span class="method-name">update</span><span
             class="method-args">()</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -525,11 +554,14 @@
         <div class="method-heading">
           <span class="method-name">agree</span><span
             class="method-args">(msg)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -541,16 +573,16 @@
   <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;#{msg} (yes/no) &quot;</span>
 
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">$stdin</span>.<span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">0</span>].<span class="ruby-identifier">downcase</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-string">'y'</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;y&#39;</span>
       <span class="ruby-keyword">true</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-string">'n'</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;n&#39;</span>
       <span class="ruby-keyword">false</span>
     <span class="ruby-keyword">else</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-string">'Please enter &quot;[y]es&quot; or &quot;[n]o&quot;.'</span>
+      <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;Please enter &quot;[y]es&quot; or &quot;[n]o&quot;.&#39;</span>
       <span class="ruby-identifier">agree</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Interrupt</span>
-  <span class="ruby-identifier">abort</span> <span class="ruby-string">''</span>
+  <span class="ruby-identifier">abort</span> <span class="ruby-string">&#39;&#39;</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- agree-source -->
           
@@ -567,11 +599,14 @@
         <div class="method-heading">
           <span class="method-name">agreed?</span><span
             class="method-args">(msg)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -581,7 +616,7 @@
             <pre><span class="ruby-comment"># File Rakefile.rb, line 371</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">agreed?</span>(<span class="ruby-identifier">msg</span>)
   <span class="ruby-identifier">puts</span> <span class="ruby-identifier">msg</span>
-  <span class="ruby-identifier">agree</span>(<span class="ruby-string">'Are you sure you want that?'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">agree</span>(<span class="ruby-string">'Are you REALLY sure?'</span>)
+  <span class="ruby-identifier">agree</span>(<span class="ruby-string">&#39;Are you sure you want that?&#39;</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">agree</span>(<span class="ruby-string">&#39;Are you REALLY sure?&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- agreed-3F-source -->
           
@@ -598,7 +633,9 @@
         <div class="method-heading">
           <span class="method-name">dryrun</span><span
             class="method-args">(what, *args) { || ... }</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -606,15 +643,16 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="dryrun-source">
             <pre><span class="ruby-comment"># File Rakefile.rb, line 376</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">dryrun</span>(<span class="ruby-identifier">what</span>, *<span class="ruby-identifier">args</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">'DRYRUN'</span>]
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">dryrun</span>(<span class="ruby-identifier">what</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;DRYRUN&#39;</span>]
     <span class="ruby-identifier">_return</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value">:_return</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
 
-    <span class="ruby-identifier">warn</span> [<span class="ruby-string">'[DRYRUN]'</span>, <span class="ruby-identifier">what</span>, *<span class="ruby-identifier">args</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">' '</span>)
+    <span class="ruby-identifier">warn</span> [<span class="ruby-string">&#39;[DRYRUN]&#39;</span>, <span class="ruby-identifier">what</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>].<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39; &#39;</span>)
 
     <span class="ruby-identifier">_return</span>
   <span class="ruby-keyword">else</span>
@@ -636,7 +674,9 @@
         <div class="method-heading">
           <span class="method-name">git</span><span
             class="method-args">(cmd, *args)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -644,47 +684,48 @@
           
           
           
+          
 
           
           <div class="method-source-code" id="git-source">
             <pre><span class="ruby-comment"># File Rakefile.rb, line 265</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">git</span>(<span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span>)
-  <span class="ruby-identifier">abort</span> <span class="ruby-string">&quot;Please install `git'.&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">GIT_FOUND</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git</span>(<span class="ruby-identifier">cmd</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+  <span class="ruby-identifier">abort</span> <span class="ruby-string">&quot;Please install `git&#39;.&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">GIT_FOUND</span>
 
   <span class="ruby-comment"># aliases</span>
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">cmd</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:update</span>
-      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'pull'</span>
-      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'origin'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'master'</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">&#39;pull&#39;</span>
+      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;origin&#39;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;master&#39;</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:reset</span>
-      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'checkout'</span>
-      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-f'</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">&#39;checkout&#39;</span>
+      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;-f&#39;</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:stash</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">'1.5.3'</span>
-        <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'stash'</span>
-        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'save'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">&#39;1.5.3&#39;</span>
+        <span class="ruby-identifier">cmd</span> = <span class="ruby-string">&#39;stash&#39;</span>
+        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;save&#39;</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-keyword">return</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:unstash</span>
-      <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">'1.5.5'</span>
-        <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'stash'</span>
-        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'pop'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">&#39;1.5.5&#39;</span>
+        <span class="ruby-identifier">cmd</span> = <span class="ruby-string">&#39;stash&#39;</span>
+        <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;pop&#39;</span>
       <span class="ruby-keyword">else</span>
-        <span class="ruby-identifier">git</span>(<span class="ruby-string">'stash'</span>, <span class="ruby-string">'apply'</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">'1.5.3'</span>
+        <span class="ruby-identifier">git</span>(<span class="ruby-string">&#39;stash&#39;</span>, <span class="ruby-string">&#39;apply&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">GIT_VERSION</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-string">&#39;1.5.3&#39;</span>
         <span class="ruby-keyword">return</span>
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:tracked</span>
-      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'ls-files'</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">&#39;ls-files&#39;</span>
       <span class="ruby-identifier">_return</span> = <span class="ruby-node">%w[foo/x foo/y bar/y bar/z/a bar/z/b]</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
     <span class="ruby-keyword">when</span> <span class="ruby-value">:untracked</span>
-      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">'ls-files'</span>
-      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'-o'</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">'--directory'</span>
+      <span class="ruby-identifier">cmd</span> = <span class="ruby-string">&#39;ls-files&#39;</span>
+      <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;-o&#39;</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;--directory&#39;</span>
       <span class="ruby-identifier">_return</span> = <span class="ruby-node">%w[foo/x.mine bar/y.mine blah]</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;\n&quot;</span>)
   <span class="ruby-keyword">end</span>
 
-  <span class="ruby-identifier">dryrun</span>(<span class="ruby-value">:git</span>, <span class="ruby-identifier">cmd</span>, *<span class="ruby-identifier">args</span> <span class="ruby-operator">+</span> [<span class="ruby-value">:_return</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">_return</span>]) {
-    <span class="ruby-node">%x{git #{[cmd, *args].join(' ')}}</span>
+  <span class="ruby-identifier">dryrun</span>(<span class="ruby-value">:git</span>, <span class="ruby-identifier">cmd</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span> <span class="ruby-operator">+</span> [<span class="ruby-value">:_return</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">_return</span>]) {
+    <span class="ruby-node">%x{git #{[cmd, *args].join(&#39; &#39;)}}</span>
   }
 <span class="ruby-keyword">end</span></pre>
           </div><!-- git-source -->
@@ -702,11 +743,14 @@
         <div class="method-heading">
           <span class="method-name">glob2re</span><span
             class="method-args">(pattern)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -719,8 +763,8 @@
     \A
     #{
       pattern.
-        gsub(/\?/, '.').
-        gsub(/\*/, '.*?')
+        gsub(/\?/, &#39;.&#39;).
+        gsub(/\*/, &#39;.*?&#39;)
     }
     (?:/|\z)
   }</span>
@@ -740,11 +784,14 @@
         <div class="method-heading">
           <span class="method-name">inclexcl</span><span
             class="method-args">(files)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -753,20 +800,20 @@
           <div class="method-source-code" id="inclexcl-source">
             <pre><span class="ruby-comment"># File Rakefile.rb, line 305</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inclexcl</span>(<span class="ruby-identifier">files</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-string">'inclexcl'</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">readable?</span>(<span class="ruby-string">&#39;inclexcl&#39;</span>)
     <span class="ruby-identifier">incl</span>, <span class="ruby-identifier">excl</span>, <span class="ruby-identifier">replace</span> = [], [], <span class="ruby-keyword">false</span>
 
-    <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">'inclexcl'</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">%r\A\s*/</span>, <span class="ruby-string">''</span>)
-      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">%r\s*\z/</span>, <span class="ruby-string">''</span>)
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-string">&#39;inclexcl&#39;</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\n&quot;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pattern</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\A\s*/</span>, <span class="ruby-string">&#39;&#39;</span>)
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\s*\z/</span>, <span class="ruby-string">&#39;&#39;</span>)
       <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">empty?</span>
 
-      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-node">%r\A([#+-])/</span>, <span class="ruby-string">''</span>)
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-node">/\A([#+-])/</span>, <span class="ruby-string">&#39;&#39;</span>)
       <span class="ruby-identifier">prefix</span> = <span class="ruby-node">$1</span>  <span class="ruby-comment"># save capture</span>
-      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-string">'#'</span>
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;#&#39;</span>
 
-      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">%r\/\z/</span>, <span class="ruby-string">''</span>)
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">'/'</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+      <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">sub!</span>(<span class="ruby-regexp">/\/\z/</span>, <span class="ruby-string">&#39;&#39;</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">pattern</span>.<span class="ruby-identifier">count</span>(<span class="ruby-string">&#39;/&#39;</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
         <span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;[ERROR] Illegal pattern - #{pattern}&quot;</span>
         <span class="ruby-keyword">next</span>
       <span class="ruby-keyword">end</span>
@@ -775,7 +822,7 @@
         <span class="ruby-identifier">file</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">glob2re</span>(<span class="ruby-identifier">pattern</span>)
       }
 
-      <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-string">'-'</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">prefix</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;-&#39;</span>
         <span class="ruby-identifier">excl</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">matches</span>
       <span class="ruby-keyword">else</span>
         <span class="ruby-identifier">replace</span> = <span class="ruby-keyword">true</span>
@@ -804,13 +851,16 @@
         <div class="method-heading">
           <span class="method-name">status_for</span><span
             class="method-args">(symlink, target)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
           
           <p>{{{ Utility methods</p>
+          
           
 
           
@@ -849,11 +899,14 @@
         <div class="method-heading">
           <span class="method-name">with_clean_working_directory</span><span
             class="method-args">() { || ... }</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
         <div class="method-description">
+          
           
           
           
@@ -886,7 +939,7 @@
 
 <footer id="validator-badges">
   <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.1.
   <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
 </footer>
 
