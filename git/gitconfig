@@ -17,6 +17,8 @@
   added     = yellow
   changed   = green
   untracked = cyan
+[diff]
+  algorithm = patience
 
 [alias]
   a    =      add
