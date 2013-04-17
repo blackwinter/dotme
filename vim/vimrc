@@ -27,7 +27,11 @@ set autoindent
 set autowrite
 set backupdir=~/.vim/tmp,.,/tmp
 set confirm
-set cryptmethod=blowfish
+
+if exists("&cryptmethod")
+  set cryptmethod=blowfish
+endif
+
 set directory=~/.vim/tmp,.,/tmp
 set expandtab
 set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
@@ -50,8 +54,12 @@ set tabstop=2
 set title
 set titlelen=50
 set titlestring=%F\ [%{&fileencoding}%Y%R%M]%(\ %a%)
-set undodir=~/.vim/tmp,.,/tmp
-set undofile
+
+if exists("&undodir")
+  set undodir=~/.vim/tmp,.,/tmp
+  set undofile
+endif
+
 set wildmode=longest,list,full
 
 " Highlight trailing whitespace
