@@ -32,6 +32,7 @@ alias  h="host"
 alias k9="kill -9"
 alias pa="ps awwwux"
 alias pe="ps -ef"
+alias sl="sudo ls --color=auto -ahlF"
 alias  t="tree"
 
 alias  .a="aptitude"
