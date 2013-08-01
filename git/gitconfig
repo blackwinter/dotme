@@ -19,6 +19,8 @@
   untracked = cyan
 [diff]
   algorithm = patience
+[push]
+  default   = current
 
 [alias]
   a    =      add
@@ -71,6 +73,7 @@
   ss   =      status --short
   st   =      stash
   sta  =      stash apply
+  stb  =      stash branch
   std  =      stash drop
   stl  =      stash list
   stp  =      stash save --patch
