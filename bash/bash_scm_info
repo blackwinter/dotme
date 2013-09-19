@@ -3,6 +3,8 @@ function __scm() {
     echo 'svn'
   elif __git; then
     echo 'git'
+  elif __bzr; then
+    echo 'bzr'
   elif __hg; then
     echo 'hg'
   fi
@@ -24,6 +26,8 @@ function __scm_info() {
     fi
 
     info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
+  elif __bzr; then
+    info="bzr:$(__bzr_branch)@$(__bzr_version)"
   elif __hg; then
     info="hg:$(__hg_branch)@$(__hg_version)"
   fi
@@ -50,7 +54,7 @@ function __svn_stale() {
 
 # GIT
 function __git() {
-  [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ]
+  [ -d '.git' ] || [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ]
 }
 
 function __git_head() {
@@ -82,9 +86,23 @@ function __git_stale() {
   }' | tr -d '\n'
 }
 
+# BZR
+
+function __bzr() {
+  [ -d '.bzr' ] || bzr root &> /dev/null
+}
+
+function __bzr_branch() {
+  bzr nick 2> /dev/null
+}
+
+function __bzr_version() {
+  bzr revno 2> /dev/null
+}
+
 # HG
 function __hg() {
-  hg identify &> /dev/null
+  [ -d '.hg' ] || hg identify &> /dev/null
 }
 
 function __hg_branch() {
