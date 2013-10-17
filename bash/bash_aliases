@@ -2,32 +2,31 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-alias al="alias | \grep -F --color"
-
 export GREP_OPTIONS="-R"
 
 alias xgrep="\grep --color -s --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
-alias egrep="xgrep -E"
 
 alias ruby="ruby -w"
-alias ruby-dev="ruby -W1 -Ilib -rubygems"
-alias ruby19-dev="ruby19 -W1 -Ilib"
+alias ruby-dev="ruby -W1 -Ilib"
+alias ruby-svn="./ruby -I. -Ilib -I.ext/x86_64-linux"
+
+alias jirb="jruby -S irb -f"
+alias jgem="jruby -S gem"
+alias jrake="jruby -S rake"
 
 alias help="help -m"
 alias diff="diff -u"
 alias whois="whois -H -T dn"
-alias ipsort="sort -n -t. -k 1,1 -k 2,2 -k 3,3 -k 4,4"
-alias xmltidy="tidy -xml -i -w 0"
-alias cdrecord="cdrecord dev=0,0,0 driveropts=burnproof -v -eject"
 
 alias cl="clear; l"
+alias ct="clear; t"
 alias  d="du -sch"
-alias da="du -sch --apparent-size"
+alias da="d --apparent-size"
 alias ff="firefox"
 alias  g="git"
-alias gs="git svn"
+alias gs="g svn"
 alias  h="host"
 alias k9="kill -9"
 alias pa="ps awwwux"
@@ -49,7 +48,6 @@ alias .af="apt-file search"
 alias .al="apt-file list"
 
 alias  .g="gem"
-alias .ga="sudo gem sources --add"
 alias .gc="sudo gem cleanup"
 alias .gi="sudo gem install"
 alias .gI="sudo gem install --conservative"
@@ -61,22 +59,11 @@ alias .gu="sudo gem update"
 alias .gw="gem list --local --details"
 
 alias   .s="svn"
-alias  .sa="svn add"
-alias  .se="svn mergeinfo --show-revs eligible"
-alias  .si="svn commit"
 alias  .sd="svn diff"
-alias  .sH="svn diff -rHEAD"
-alias  .sP="svn diff -rPREV"
-alias  .sr="svn revert"
-alias  .sR="svn resolved"
 alias  .sl="svn log -r 1:HEAD"
 alias  .so="svn checkout"
 alias  .ss="svn status --show-updates"
 alias  .su="svn update"
-alias  .sV="svn status | \grep '^\?'   | cut -c9-"           # unVersioned
-alias  .sC="svn status | \grep '^[AM]' | cut -c9-"           # Changed
-alias  .sF="svn status | \grep '^C'    | cut -c9-"           # conFlicted
-alias  .sI="svn status --no-ignore | \grep '^I' | cut -c9-"  # Ignored
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine
