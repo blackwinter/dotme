@@ -53,11 +53,15 @@
   la   = !GIT_PAGER=less git log --reverse
   lc   =      whatchanged --reverse -10
   lf   = !GIT_PAGER=less git whatchanged
-  lg   = "!sh -c 'a=\"$1\"; shift; git ly --grep=\"$a\" -E \"$@\"' -"
-  lgv  = "!sh -c 'git lg \"$@\" --pretty=medium' -"
+  lg   = "!sh -c 'a=\"$1\"; shift; git ly -G\"$a\" \"$@\"' -"
+  lgv  = "!sh -c 'git lG \"$@\" --pretty=medium' -"
   ll   =      log --reverse -10
   lol  =      log --pretty=oneline --abbrev-commit --graph --decorate
   lp   = !git lv -10
+  lr   = "!sh -c 'a=\"$1\"; shift; git ly --grep=\"$a\" -E \"$@\"' -"
+  lrv  = "!sh -c 'git lg \"$@\" --pretty=medium' -"
+  ls   = "!sh -c 'a=\"$1\"; shift; git ly -S\"$a\" \"$@\"' -"
+  lsv  = "!sh -c 'git ls \"$@\" --pretty=medium' -"
   lv   = !git la -p
   ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%an %Creset- %s\"
   m    =      merge
@@ -81,6 +85,7 @@
   stt  =      stash pop
   stw  =      stash show --patch --no-prefix
   t    =      tag
+  td   =      describe --contains
   tl   =      tag -n1 -l
   u    =      pull
   ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
