@@ -70,9 +70,14 @@
   oo   = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
   p    =      push
   pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
+  pp   = !git pa && git pt
   pt   = !git oo | xargs -I '{}' git push --tags '{}'
-  r    =      reset
+  ra   =      rebase --abort
+  rb   =      rebase
+  rc   =      rebase --continue
+  re   =      reset
   ri   = "!sh -c 'git rebase -i $1^' -"
+  rs   =      rebase --skip
   s    =      status
   ss   =      status --short
   st   =      stash
