@@ -49,6 +49,7 @@ alias .al="apt-file list"
 
 alias  .g="gem"
 alias .gc="sudo gem cleanup"
+alias .gg="sudo gem update && sudo gem cleanup"
 alias .gi="sudo gem install"
 alias .gI="sudo gem install --conservative"
 alias .gl="gem search --local --details"
