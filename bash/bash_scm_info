@@ -80,10 +80,13 @@ function __git_name() {
 }
 
 function __git_stale() {
-  git status 2> /dev/null | sed -n '/^\(# \)\?Your branch is /{
-    s/.* ahead o.* \([0-9]\+\) .*/+\1/p;
-    s/.* behind .* \([0-9]\+\) .*/-\1/p
-  }' | tr -d '\n'
+  git status 2> /dev/null | sed -n '
+    /^\(# \)\?Your branch is /{
+      s/.* ahead o.* \([0-9]\+\) .*/+\1/p;
+      s/.* behind .* \([0-9]\+\) .*/-\1/p
+    };
+      s/^\(# \)\?Untracked files:/?/p
+  ' | tr -d '\n'
 }
 
 # BZR
