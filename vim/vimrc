@@ -84,7 +84,7 @@ au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru set filetype=ruby
 au FileType ruby set iskeyword+=33,63
 
 " Use Ruby completion
-if has("ruby")
+if has("ruby") && 0
   au FileType ruby,eruby ru autoload/rubycomplete.vim
     \| set omnifunc=rubycomplete#Complete
     \| let g:complType="\<C-X>\<C-O>"
@@ -94,7 +94,7 @@ if has("ruby")
 endif
 
 " Toggle completion mode
-imap <expr> <F9> ToggleFileCompl()
+imap <expr> <F9>  ToggleFileCompl()
 imap <expr> <F10> ToggleOmniCompl()
 
 func! ToggleFileCompl()
