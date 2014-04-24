@@ -10,23 +10,24 @@ alias fgrep="xgrep -F"
 
 alias ruby="ruby -w"
 alias ruby-dev="ruby -W1 -Ilib"
-alias ruby-svn="./ruby -I. -Ilib -I.ext/x86_64-linux"
+alias ruby-svn="./ruby -I. -Ilib -I.ext/common -I.ext/x86_64-linux"
 
 alias jirb="jruby -S irb -f"
 alias jgem="jruby -S gem"
 alias jrake="jruby -S rake"
 
-alias help="help -m"
 alias diff="diff -u"
+alias help="help -m"
+alias make="make -j$(\grep -c ^processor /proc/cpuinfo)"
 alias whois="whois -H -T dn"
 
 alias cl="clear; l"
 alias ct="clear; t"
 alias  d="du -sch"
 alias da="d --apparent-size"
+alias dy="display"
 alias ff="firefox"
 alias  g="git"
-alias gs="g svn"
 alias  h="host"
 alias k9="kill -9"
 alias pa="ps awwwux"
@@ -59,12 +60,22 @@ alias .gs="gem search --remote --details"
 alias .gu="sudo gem update"
 alias .gw="gem list --local --details"
 
-alias   .s="svn"
-alias  .sd="svn diff"
-alias  .sl="svn log -r 1:HEAD"
-alias  .so="svn checkout"
-alias  .ss="svn status --show-updates"
-alias  .su="svn update"
+alias  .s="svn"
+alias .sd="svn diff"
+alias .sl="svn log -r 1:HEAD"
+alias .so="svn checkout"
+alias .ss="svn status --show-updates"
+alias .su="svn update"
+
+function lsdel() {
+  sudo lsof -n | awk "{
+    if ((\$4 == \"DEL\" || \$5 == \"DEL\") && \$NF ~ /lib.*$1/) print \$1, \$2, \$NF
+  }" | sort -u
+}
+
+function pdfcat() {
+  pdftk "$1"/*.pdf cat output "${2:-$1}".pdf
+}
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine
