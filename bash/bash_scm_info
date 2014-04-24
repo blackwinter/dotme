@@ -37,11 +37,11 @@ function __scm_info() {
 
 # SVN
 function __svn() {
-  [ -d '.svn' ] || [[ ! $(svnversion) =~ ^Unversioned ]]
+  [ -d '.svn' ] || [[ ! $(__svn_version) =~ ^Unversioned ]]
 }
 
 function __svn_version() {
-  svnversion
+  svnversion 2> /dev/null
 }
 
 function __svn_repo() {
