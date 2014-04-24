@@ -13,7 +13,7 @@ function __scm() {
 function __scm_info() {
   local info version branch
 
-  [ -f .no_scm_info ] && return
+  [ ! -d "$PWD" -o -f .no_scm_info ] && return
 
   if __svn; then
     info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
