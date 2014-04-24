@@ -69,6 +69,8 @@ else
   prompt_indicator='>'
 fi
 
+export PS1_PLAIN="\u@\h:\w${prompt_indicator} "
+
 case "$TERM" in
   xterm-color|xterm|screen)
     function __prompt_ps1() {
@@ -99,7 +101,7 @@ case "$TERM" in
     export PS1="\$(__prompt_ps1 '\t' '\u' '\h' '\w' \[ \])"
     ;;
   *)
-    export PS1="\u@\h:\w${prompt_indicator} "
+    export PS1="$PS1_PLAIN"
     ;;
 esac
 
