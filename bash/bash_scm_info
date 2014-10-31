@@ -15,9 +15,7 @@ function __scm_info() {
 
   [ ! -d "$PWD" -o -f .no_scm_info ] && return
 
-  if __svn; then
-    info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
-  elif __git; then
+  if [ -z "$BASH_SCM_INFO_DISABLE_GIT" ] && __git; then
     if __git_head; then
       version="$(__git_version)"
       branch="$(__git_branch)"
@@ -26,9 +24,11 @@ function __scm_info() {
     fi
 
     info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
-  elif __bzr; then
+  elif [ -z "$BASH_SCM_INFO_DISABLE_SVN" ] && __svn; then
+    info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
+  elif [ -z "$BASH_SCM_INFO_DISABLE_BZR" ] && __bzr; then
     info="bzr:$(__bzr_branch)@$(__bzr_version)"
-  elif __hg; then
+  elif [ -z "$BASH_SCM_INFO_DISABLE_HG" ] && __hg; then
     info="hg:$(__hg_branch)@$(__hg_version)"
   fi
 
@@ -90,7 +90,6 @@ function __git_stale() {
 }
 
 # BZR
-
 function __bzr() {
   [ -d '.bzr' ] || bzr root &> /dev/null
 }
