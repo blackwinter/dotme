@@ -24,7 +24,7 @@ shopt -s checkwinsize
 # Enable color support of ls
 if [ "$TERM" != 'dumb' ]; then
   if ls --help 2> /dev/null | grep -q -- --color; then
-    [ -x "$(which dircolors 2> /dev/null)" ] && eval "$(dircolors -b)"
+    [ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
     alias ls='ls --color=auto'
   else
     # assume *BSD
@@ -38,7 +38,7 @@ alias la='ls -A'
 alias  l='ls -ahlF'
 
 # Make less more friendly for non-text input files, see lesspipe(1)
-[ -x "$(which lesspipe 2> /dev/null)" ] && eval "$(lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 export LESS='-M -i -R'
 
