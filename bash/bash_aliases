@@ -74,6 +74,13 @@ alias .gs="gem search --remote --details"
 alias .gu="sudo gem update"
 alias .gw="gem list --local --details"
 
+alias  .jg="jruby -S gem"
+alias .jgc="sudo jruby -S gem cleanup"
+alias .jgi="sudo jruby -S gem install"
+alias .jgo="jruby -S gem outdated"
+alias .jgr="sudo jruby -S gem uninstall --no-user-install"
+alias .jgu="sudo jruby -S gem update"
+
 alias  .s="svn"
 alias .sd="svn diff"
 alias .sl="svn log -r 1:HEAD"
