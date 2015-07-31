@@ -39,14 +39,29 @@ alias sl="sudo ls --color=auto -ahlF"
 alias sv="sudo vi"
 alias  t="tree -if"
 
-alias jc="sudo journalctl"
-alias sc="sudo systemctl"
-alias sk="sc kill"
-alias so="sc reload"
-alias sp="sc stop"
-alias sr="sc restart"
-alias ss="sc status"
-alias st="sc start"
+alias  jc="sudo journalctl"
+alias  sc="sudo systemctl"
+alias  sk="_sc kill"
+alias _sk="sc kill"
+alias  so="_sc reload"
+alias _so="sc reload"
+alias  sp="_sc stop"
+alias _sp="sc stop"
+alias  sr="_sc restart"
+alias _sr="sc restart"
+alias  ss="sc status"
+alias  st="_sc start"
+alias _st="sc start"
+
+function _sc() {
+  local c=$1; shift
+  sc $c "$@"
+
+  local r=$?
+  ss "$@"
+
+  return $r
+}
 
 alias .ac="sudo apt-get clean"
 alias .af="apt-file search"
