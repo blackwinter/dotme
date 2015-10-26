@@ -97,7 +97,7 @@
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
   v    =      revert
   w    =      show --pretty=fuller --no-prefix
-  ww   = !GIT_PAGER=less git w
+  ww   = "!sh -c 'while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done' -"
   x    =      commit -v --amend
   xa   =      commit -v --amend -a
   z    =      checkout-index -u -f --
