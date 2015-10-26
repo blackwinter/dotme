@@ -2,9 +2,7 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-export GREP_OPTIONS="-R"
-
-alias xgrep="\grep --color -s --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
+alias xgrep="\grep -R --color -s --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 
@@ -33,6 +31,7 @@ alias ff="firefox"
 alias  g="git"
 alias  h="host"
 alias k9="kill -9"
+alias mi="mv -i"
 alias pa="ps awwwux"
 alias pe="ps -ef"
 alias sl="sudo ls --color=auto -ahlF"
@@ -40,6 +39,8 @@ alias sv="sudo vi"
 alias  t="tree -if"
 
 alias  jc="sudo journalctl"
+alias  jj="jc --since today"
+alias  jk="jc --since yesterday --until today"
 alias  sc="sudo systemctl"
 alias  sk="_sc kill"
 alias _sk="sc kill"
@@ -49,7 +50,7 @@ alias  sp="_sc stop"
 alias _sp="sc stop"
 alias  sr="_sc restart"
 alias _sr="sc restart"
-alias  ss="sc status"
+alias  ss="sc status -l"
 alias  st="_sc start"
 alias _st="sc start"
 
