@@ -2,7 +2,15 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-alias xgrep="\grep -R --color -s --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
+function _grep() {
+  if [ -t 0 ]; then
+    \grep "$@"
+  else
+    \grep "$@" -
+  fi
+}
+
+alias xgrep="_grep --color -Rs --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
 alias fgrep="xgrep -F"
 
@@ -72,6 +80,7 @@ alias .ak="sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com"
 alias .al="apt-file list"
 alias .ap="sudo aptitude purge"
 alias .ar="sudo aptitude remove"
+alias .aR="sudo apt-get autoremove"
 alias .as="aptitude search"
 alias .au="sudo aptitude update"
 alias .aw="aptitude show"
@@ -100,13 +109,11 @@ alias .jgu="sudo jruby -S gem update"
 alias  .s="svn"
 alias .sd="svn diff"
 alias .sl="svn log -r 1:HEAD"
-alias .so="svn checkout"
 alias .ss="svn status --show-updates"
-alias .su="svn update"
 
 function .sg() {
   local v="$(svnversion 2>/dev/null)"
-  .su && [ -n "$v" ] && .s log -r "${v//[^0-9]}:HEAD"
+  svn update && [ -n "$v" ] && svn log -r "${v//[^0-9]}:HEAD"
 }
 
 function lsdel() {
