@@ -69,7 +69,8 @@
   o    =      remote -v
   oo   = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
   p    =      push
-  pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
+  pa   = !git oo | xargs -I '{}' git push --force-with-lease '{}' $(git bc)
+  po   = !git push --force-with-lease origin $(git bc)
   pp   = !git pa && git pt
   pt   = !git oo | xargs -I '{}' git push --tags '{}'
   ra   =      rebase --abort
