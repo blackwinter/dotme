@@ -11,7 +11,8 @@
 [ -z "$PS1" ] && return
 
 export LC_ALL='en_US.UTF-8'
-export TIMEFORMAT='%U + %S # %R'
+export TIME='%U + %S = %e (%P, %M K)'
+export TIMEFORMAT='%U + %S = %R (%P%%)'
 
 # Don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
