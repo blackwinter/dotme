@@ -14,9 +14,9 @@ export LC_ALL='en_US.UTF-8'
 export TIME='%U + %S = %e (%P, %M K)'
 export TIMEFORMAT='%U + %S = %R (%P%%)'
 
-# Don't put duplicate lines in the history. See bash(1) for more options
+export HISTSIZE=100000
 export HISTCONTROL=ignoredups
-export HISTSIZE=50000
+export HISTTIMEFORMAT="%F %T "
 
 # Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
