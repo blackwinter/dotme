@@ -62,6 +62,7 @@
   lrv  = "!sh -c 'git lg \"$@\" --pretty=medium' -"
   ls   = "!sh -c 'a=\"$1\"; shift; git ly -S\"$a\" \"$@\"' -"
   lsv  = "!sh -c 'git ls \"$@\" --pretty=medium' -"
+  lu   =      ls-files -o --exclude-standard
   lv   = !git la -p
   ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%an %Creset- %s\"
   m    =      merge
