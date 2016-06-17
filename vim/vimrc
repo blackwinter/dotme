@@ -2,40 +2,19 @@
 " A component of dotme, the dotfile manager.                                  #
 "##############################################################################
 
-" Use Vim defaults instead of 100% vi compatibility
 set nocompatible
 
-" Useful for debugging
-"set verbose=2
-
-" Add some directories to search for runtime files
 set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim-scripts,$VIMRUNTIME,/usr/share/vim-scripts/after,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
-
-" Enable syntax highlighting
-syntax on
-
-" Using a dark background within the editing area and syntax highlighting
-set background=dark
-
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-  \| exe "normal g'\"" | endif
-
-filetype indent on
-filetype plugin on
 
 set autoindent
 set autowrite
+set background=dark
 set backupdir=~/.vim/tmp,.,/tmp
 set confirm
-
-if exists("&cryptmethod")
-  set cryptmethod=blowfish
-endif
-
+set cryptmethod=blowfish
 set directory=~/.vim/tmp,.,/tmp
 set expandtab
 set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
-set foldmethod=syntax
 set history=1000
 set ignorecase
 set modeline
@@ -46,78 +25,46 @@ set scrolloff=3
 set shiftwidth=2
 set showcmd
 set showmatch
-set sidescroll=1
-set sidescrolloff=3
 set smartcase
 set softtabstop=2
 set tabstop=2
 set title
 set titlelen=50
 set titlestring=%F\ [%{&fileencoding}%Y%R%M]%(\ %a%)
-
-if exists("&undodir")
-  set undodir=~/.vim/tmp,.,/tmp
-  set undofile
-endif
-
+set undodir=~/.vim/tmp,.,/tmp
+set undofile
 set wildmode=longest,list,full
 
-" Highlight trailing whitespace
+syntax on
+
+filetype indent on
+filetype plugin on
+
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+  \| exe "normal g'\"" | endif
+
 highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
 match RedundantSpaces /\s\+$\| \+\ze\t/
 
 au FileType * set comments=""
 au FileType gitcommit set tw<
 
-let loaded_matchparen=1
-
 au FileType html,xhtml,eruby let b:closetag_html_style=1
 au Filetype html,xhtml,eruby,xml,xsl ru macros/closetag.vim
 
-" Load plugins
-ru! macros/matchit.vim macros/ll.vim plugin/supertab.vim
-
-" Those are Ruby files, too
 au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru set filetype=ruby
 
-" Ruby allows punctuation in keywords
 au FileType ruby set iskeyword+=33,63
 
-" Use Ruby completion
-if has("ruby") && 0
-  au FileType ruby,eruby ru autoload/rubycomplete.vim
-    \| set omnifunc=rubycomplete#Complete
-    \| let g:complType="\<C-X>\<C-O>"
-    \| let g:rubycomplete_buffer_loading=1
-    \| let g:rubycomplete_rails=1
-    \| let g:rubycomplete_classes_in_global=1
-endif
+ru! macros/matchit.vim macros/ll.vim plugin/supertab.vim
 
-" Toggle completion mode
-imap <expr> <F9>  ToggleFileCompl()
-imap <expr> <F10> ToggleOmniCompl()
+map <C-up> <C-y>
+map <C-down> <C-e>
+imap <C-up> <C-x><C-y>
+imap <C-down> <C-x><C-e>
 
-func! ToggleFileCompl()
-  if g:complType == "\<C-X>\<C-F>"
-    let g:complType = "\<C-X>\<C-P>"
-    echo "Keyword Local completion"
-  else
-    let g:complType = "\<C-X>\<C-F>"
-    echo "File name completion"
-  endif
-  return ''
-endfunc
-
-func! ToggleOmniCompl()
-  if g:complType == "\<C-X>\<C-O>"
-    let g:complType = "\<C-X>\<C-P>"
-    echo "Keyword Local completion"
-  else
-    let g:complType = "\<C-X>\<C-O>"
-    echo "Omni completion"
-  endif
-  return ''
-endfunc
+noremap  <F12> <ESC>:redraw!<CR>
+inoremap <F12> <ESC>:redraw!<CR>a
 
 " <home> toggles between start of line and start of text
 imap <khome> <home>
@@ -132,29 +79,6 @@ function Home()
       normal 0
     endif
 endfunction
-
-" Scroll faster
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-vnoremap <C-e> 3<C-e>
-vnoremap <C-y> 3<C-y>
-
-map <C-up> <C-y>
-map <C-down> <C-e>
-imap <C-up> <C-x><C-y>
-imap <C-down> <C-x><C-e>
-
-nmap n nzz
-nmap N Nzz
-
-nnoremap ' `
-nnoremap ` '
-
-nmap <F5> zi
-nmap <S-F5> zM
-
-noremap  <F12> <ESC>:redraw!<CR>
-inoremap <F12> <ESC>:redraw!<CR>a
 
 """ LOAD CUSTOM FILE
 if filereadable($HOME . "/.vimrc.mine")
