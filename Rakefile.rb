@@ -196,7 +196,7 @@ module DotMe
     abort unless agreed?('This will undo all your local modifications AND remove all untracked files.')
     reset(false)
 
-    git(:untracked).split("\n").sort.each { |file|
+    git(:untracked).split("\0").sort.each { |file|
       dryrun(:rm_r, file) {
         FileUtils.rm_r(file)
         puts "[REMOVED] #{file}"
@@ -219,7 +219,7 @@ module DotMe
   end
 
   def dotfiles
-    files = inclexcl(git(:tracked).split("\n") - IGNORE)
+    files = inclexcl(git(:tracked).split("\0") - IGNORE)
     custom = []
 
     files.each { |file|
@@ -280,11 +280,12 @@ module DotMe
         args << 'pop'
       when :tracked
         cmd = 'ls-files'
-        _return = %w[foo/x foo/y bar/y bar/z/a bar/z/b].join("\n")
+        args << '-z'
+        _return = %w[foo/x foo/y bar/y bar/z/a bar/z/b].join("\0")
       when :untracked
         cmd = 'ls-files'
-        args << '-o' << '--directory'
-        _return = %w[foo/x.mine bar/y.mine blah].join("\n")
+        args << '-z' << '-o' << '--directory'
+        _return = %w[foo/x.mine bar/y.mine blah].join("\0")
     end
 
     dryrun(:git, cmd, *args + [:_return => _return]) {
