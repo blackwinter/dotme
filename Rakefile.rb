@@ -3,7 +3,7 @@
 #                                                                             #
 # dotme - The dotfile manager                                                 #
 #                                                                             #
-# Copyright (C) 2008-2013 Jens Wille                                          #
+# Copyright (C) 2008-2016 Jens Wille                                          #
 #                                                                             #
 # Authors:                                                                    #
 #     Jens Wille <jens.wille@gmail.com>                                       #
@@ -67,7 +67,6 @@ module DotMe
   HOME = ENV.user_home
 
   GIT_FOUND = File.which('git')
-  GIT_VERSION = GIT_FOUND ? %x{git --version}[/[\d.]+/] : ''
 
   # {{{ class Status
 
@@ -274,20 +273,11 @@ module DotMe
         cmd = 'checkout'
         args << '-f'
       when :stash
-        if GIT_VERSION >= '1.5.3'
-          cmd = 'stash'
-          args << 'save'
-        else
-          return
-        end
+        cmd = 'stash'
+        args << 'save'
       when :unstash
-        if GIT_VERSION >= '1.5.5'
-          cmd = 'stash'
-          args << 'pop'
-        else
-          git('stash', 'apply') if GIT_VERSION >= '1.5.3'
-          return
-        end
+        cmd = 'stash'
+        args << 'pop'
       when :tracked
         cmd = 'ls-files'
         _return = %w[foo/x foo/y bar/y bar/z/a bar/z/b].join("\n")
