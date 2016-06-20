@@ -27,26 +27,12 @@
 require 'pathname'
 require 'fileutils'
 
-begin
-  require 'rdoc/task'
-rescue LoadError
-end
-
-begin
-  require 'rubygems'
-  require 'nuggets/env/user_home'
-  require 'nuggets/file/which'
-rescue LoadError => err
-  warn "#{err}. RubyGem ruby-nuggets required for full functionality."
-
-  def ENV.user_home  #:nodoc:
-    ENV['HOME'] || File.expand_path('~')
+%w[rdoc/task nuggets/env/user_home nuggets/file/which].each { |lib|
+  begin
+    require lib
+  rescue LoadError
   end
-
-  def File.which(cmd)  #:nodoc:
-    !%x{#{cmd} --help}.empty?
-  end
-end
+}
 
 if Dir.pwd != dir = File.dirname(__FILE__)
   abort "Please change into directory `#{dir}' and run again."
@@ -60,13 +46,15 @@ module DotMe
 
   extend self
 
-  VERSION = '0.1.1'
+  VERSION = '0.2.0'
 
   IGNORE = %w[Rakefile.rb README COPYING .gitignore inclexcl.sample]
 
-  HOME = ENV.user_home
+  HOME = ENV.respond_to?(:user_home) ?
+    ENV.user_home : ENV['HOME'] || File.expand_path('~')
 
-  GIT_FOUND = File.which('git')
+  HAVE_GIT = File.respond_to?(:which) ?
+    File.which('git') : !%x{git --help}.empty?
 
   # {{{ class Status
 
@@ -117,7 +105,7 @@ module DotMe
   # }}}
 
   def install
-    symlinks.sort.each { |target, symlink|
+    symlinks.each { |target, symlink|
       dryrun(:symlink, target, symlink) {
         status, actual = status_for(symlink, target)
 
@@ -146,7 +134,7 @@ module DotMe
     puts git(:status)
     puts
 
-    symlinks.sort.each { |target, symlink|
+    symlinks.each { |target, symlink|
       status, actual = status_for(symlink, target)
       msg = "[#{status}] #{symlink}"
 
@@ -163,7 +151,7 @@ module DotMe
   end
 
   def uninstall
-    symlinks.sort.each { |target, symlink|
+    symlinks.each { |target, symlink|
       dryrun(:unlink, symlink) {
         status, actual = status_for(symlink, target)
 
@@ -218,7 +206,7 @@ module DotMe
       hash[File.expand_path(target)] = symlink
     }
 
-    hash
+    hash.sort
   end
 
   def dotfiles
@@ -265,7 +253,7 @@ module DotMe
   end
 
   def git(cmd, *args)
-    abort "Please install `git'." unless GIT_FOUND
+    abort "Please install `git'." unless HAVE_GIT
 
     # aliases
     case cmd
@@ -297,16 +285,16 @@ module DotMe
   end
 
   def inclexcl(files)
-    if File.readable?('inclexcl')
+    if File.readable?(inclexcl = 'inclexcl')
       incl, excl, replace = [], [], false
 
-      File.read('inclexcl').split("\n").each { |pattern|
+      File.foreach(inclexcl) { |pattern|
         pattern.sub!(/\A\s*/, '')
         pattern.sub!(/\s*\z/, '')
         next if pattern.empty?
 
         pattern.sub!(/\A([#+-])/, '')
-        prefix = $1  # save capture
+        prefix = $1 # save capture
         next if prefix == '#'
 
         pattern.sub!(/\/\z/, '')
@@ -315,9 +303,7 @@ module DotMe
           next
         end
 
-        matches = files.select { |file|
-          file =~ glob2re(pattern)
-        }
+        matches = files.grep(glob2re(pattern))
 
         if prefix == '-'
           excl += matches
@@ -349,11 +335,9 @@ module DotMe
   def agree(msg)
     print "#{msg} (yes/no) "
 
-    case $stdin.gets.chomp[0..0].downcase
-      when 'y'
-        true
-      when 'n'
-        false
+    case $stdin.gets.chomp[0].downcase
+      when 'y' then true
+      when 'n' then false
       else
         puts 'Please enter "[y]es" or "[n]o".'
         agree(msg)
@@ -370,9 +354,7 @@ module DotMe
   def dryrun(what, *args)
     if ENV['DRYRUN']
       _return = args.last.delete(:_return) if args.last.is_a?(Hash)
-
       warn ['[DRYRUN]', what, *args].join(' ')
-
       _return
     else
       yield
@@ -385,7 +367,7 @@ end
 
 # }}}
 
-task :default => :update
+task default: :update
 
 desc "Install symlinks to dotfiles."
 task :install do
