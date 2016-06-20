@@ -133,7 +133,10 @@ module DotMe
 
   def update
     with_clean_working_directory do
-      git(:update) && git(:fetch)
+      if out = git(:update) and git(:fetch)
+        out.lines.grep(/^Updating\s+(\S+)/) {
+          puts git(:log, '--oneline', '--reverse', $1) }
+      end
     end
 
     install
