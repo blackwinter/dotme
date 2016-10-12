@@ -1,2 +1,2 @@
 ---
-gem: --no-ri --no-rdoc --no-document --no-suggestions --env-shebang
+gem: --no-ri --no-rdoc --no-document --no-suggestions --env-shebang -P MediumSecurity
