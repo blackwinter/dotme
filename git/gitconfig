@@ -19,6 +19,7 @@
   untracked = cyan
 [diff]
   algorithm = patience
+  compactionHeuristic = true
 [push]
   default   = current
 
