@@ -33,7 +33,6 @@ alias cl="clear; l"
 alias ct="clear; t"
 alias  d="du -sch"
 alias da="d --apparent-size"
-alias dh="df -hP"
 alias dy="display"
 alias ff="firefox"
 alias  g="git"
@@ -114,6 +113,10 @@ alias .ss="svn status --show-updates"
 function .sg() {
   local v="$(svnversion 2>/dev/null)"
   svn update && [ -n "$v" ] && svn log -r "${v//[^0-9]}:HEAD"
+}
+
+function dh() {
+  df -hP "$@" | \grep ^/
 }
 
 function lsdel() {
