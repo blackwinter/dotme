@@ -1,4 +1,5 @@
 +bash
++gem
 +git
 +irb
 -irb/irbrc.d
