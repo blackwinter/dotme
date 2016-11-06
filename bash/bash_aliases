@@ -23,7 +23,7 @@ alias jgem="jruby -S gem"
 alias jrake="jruby -S rake"
 
 alias  diff="diff -u"
-alias disks="sudo fdisk -l | sed -n 's/,.*//; s:^Disk /:/:p'"
+alias disks="sudo fdisk -l | sed -n 's/,.*//; /\/dev\/ram/n; s:^Disk /:/:p'"
 alias  help="help -m"
 alias  make="make -j$(nproc)"
 alias  uuid="sudo blkid -o value -s UUID"
