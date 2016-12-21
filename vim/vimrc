@@ -56,6 +56,8 @@ au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru set filetype=ruby
 
 au FileType ruby set iskeyword+=33,63
 
+au FileType java set shiftwidth=4
+
 ru! macros/matchit.vim macros/ll.vim plugin/supertab.vim
 
 map <C-up> <C-y>
