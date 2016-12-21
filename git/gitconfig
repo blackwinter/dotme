@@ -69,6 +69,8 @@
   lv   = !git la -p
   ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%an %Creset- %s\"
   m    =      merge
+  mf   =      merge --ff-only
+  mn   =      merge --no-ff
   msg  =      commit --allow-empty -m
   o    =      remote -v
   oo   = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
