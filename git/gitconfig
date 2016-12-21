@@ -20,6 +20,8 @@
 [diff]
   algorithm = patience
   compactionHeuristic = true
+[merge]
+  conflictstyle = diff3
 [push]
   default   = current
 
