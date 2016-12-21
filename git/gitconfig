@@ -102,8 +102,9 @@
   tl   =      tag -n1 -l
   u    =      pull
   ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
+  uf   = !git remote | xargs -I '{}' git pull --ff-only '{}' $(git bc) && git fetch
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
-  uu   = !git ly --reverse "$(git -c color.ui=always ua | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
+  uu   = !git ly --reverse "$(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
   v    =      revert
   w    =      show --pretty=fuller --no-prefix
   ww   = "!sh -c 'while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done' -"
