@@ -2,6 +2,14 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
+function _diff() {
+  if [ -t 1 -a -x /usr/bin/colordiff ]; then
+    \colordiff "$@"
+  else
+    \diff "$@"
+  fi
+}
+
 function _grep() {
   if [ -t 0 ]; then
     \grep "$@"
@@ -22,7 +30,7 @@ alias jirb="jruby -S irb"
 alias jgem="jruby -S gem"
 alias jrake="jruby -S rake"
 
-alias  diff="diff -u"
+alias  diff="_diff -u"
 alias disks="sudo fdisk -l | sed -n 's/,.*//; /\/dev\/ram/n; s:^Disk /:/:p'"
 alias  help="help -m"
 alias  make="make -j$(nproc)"
