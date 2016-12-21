@@ -50,6 +50,7 @@
   e    =      reset HEAD
   ee   =      reset --soft HEAD^
   f    =      fetch
+  fa   = !git remote | xargs -I '{}' git fetch '{}'
   g    =      grep -E -n
   h    =      help
   l    = !git ly --reverse -10
