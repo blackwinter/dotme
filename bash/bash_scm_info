@@ -23,7 +23,7 @@ function __scm_info() {
       branch="$(__git_branch2)"
     fi
 
-    info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)"
+    info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)$(__git_stash)"
   elif [ -z "$BASH_SCM_INFO_DISABLE_SVN" ] && __svn; then
     info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
   elif [ -z "$BASH_SCM_INFO_DISABLE_BZR" ] && __bzr; then
@@ -87,6 +87,11 @@ function __git_stale() {
     };
       s/^\(# \)\?Untracked files:/?/p
   ' | tr -d '\n'
+}
+
+function __git_stash() {
+  local n=$(git stash list | wc -l)
+  [ "$n" -gt 0 ] && echo -n "|$n"
 }
 
 # BZR
