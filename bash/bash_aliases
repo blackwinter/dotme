@@ -20,7 +20,7 @@ function _grep() {
 
 alias xgrep="_grep --color -Rs --exclude-dir .svn --exclude-dir .git --exclude '.*.sw?'"
 alias  grep="xgrep -EHn"
-alias fgrep="xgrep -F"
+alias fgrep="xgrep -FHn"
 
 alias ruby="ruby -w"
 alias ruby-dev="ruby -W1 -Ilib"
@@ -30,6 +30,7 @@ alias jirb="jruby -S irb"
 alias jgem="jruby -S gem"
 alias jrake="jruby -S rake"
 
+alias  curl="curl -sSL"
 alias  diff="_diff -u"
 alias disks="sudo fdisk -l | sed -n 's/,.*//; /\/dev\/ram/n; s:^Disk /:/:p'"
 alias  help="help -m"
