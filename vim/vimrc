@@ -83,6 +83,23 @@ function Home()
     endif
 endfunction
 
+" http://vim.wikia.com/wiki/Faster_loading_of_large_files
+let g:LargeFile = 1024 * 1024 * 100
+au BufReadPre * let s = getfsize(@%) |
+      \ if s < -1 || s > g:LargeFile |
+      \ call LargeFile() | endif
+
+function LargeFile()
+  " disable syntax highlighting etc.
+  set eventignore+=FileType
+  " disable writing
+  "setlocal buftype=nowrite
+  " disable undo
+  setlocal undolevels=-1
+  " save memory when other file is viewed
+  setlocal bufhidden=unload
+endfunction
+
 """ LOAD CUSTOM FILE
 if filereadable($HOME . "/.vimrc.mine")
   so $HOME/.vimrc.mine
