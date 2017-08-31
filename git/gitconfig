@@ -45,6 +45,7 @@
   d    =      diff --no-prefix
   dc   =      diff --no-prefix --cached
   dd   = !GIT_PAGER=less git d
+  ddi  = !GIT_PAGER=less git di
   di   =      diff --no-prefix HEAD
   dp   =      diff --no-prefix HEAD^
   e    =      reset HEAD
@@ -60,7 +61,7 @@
   lg   = "!sh -c 'a=\"$1\"; shift; git ly -G\"$a\" \"$@\"' -"
   lgv  = "!sh -c 'git lG \"$@\" --pretty=medium' -"
   ll   =      log --reverse -10
-  lol  =      log --pretty=oneline --abbrev-commit --graph --decorate
+  lol  = !git ly --graph --date-order -32
   lp   = !git lv -10
   lr   = "!sh -c 'a=\"$1\"; shift; git ly --grep=\"$a\" -E \"$@\"' -"
   lrv  = "!sh -c 'git lg \"$@\" --pretty=medium' -"
@@ -68,7 +69,7 @@
   lsv  = "!sh -c 'git ls \"$@\" --pretty=medium' -"
   lu   =      ls-files -o --exclude-standard
   lv   = !git la -p
-  ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%an %Creset- %s\"
+  ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%<(16,trunc)%an %Creset%m%m%m%m %<(124,trunc)%s\"
   m    =      merge
   mf   =      merge --ff-only
   mn   =      merge --no-ff
@@ -106,8 +107,10 @@
   uf   = !git remote | xargs -I '{}' git pull --ff-only '{}' $(git bc) && git fetch
   ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
   uu   = !git ly --reverse "$(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
+  us   =      svn rebase
   v    =      revert
   w    =      show --pretty=fuller --no-prefix
+  wc   = "!sh -c 'while :; do git whatchanged \"${1:-HEAD}^!\"; [ $# -gt 1 ] && shift || break; done' -"
   ww   = "!sh -c 'while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done' -"
   x    =      commit -v --amend
   xa   =      commit -v --amend -a
