@@ -73,7 +73,7 @@ fi
 export PS1_PLAIN="\u@\h:\w${prompt_indicator} "
 
 case "$TERM" in
-  xterm-color|xterm|screen)
+  xterm-*color|xterm|screen)
     function __prompt_ps1() {
       local rc=$?
 
