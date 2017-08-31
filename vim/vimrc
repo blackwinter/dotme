@@ -53,10 +53,11 @@ au FileType html,xhtml,eruby let b:closetag_html_style=1
 au Filetype html,xhtml,eruby,xml,xsl ru macros/closetag.vim
 
 au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru set filetype=ruby
+au BufRead,BufNewFile *.jsonl set filetype=javascript
 
 au FileType ruby set iskeyword+=33,63
 
-au FileType java set shiftwidth=4
+au FileType java,groovy set shiftwidth=4
 
 ru! macros/matchit.vim macros/ll.vim plugin/supertab.vim
 
