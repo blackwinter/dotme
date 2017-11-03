@@ -61,10 +61,15 @@ au FileType java,groovy set shiftwidth=4
 
 ru! macros/matchit.vim macros/ll.vim plugin/supertab.vim
 
-map <C-up> <C-y>
-map <C-down> <C-e>
 imap <C-up> <C-x><C-y>
 imap <C-down> <C-x><C-e>
+nmap <C-up> <C-y>
+nmap <C-down> <C-e>
+
+imap <C-left> <ESC>:Next<CR>
+imap <C-right> <ESC>:next<CR>
+nmap <C-left> <ESC>:Next<CR>
+nmap <C-right> <ESC>:next<CR>
 
 noremap  <F12> <ESC>:redraw!<CR>
 inoremap <F12> <ESC>:redraw!<CR>a
