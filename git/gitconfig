@@ -54,22 +54,23 @@
   fa   = !git remote | xargs -I '{}' git fetch '{}'
   g    =      grep -E -n
   h    =      help
-  l    = !git ly --reverse -10
+  l    = !git ly --reverse -20
   la   = !GIT_PAGER=less git log --reverse
-  lc   =      whatchanged --reverse -10
+  lc   =      whatchanged --reverse -20
   lf   = !GIT_PAGER=less git whatchanged
   lg   = "!sh -c 'a=\"$1\"; shift; git ly -G\"$a\" \"$@\"' -"
   lgv  = "!sh -c 'git lG \"$@\" --pretty=medium' -"
-  ll   =      log --reverse -10
+  ll   =      log --reverse -20
   lol  = !git ly --graph --date-order -32
-  lp   = !git lv -10
+  lp   = !git lv -20
   lr   = "!sh -c 'a=\"$1\"; shift; git ly --grep=\"$a\" -E \"$@\"' -"
   lrv  = "!sh -c 'git lg \"$@\" --pretty=medium' -"
-  ls   = "!sh -c 'a=\"$1\"; shift; git ly -S\"$a\" \"$@\"' -"
-  lsv  = "!sh -c 'git ls \"$@\" --pretty=medium' -"
   lu   =      ls-files -o --exclude-standard
   lv   = !git la -p
-  ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%<(16,trunc)%an %Creset%m%m%m%m %<(124,trunc)%s\"
+  lw   = !git ly --follow
+  lx   = "!sh -c 'a=\"$1\"; shift; git ly -S\"$a\" \"$@\"' -"
+  lxv  = "!sh -c 'git lx \"$@\" --pretty=medium' -"
+  ly   =      log --pretty=tformat:\"%C(magenta)%h %Cgreen%ai %C(cyan)%<(16,trunc)%an %Creset%m%m%m%m %<(112,trunc)%s\"
   m    =      merge
   mf   =      merge --ff-only
   mn   =      merge --no-ff
