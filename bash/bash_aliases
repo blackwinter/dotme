@@ -138,5 +138,13 @@ function pdfcat() {
   pdftk "$1"/*.pdf cat output "${2:-$1}".pdf
 }
 
+function date2epoch() {
+  date "+%s" -d "$1"
+}
+
+function epoch2date() {
+  date +"%Y/%m/%d %H:%M:%S" -d "@${1:0:10}"
+}
+
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine
