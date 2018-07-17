@@ -2,21 +2,22 @@
 # A component of dotme, the dotfile manager.                                  #
 ###############################################################################
 
-*.o
-*.lo
-*.la
-*.so
 #*#
-.*.rej
+*.la
+*.lo
+*.o
 *.rej
-.*~
+*.so
 *~
 *~?
 .#*
-.DS_Store
+.*.rej
 .*.sw?
-WCFILES
-HEADER
+.*~
+.DS_Store
+.agignore
 .autotest
 .local
+HEADER
+WCFILES
 tags
