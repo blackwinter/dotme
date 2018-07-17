@@ -3,27 +3,31 @@
 ###############################################################################
 
 [color]
-  ui        = true
+  ui                  = true
 [color "branch"]
-  current   = yellow reverse
-  local     = yellow
-  remote    = green
+  current             = yellow reverse
+  local               = yellow
+  remote              = green
+  upstream            = cyan
 [color "diff"]
-  meta      = yellow bold
-  frag      = magenta bold
-  old       = red bold
-  new       = green bold
+  meta                = yellow bold
+  frag                = magenta bold
+  old                 = red bold
+  new                 = green bold
 [color "status"]
-  added     = yellow
-  changed   = green
-  untracked = cyan
+  added               = yellow
+  changed             = green
+  untracked           = cyan
 [diff]
-  algorithm = patience
+  algorithm           = patience
   compactionHeuristic = true
 [merge]
-  conflictstyle = diff3
+  conflictstyle       = diff3
 [push]
-  default   = current
+  default             = current
+[rebase]
+  abbreviateCommands  = true
+  stat                = true
 
 [alias]
   a    =      add
