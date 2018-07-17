@@ -81,6 +81,12 @@ nmap <C-right> <ESC>:next<CR>
 noremap  <F12> <ESC>:redraw!<CR>
 inoremap <F12> <ESC>:redraw!<CR>a
 
+nnoremap * :set noignorecase<CR>*
+nnoremap # :set noignorecase<CR>#
+nnoremap / :set ignorecase<CR>/
+
+noremap <F10> <ESC>:set cursorline! cursorcolumn!<CR>
+
 " <home> toggles between start of line and start of text
 imap <khome> <home>
 nmap <khome> <home>
