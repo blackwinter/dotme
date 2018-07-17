@@ -46,14 +46,21 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
 match RedundantSpaces /\s\+$\| \+\ze\t/
 
+au BufRead,BufNewFile *.conf.mt                   set filetype=conf
+au BufRead,BufNewFile *.html.epx,*.text.epx       set filetype=mojo-epx
+au BufRead,BufNewFile *.json.mt                   set filetype=json
+au BufRead,BufNewFile *.jsonl                     set filetype=json
+au BufRead,BufNewFile *.xml.mt                    set filetype=xml
+au BufRead,BufNewFile *.yml.mt                    set filetype=yaml
+au BufRead,BufNewFile Dockerfile.mt,*.dockerfile  set filetype=dockerfile
+au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru set filetype=ruby
+au BufRead,BufNewFile cpanfile                    set filetype=perl
+
 au FileType * set comments=""
 au FileType gitcommit set tw<
 
 au FileType html,xhtml,eruby let b:closetag_html_style=1
 au Filetype html,xhtml,eruby,xml,xsl ru macros/closetag.vim
-
-au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru set filetype=ruby
-au BufRead,BufNewFile *.jsonl set filetype=javascript
 
 au FileType ruby set iskeyword+=33,63
 
