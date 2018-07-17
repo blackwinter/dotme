@@ -31,27 +31,26 @@
 
 [alias]
   a    =      add
-  aa   =      add .
-  al   = "!sh -c 'git cl | grep \"^alias\\.$1\"' -"
+  al   = "!sh -c 'git config -l | grep \"^alias\\.$1\"' -"
   au   =      add -u .
-  b    =      branch -v
+  b    =      branch -vv
   bc   = !git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
   bm   =      branch -v --merged
   bn   =      branch -v --no-merged
   c    =      commit -v
   ca   =      commit -v --all
   cb   =      checkout -b
-  cf   =      config
   ci   =      commit -v --interactive
-  cl   =      config -l
   co   =      checkout
-  cp   =      cherry-pick -x
+  cp   =      cherry-pick
+  cx   =      cherry-pick -x
   d    =      diff --no-prefix
+  db   = "!sh -c 'GIT_PAGER=less git d ${1:-master}...' -"
   dc   =      diff --no-prefix --cached
   dd   = !GIT_PAGER=less git d
   ddi  = !GIT_PAGER=less git di
   di   =      diff --no-prefix HEAD
-  dp   =      diff --no-prefix HEAD^
+  dp   = "!sh -c 'git db ${1:-origin}/$(git bc)' -"
   e    = "!sh -c 'git re ${1:-HEAD}' -"
   ee   = "!sh -c 'git re --soft ${1:-HEAD}^' -"
   eh   = "!sh -c 'git re --hard ${1:-HEAD}^' -"
@@ -68,7 +67,7 @@
   lgv  = "!sh -c 'git lG \"$@\" --pretty=medium' -"
   ll   =      log --reverse -20
   lol  = !git ly --graph --date-order -32
-  lp   = !git lv -20
+  lp   = "!sh -c 'git lb ${1:-origin}/$(git bc)' -"
   lr   = "!sh -c 'a=\"$1\"; shift; git ly --grep=\"$a\" -E \"$@\"' -"
   lrv  = "!sh -c 'git lg \"$@\" --pretty=medium' -"
   ls   = !git l --stat
@@ -78,25 +77,28 @@
   lw   = !git ly --follow
   lx   = "!sh -c 'a=\"$1\"; shift; git ly -S\"$a\" \"$@\"' -"
   lxv  = "!sh -c 'git lx \"$@\" --pretty=medium' -"
-  ly   = "!sh -c 'git log --reverse --pretty=tformat:\"%Cred%h %Cgreen%ai %C(cyan)%<(16,trunc)%an %Creset[%m%m%m%m] %<(112,trunc)%s\" $@ | sed \"s/\\[<<<<\\]/[-]/;s/\\[>>>>\\]/[+]/\"' -"
+  ly   = "!sh -c 'git log --abbrev=7 --color=always --pretty=tformat:\"%Cred%h %Cgreen%ai %C(cyan)%<(16,trunc)%an %Creset[%m%m%m%m] %<(112,trunc)%s\" $@ | sed \"s/\\[<<<<\\]/[-]/;s/\\[>>>>\\]/[+]/\" | tac' -"
   m    =      merge
+  mc   =      merge --continue
   mf   =      merge --ff-only
   mn   =      merge --no-ff
-  msg  =      commit --allow-empty -m
   o    =      remote -v
   oo   = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
   p    =      push
   pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
+  pd   =      push origin --delete
   pf   = !git po --force-with-lease
   po   = "!bash -c 'if [ $# -gt 0 -a \"${1:0:1}\" != \"-\" ]; then a=\"$1\"; shift; fi; git push origin \"${a:-HEAD}:$(git bc)\" $@' -"
   pp   = !git pa && git pt
   pt   = !git oo | xargs -I '{}' git push --tags '{}'
-  ra   =      rebase --abort
-  rb   =      rebase
-  rc   =      rebase --continue
+  rb   =      rebase -p
+  rba  =      rebase --abort
+  rbc  =      rebase --continue
+  rbp  =      rebase --show-current-patch
+  rbs  =      rebase --skip
   re   =      reset
-  ri   = "!sh -c 'git rb -i ${1:-HEAD^}^' -"
-  rs   =      rebase --skip
+  ri   = "!sh -c 'git rebase -i ${1:-HEAD^}^' -"
+  rip  = "!sh -c 'git rb -i ${1:-HEAD^}^' -"
   s    =      status
   ss   =      status --short
   st   =      stash
@@ -104,8 +106,8 @@
   stb  =      stash branch
   std  =      stash drop
   stl  =      stash list
-  stp  =      stash save --patch
-  sts  =      stash save
+  stp  =      stash push --patch
+  sts  =      stash push
   stt  =      stash pop
   stw  =      stash show --patch --no-prefix
   t    =      tag
@@ -114,13 +116,13 @@
   u    =      pull
   ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
   uf   = !git remote | xargs -I '{}' git pull --ff-only '{}' $(git bc) && git fetch
-  ur   = !git remote | xargs -I '{}' git pull --rebase '{}' $(git bc) && git fetch
+  ur   = !git remote | xargs -I '{}' git pull --rebase=preserve '{}' $(git bc) && git fetch
   uu   = !git ly "$(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
-  us   =      svn rebase
   v    =      revert
   w    =      show --pretty=fuller --no-prefix
   wc   = "!sh -c 'while :; do git whatchanged \"${1:-HEAD}^!\"; [ $# -gt 1 ] && shift || break; done' -"
   ww   = "!sh -c 'while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done' -"
+  www  = "!sh -c 'while :; do GIT_PAGER=less git w -w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done' -"
   x    =      commit --amend
   xa   = !git x -v -a
   z    =      checkout-index -u -f --
