@@ -10,7 +10,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-export LC_ALL='en_US.UTF-8'
+export LC_ALL='en_US.utf8'
 export TIME='%U + %S = %e (%P, %M K)'
 export TIMEFORMAT='%U + %S = %R (%P%%)'
 
@@ -34,12 +34,16 @@ if [ "$TERM" != 'dumb' ]; then
 fi
 
 # Some handy ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias  l='ls -ahlF'
+alias ll='ls -hlF'
+alias  l='ll -a'
 
 # Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+#if [ -x /usr/bin/source-highlight ]; then
+#  LESSOPEN+='| source-highlight --failsafe --infer-lang -f esc --style-file=esc.style'
+#  export LESSOPEN
+#fi
 
 export LESS='-M -i -R'
 
