@@ -18,6 +18,7 @@
 .agignore
 .autotest
 .local
+.mailmap
 HEADER
 WCFILES
 tags
