@@ -97,15 +97,15 @@ alias .uu=".au && .ag"
 
 alias  .g="gem"
 alias .gc="sudo gem cleanup"
-alias .gg="sudo gem update && sudo gem cleanup"
-alias .gi="sudo gem install"
-alias .gI="sudo gem install --conservative"
-alias .gl="gem search --local --details"
-alias .go="gem outdated"
+alias .gg=".gu && .gc"
+alias .gi="sudo gem install -N"
+alias .gI=".gi --conservative"
+alias .gl=".g search --local --details"
+alias .go=".g outdated"
 alias .gr="sudo gem uninstall --no-user-install"
-alias .gs="gem search --remote --details"
-alias .gu="sudo gem update"
-alias .gw="gem list --local --details"
+alias .gs=".g search --remote --details"
+alias .gu="sudo gem update -N"
+alias .gw=".g list --local --details"
 
 alias  .jg="jruby -S gem"
 alias .jgc="sudo jruby -S gem cleanup"
@@ -125,7 +125,7 @@ function .sg() {
 }
 
 function dh() {
-  df -hP "$@" | \grep ^/
+  df -hP "$@" | \grep ^/ | \grep -v /snap/
 }
 
 function lsdel() {
