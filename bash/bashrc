@@ -90,7 +90,7 @@ case "$TERM" in
       echo -ne ":${4:-$PWD}"
 
       # SCM info
-      __scm_info
+      __scm_info $5 $6
 
       # exit status
       [ $rc -ne 0 ] && echo -ne " ($5\033[31m$6$rc$5\033[0m$6)"

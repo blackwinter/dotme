@@ -16,14 +16,17 @@ function __scm_info() {
   [ ! -d "$PWD" -o -f .no_scm_info ] && return
 
   if [ -z "$BASH_SCM_INFO_DISABLE_GIT" ] && __git; then
-    if __git_head; then
-      version="$(__git_version)"
-      branch="$(__git_branch)"
-    else
-      branch="$(__git_branch2)"
-    fi
+    __git_head && branch="$(__git_branch)" || branch="$(__git_branch2)"
+    echo -ne " [$1\033[1;37m$2${branch:-<$(__git_name)>}$1\033[0m$2|"
 
-    info="git:${branch:-<$(__git_name)>}@${version:-<init>}$(__git_stale)$(__git_stash)"
+    __git_version $1 $2
+
+    local stale=$(__git_stale)
+    [ -z "$stale" ] || echo -ne "|$1\033[36m$2$stale$1\033[0m$2"
+
+    echo -ne "$(__git_stash)]"
+
+    return
   elif [ -z "$BASH_SCM_INFO_DISABLE_SVN" ] && __svn; then
     info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
   elif [ -z "$BASH_SCM_INFO_DISABLE_BZR" ] && __bzr; then
@@ -62,9 +65,13 @@ function __git_head() {
 }
 
 function __git_version() {
-  git rev-parse --short HEAD 2> /dev/null | tr -d '\n'
-  git diff --quiet           2> /dev/null || echo -n 'M'
-  git diff --quiet --cached  2> /dev/null || echo -n '*'
+  local v=$(git rev-parse --short=7 HEAD 2> /dev/null | tr -d '\n')
+  echo -ne "$1\033[33m$2${v:-<init>}$1\033[0m$2"
+
+  local m
+  git diff --quiet           2> /dev/null || m+='M'
+  git diff --quiet --cached  2> /dev/null || m+='*'
+  [ -z "$m" ] || echo -ne "|$1\033[32m$2$m$1\033[0m$2"
 }
 
 function __git_branch() {
@@ -90,7 +97,7 @@ function __git_stale() {
 }
 
 function __git_stash() {
-  local n=$(git stash list | wc -l)
+  local n=$(git stash list 2>/dev/null | wc -l)
   [ "$n" -gt 0 ] && echo -n "|$n"
 }
 
