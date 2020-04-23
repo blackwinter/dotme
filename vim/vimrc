@@ -47,12 +47,13 @@ highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
 match RedundantSpaces /\s\+$\| \+\ze\t/
 
 au BufRead,BufNewFile *.conf.mt                                                       set filetype=conf
+au BufRead,BufNewFile *.fix                                                           set filetype=metafacture-fix
 au BufRead,BufNewFile *.html.epx,*.text.epx                                           set filetype=mojo-epx
 au BufRead,BufNewFile *.jsonl,*.json.mt                                               set filetype=json
 au BufRead,BufNewFile *.xml.mt                                                        set filetype=xml
 au BufRead,BufNewFile *.yml.mt                                                        set filetype=yaml
 au BufRead,BufNewFile */nginx/*.conf,*/nginx/*.conf.mt                                set filetype=nginx
-au BufRead,BufNewFile Dockerfile.mt,*.dockerfile                                      set filetype=dockerfile
+au BufRead,BufNewFile Dockerfile*.mt,*.dockerfile                                     set filetype=dockerfile
 au BufRead,BufNewFile Rakefile,Capfile,*.cap,*.ru                                     set filetype=ruby
 au BufRead,BufNewFile cpanfile,*/portalconf/*/app.conf*,*/portal/*/{conf,app}/*.conf* set filetype=perl
 
