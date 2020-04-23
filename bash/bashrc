@@ -75,6 +75,7 @@ else
 fi
 
 export PS1_PLAIN="\u@\h:\w${prompt_indicator} "
+export PS0_PLAIN="\t\n"
 
 case "$TERM" in
   xterm-*color|xterm|screen)
@@ -104,9 +105,11 @@ case "$TERM" in
     }
 
     export PS1="\$(__prompt_ps1 '\t' '\u' '\h' '\w' \[ \])"
+    export PS0="\[\033[${MY_COLOR}m\]\t\[\033[0m\]\n"
     ;;
   *)
     export PS1="$PS1_PLAIN"
+    export PS0="$PS0_PLAIN"
     ;;
 esac
 
