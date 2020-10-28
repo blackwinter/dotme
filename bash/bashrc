@@ -59,7 +59,7 @@ export LESS='-M -i -R'
 # 37 = gray
 # 38 = light red
 # 39 = white
-MY_COLOR=35  # default
+MY_COLOR=33  # default
 
 # Customized user setting
 # E.g.: MY_COLOR=3$(date +%u) ;-)
@@ -95,7 +95,7 @@ case "$TERM" in
       echo -ne ":${4:-$PWD}"
 
       # SCM info
-      __scm_info $5 $6
+      __bsi_scm_info $5 $6
 
       # exit status
       [ $rc -ne 0 ] && echo -ne " ($5\033[31m$6$rc$5\033[0m$6)"
@@ -105,7 +105,7 @@ case "$TERM" in
     }
 
     export PS1="\$(__prompt_ps1 '\t' '\u' '\h' '\w' \[ \])"
-    export PS0="\[\033[${MY_COLOR}m\]\t\[\033[0m\]\n"
+    export PS0="\[\033[${MY_COLOR}m\]\t\[\033[0m\] \$(pwd -P) (\$(df -h --output=avail . | awk 'END{print \$1}'))\n"
     ;;
   *)
     export PS1="$PS1_PLAIN"

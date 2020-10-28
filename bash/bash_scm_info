@@ -1,70 +1,70 @@
-function __scm() {
-  if __svn; then
+function __bsi_scm() {
+  if __bsi_svn; then
     echo 'svn'
-  elif __git; then
+  elif __bsi_git; then
     echo 'git'
-  elif __bzr; then
+  elif __bsi_bzr; then
     echo 'bzr'
-  elif __hg; then
+  elif __bsi_hg; then
     echo 'hg'
   fi
 }
 
-function __scm_info() {
+function __bsi_scm_info() {
   local info version branch
 
   [ ! -d "$PWD" -o -f .no_scm_info ] && return
 
-  if [ -z "$BASH_SCM_INFO_DISABLE_GIT" ] && __git; then
-    __git_head && branch="$(__git_branch)" || branch="$(__git_branch2)"
-    echo -ne " [$1\033[1;37m$2${branch:-<$(__git_name)>}$1\033[0m$2|"
+  if [ -z "$BASH_SCM_INFO_DISABLE_GIT" ] && __bsi_git; then
+    __bsi_git_head && branch="$(__bsi_git_branch)" || branch="$(__bsi_git_branch2)"
+    echo -ne " [$1\033[1;37m$2${branch:-<$(__bsi_git_name)>}$1\033[0m$2|"
 
-    __git_version $1 $2
+    __bsi_git_version $1 $2
 
-    local stale=$(__git_stale)
+    local stale=$(__bsi_git_stale)
     [ -z "$stale" ] || echo -ne "|$1\033[36m$2$stale$1\033[0m$2"
 
-    echo -ne "$(__git_stash)]"
+    echo -ne "$(__bsi_git_stash)]"
 
     return
-  elif [ -z "$BASH_SCM_INFO_DISABLE_SVN" ] && __svn; then
-    info="svn:$(__svn_repo)@$(__svn_version)$(__svn_stale)"
-  elif [ -z "$BASH_SCM_INFO_DISABLE_BZR" ] && __bzr; then
-    info="bzr:$(__bzr_branch)@$(__bzr_version)"
-  elif [ -z "$BASH_SCM_INFO_DISABLE_HG" ] && __hg; then
-    info="hg:$(__hg_branch)@$(__hg_version)"
+  elif [ -z "$BASH_SCM_INFO_DISABLE_SVN" ] && __bsi_svn; then
+    info="svn:$(__bsi_svn_repo)@$(__bsi_svn_version)$(__bsi_svn_stale)"
+  elif [ -z "$BASH_SCM_INFO_DISABLE_BZR" ] && __bsi_bzr; then
+    info="bzr:$(__bsi_bzr_branch)@$(__bsi_bzr_version)"
+  elif [ -z "$BASH_SCM_INFO_DISABLE_HG" ] && __bsi_hg; then
+    info="hg:$(__bsi_hg_branch)@$(__bsi_hg_version)"
   fi
 
   [ -n "$info" ] && echo -n " [$info]"
 }
 
 # SVN
-function __svn() {
-  [ -d '.svn' ] || [[ ! $(__svn_version) =~ ^Unversioned ]]
+function __bsi_svn() {
+  [ -d '.svn' ] || [[ ! $(__bsi_svn_version) =~ ^Unversioned ]]
 }
 
-function __svn_version() {
+function __bsi_svn_version() {
   svnversion 2> /dev/null
 }
 
-function __svn_repo() {
+function __bsi_svn_repo() {
   svn info 2> /dev/null | sed -n '/^Repository Root:/s:.*/::p'
 }
 
-function __svn_stale() {
+function __bsi_svn_stale() {
   : svn status --show-updates 2> /dev/null | $(which grep) -F -o -m1 '*'
 }
 
 # GIT
-function __git() {
+function __bsi_git() {
   [ -d '.git' ] || [ "$(git rev-parse --is-bare-repository 2> /dev/null)" == "false" ]
 }
 
-function __git_head() {
+function __bsi_git_head() {
   git show-ref --head &> /dev/null
 }
 
-function __git_version() {
+function __bsi_git_version() {
   local v=$(git rev-parse --short=7 HEAD 2> /dev/null | tr -d '\n')
   echo -ne "$1\033[33m$2${v:-<init>}$1\033[0m$2"
 
@@ -74,19 +74,19 @@ function __git_version() {
   [ -z "$m" ] || echo -ne "|$1\033[32m$2$m$1\033[0m$2"
 }
 
-function __git_branch() {
+function __bsi_git_branch() {
   git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
 }
 
-function __git_branch2() {
+function __bsi_git_branch2() {
   git symbolic-ref HEAD 2> /dev/null | sed 's:.*/::'
 }
 
-function __git_name() {
+function __bsi_git_name() {
   git describe HEAD 2> /dev/null
 }
 
-function __git_stale() {
+function __bsi_git_stale() {
   git status 2> /dev/null | sed -n '
     /^\(# \)\?Your branch is /{
       s/.* ahead o.* \([0-9]\+\) .*/+\1/p;
@@ -96,34 +96,34 @@ function __git_stale() {
   ' | tr -d '\n'
 }
 
-function __git_stash() {
+function __bsi_git_stash() {
   local n=$(git stash list 2>/dev/null | wc -l)
   [ "$n" -gt 0 ] && echo -n "|$n"
 }
 
 # BZR
-function __bzr() {
+function __bsi_bzr() {
   [ -d '.bzr' ] || bzr root &> /dev/null
 }
 
-function __bzr_branch() {
+function __bsi_bzr_branch() {
   bzr nick 2> /dev/null
 }
 
-function __bzr_version() {
+function __bsi_bzr_version() {
   bzr revno 2> /dev/null
 }
 
 # HG
-function __hg() {
+function __bsi_hg() {
   [ -d '.hg' ] || hg identify &> /dev/null
 }
 
-function __hg_branch() {
+function __bsi_hg_branch() {
   hg branch
 }
 
-function __hg_version() {
+function __bsi_hg_version() {
   hg summary --quiet | awk '/parent:/{print $2}'
 }
 
