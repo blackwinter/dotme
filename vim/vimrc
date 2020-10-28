@@ -49,6 +49,7 @@ match RedundantSpaces /\s\+$\| \+\ze\t/
 au BufRead,BufNewFile *.conf.mt                                                       set filetype=conf
 au BufRead,BufNewFile *.fix                                                           set filetype=metafacture-fix
 au BufRead,BufNewFile *.html.epx,*.text.epx                                           set filetype=mojo-epx
+au BufRead,BufNewFile *.jinja,*.jinja2,*.j2                                           set filetype=jinja
 au BufRead,BufNewFile *.jsonl,*.json.mt                                               set filetype=json
 au BufRead,BufNewFile *.xml.mt                                                        set filetype=xml
 au BufRead,BufNewFile *.yml.mt                                                        set filetype=yaml
