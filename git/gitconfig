@@ -3,167 +3,176 @@
 ###############################################################################
 
 [color]
-  ui                  = true
+  ui = true
 [color "branch"]
-  current             = yellow reverse
-  local               = yellow
-  remote              = green
-  upstream            = cyan
+  current = yellow reverse
+  local = yellow
+  remote = green
+  upstream = cyan
 [color "diff"]
-  meta                = yellow bold
-  frag                = magenta bold
-  old                 = red bold
-  new                 = green bold
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
 [color "status"]
-  added               = yellow
-  changed             = green
-  untracked           = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 [diff]
-  algorithm           = patience
+  algorithm = patience
+  colorMoved = dimmed-zebra
   compactionHeuristic = true
+  relative = true
 [diff "gzip"]
-  binary              = true
-  textconv            = /bin/zcat
+  binary = true
+  textconv = /bin/zcat
 [merge]
-  conflictstyle       = diff3
+  conflictstyle = diff3
 [push]
-  default             = current
+  default = current
+[pull]
+  ff = only
 [rebase]
-  abbreviateCommands  = true
-  stat                = true
+  abbreviateCommands = true
+  stat = true
 
 [alias]
-  a    =      add
-  al   = "!f() { git config -l | grep \"^alias\\.$1\"; }; f"
-  au   =      add -u .
-  b    =      branch
-  bb   = "!f() { git branch --list '[^0-9]*' --color=always --format '%(if)%(HEAD)%(then)%(color:reverse)%(else)%(color:bold)%(end)%(align:46)%(refname:lstrip=2)%(end)%(color:reset) %(color:yellow)%(objectname:short=7) %(color:green)%(authordate:iso) %(color:cyan)%(align:21)%(authorname)%(end) %(if)%(upstream)%(then)%(color:reset)[%(color:magenta)%(upstream:lstrip=2)%(color:reset)] %(end)%(color:reset)%(contents:subject)' \"$@\" | sed -E 's/(.{202}).*/\\1/'; }; f"
-  bc   = !git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
-  bl   = !git bb '*'
-  bm   =      branch -v --merged
-  bn   =      branch -v --no-merged
-  br   = "!f() { git branch -r --color=always --format '%(align:24)%(refname:rstrip=-3)%(end) %(color:bold)%(align:46)%(refname:lstrip=3)%(end)%(color:reset) %(color:yellow)%(objectname:short=7) %(color:green)%(authordate:iso) %(color:cyan)%(align:21)%(authorname)%(end) %(color:reset)%(contents:subject)' | cut -d/ -f3- | sed -E 's/(.{202}).*/\\1/'; }; f"
-  bsb  =      bisect bad
-  bsg  =      bisect good
-  bsr  =      bisect reset
-  bss  =      bisect start
-  c    =      commit -v
-  ca   =      commit -v --all
-  cb   =      checkout -b
-  ci   =      commit -v --interactive
-  cmp  = "!f() { git merge-base --is-ancestor $1 ${2:-HEAD}; }; f"
-  co   =      checkout
-  cp   =      cherry-pick
-  cx   =      cherry-pick -x
-  d    =      diff --no-prefix
-  db   = "!f() { GIT_PAGER=less git d ${1:-master}...; }; f"
-  dc   =      diff --no-prefix --cached
-  dd   = !GIT_PAGER=less git d
-  ddc  = !GIT_PAGER=less git dc
-  ddi  = !GIT_PAGER=less git di
-  di   =      diff --no-prefix HEAD
-  dp   = "!f() { git db ${1:-origin}/$(git bc); }; f"
-  e    = "!f() { git re ${1:-HEAD}; }; f"
-  ee   = "!f() { git re --soft ${1:-HEAD}^; }; f"
-  eh   = "!f() { git re --hard ${1:-HEAD}^; }; f"
-  f    =      fetch
-  fa   = !git remote | xargs -I '{}' git fetch '{}'
-  g    =      grep -E -n
-  h    =      help
-  l    = !cd -- \"${GIT_PREFIX:-.}\" && git ly -20
-  la   = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git log --reverse
-  lb   = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly ${a:-master}... \"$@\"; }; f"
-  lc   =      whatchanged --reverse -20
-  lf   = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git whatchanged
-  lg   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly -G\"$a\" \"$@\"; }; f"
-  li   = !cd -- \"${GIT_PREFIX:-.}\" && git ls-files -oi --exclude-standard | sed /^\\\\.\\\\?local\\\\//d
-  ll   =      log --reverse -20
-  lm   =      ls-files -m --exclude-standard
-  lo   = "!f() { local a=$1; [ $# -gt 0 ] && shift; git lb origin/${a:-master} \"$@\"; }; f"
-  lol  = !cd -- \"${GIT_PREFIX:-.}\" && git ly --graph --date-order -32
-  lp   = "!f() { git lb ${1:-origin}/$(git bc); }; f"
-  lr   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --grep=\"$a\" -E \"$@\"; }; f"
-  ls   = !cd -- \"${GIT_PREFIX:-.}\" && git l --stat
-  lu   =      ls-files -o --exclude-standard
-  lv   = !cd -- \"${GIT_PREFIX:-.}\" && git la -p
-  lw   = !cd -- \"${GIT_PREFIX:-.}\" && git ly --follow
-  lx   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --pickaxe-regex -S\"$a\" \"$@\"; }; f"
-  ly   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/\" | tac; }; f"
-  m    =      merge
-  mc   =      merge --continue
-  mf   =      merge --ff-only
-  mine = !cd -- \"${GIT_PREFIX:-.}\" && git ly --author="$(git config user.email)"
-  mn   =      merge --no-ff
-  o    =      remote -v
-  oo   = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
-  op   = !git oo | xargs -I '{}' git o prune '{}'
-  p    =      push
-  pa   = !git oo | xargs -I '{}' git push '{}' $(git bc)
-  pd   =      push origin --delete
-  pf   = !git po --force-with-lease
-  pff  = !git oo | xargs -I '{}' git push '{}' $(git bc) --force-with-lease
-  po   = "!f() { local a=HEAD; case \"$1\" in -* ) ;; ?* ) a=$1; shift;; esac; git push origin \"$a:$(git bc)\" \"$@\"; }; f"
-  pp   = !git pa && git pt
-  pt   = !git oo | xargs -I '{}' git push --tags '{}'
-  rb   =      rebase --rebase-merges
-  rba  =      rebase --abort
-  rbc  =      rebase --continue
-  rbp  =      rebase --show-current-patch
-  rbs  =      rebase --skip
-  re   =      reset
-  ri   = "!f() { git rb -i ${1:-HEAD^}^; }; f"
-  rr   =      rb -i --root
-  s    =      status
-  ss   =      status --short
-  st   =      stash
-  sta  =      stash apply
-  stb  =      stash branch
-  std  =      stash drop
-  stl  =      stash list
-  stp  =      stash push --patch
-  sts  =      stash push --keep-index
-  stt  =      stash pop
-  stw  =      stash show --patch --no-prefix
-  t    =      tag
-  td   =      describe --contains
-  tl   =      tag -n1 -l
-  u    =      pull
-  ua   = !git remote | xargs -I '{}' git pull '{}' $(git bc) && git fetch
-  uf   = !git remote | xargs -I '{}' git pull --ff-only '{}' $(git bc) && git fetch
-  ur   = !git remote | xargs -I '{}' git pull --rebase=merges '{}' $(git bc) && git fetch
-  uu   = !git ly "$(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
-  v    =      revert
-  w    =      show --pretty=fuller --no-prefix
-  wb   = "!f() { git ww $(git log --reverse --pretty=%H ${1:-master}...); }; f"
-  wc   = "!f() { while :; do git whatchanged \"${1:-HEAD}^!\"; [ $# -gt 1 ] && shift || break; done; }; f"
-  wm   = "!f() { local a=$1; shift; GIT_PAGER=less git diff \"$@\" $(git show $a | sed -n \"/^Merge:/{s/.*: *//;s/ /.../;p;q}\"); }; f"
-  wp   = "!f() { git wb ${1:-origin}/$(git bc); }; f"
-  wt   =      worktree add
-  wtl  =      worktree list
-  wtm  =      worktree move
-  wtp  =      worktree prune -v
-  wtr  =      worktree remove
-  ww   = "!f() { while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
-  www  = "!f() { while :; do GIT_PAGER=less git w -w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
-  x    =      commit --amend
-  xa   = !cd -- \"${GIT_PREFIX:-.}\" && git x -v -a
-  z    =      checkout-index -u -f --
-  zz   =      checkout -f --
+  a = add
+  al = "!f() { git config -l | grep \"^alias\\.$1\"; }; f"
+  au = add -u .
+  b = branch
+  bb = "!f() { git branch --list --color=always --format '%(if)%(HEAD)%(then)%(color:reverse)%(else)%(color:bold)%(end)%(align:46)%(refname:lstrip=2)%(end)%(color:reset) %(color:yellow)%(objectname:short=7) %(color:green)%(authordate:iso) %(color:cyan)%(align:21)%(authorname)%(end) %(if)%(upstream)%(then)%(color:reset)[%(color:magenta)%(upstream:lstrip=2)%(color:reset)] %(end)%(color:reset)%(contents:subject)' \"$@\" | sed -E '/^.{4}[0-9]-/d;s/(.{202}).*/\\1/'; }; f"
+  bc = !git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
+  bd = b -d
+  bdd = b -D
+  bl = !git bb '*'
+  bm = branch -v --merged
+  bn = branch -v --no-merged
+  br = "!f() { git branch -r --color=always --format '%(align:24)%(refname:rstrip=-3)%(end) %(color:bold)%(align:46)%(refname:lstrip=3)%(end)%(color:reset) %(color:yellow)%(objectname:short=7) %(color:green)%(authordate:iso) %(color:cyan)%(align:21)%(authorname)%(end) %(color:reset)%(contents:subject)' | cut -d/ -f3- | sed -E 's/(.{202}).*/\\1/'; }; f"
+  bsb = bisect bad
+  bsg = bisect good
+  bsr = bisect reset
+  bss = bisect start
+  c = commit -v
+  ca = commit -v --all
+  cb = checkout -b
+  ci = commit -v --interactive
+  cmp = "!f() { git merge-base --is-ancestor $1 ${2:-HEAD}; }; f"
+  co = checkout
+  cp = cherry-pick
+  cx = cherry-pick -x
+  d = diff --no-prefix
+  db = "!f() { GIT_PAGER=less git d ${1:-master}...; }; f"
+  dc = diff --no-prefix --cached
+  dd = !GIT_PAGER=less git d
+  ddc = !GIT_PAGER=less git dc
+  ddi = !GIT_PAGER=less git di
+  di = diff --no-prefix HEAD
+  dp = "!f() { git db ${1:-origin}/$(git bc); }; f"
+  e = "!f() { git re ${1:-HEAD}; }; f"
+  ee = "!f() { git re --soft ${1:-HEAD}^; }; f"
+  eh = "!f() { git re --hard ${1:-HEAD}^; }; f"
+  f = fetch
+  fa = !git remote | xargs -I '{}' git fetch '{}'
+  g = grep -E -n
+  h = help
+  l = !cd -- \"${GIT_PREFIX:-.}\" && git ly -20
+  la = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git log --reverse
+  lb = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly ${a:-master}... \"$@\"; }; f"
+  lc = whatchanged --reverse -20
+  lf = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git whatchanged
+  lg = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly -G\"$a\" \"$@\"; }; f"
+  lh = ly ORIG_HEAD...
+  li = !cd -- \"${GIT_PREFIX:-.}\" && git ls-files -oi --exclude-standard | sed /^\\\\.\\\\?local\\\\//d
+  ll = log --reverse -20
+  lm = ls-files -m --exclude-standard
+  lo = "!f() { local a=$1; [ $# -gt 0 ] && shift; git lb origin/${a:-master} \"$@\"; }; f"
+  lol = !cd -- \"${GIT_PREFIX:-.}\" && git ly --graph --date-order -32
+  lp = "!f() { git lb ${1:-origin}/$(git bc); }; f"
+  lr = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --grep=\"$a\" -E \"$@\"; }; f"
+  ls = !cd -- \"${GIT_PREFIX:-.}\" && git l --stat
+  lu = ls-files -o --exclude-standard
+  lv = !cd -- \"${GIT_PREFIX:-.}\" && git la -p
+  lw = !cd -- \"${GIT_PREFIX:-.}\" && git ly --follow
+  lx = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --pickaxe-regex -S\"$a\" \"$@\"; }; f"
+  ly = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --show-pulls --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/\" | tac; }; f"
+  m = merge
+  mc = merge --continue
+  mf = merge --ff-only
+  mine = !cd -- \"${GIT_PREFIX:-.}\" && git ly --author=$(git config user.email)
+  mn = merge --no-ff
+  o = remote -v
+  oo = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
+  op = !git oo | xargs -I '{}' git o prune '{}'
+  p = push
+  pa = !git oo | xargs -I '{}' git push '{}' $(git bc)
+  pd = push origin --delete
+  pf = !git po --force-with-lease
+  pff = !git oo | xargs -I '{}' git push '{}' $(git bc) --force-with-lease
+  po = "!f() { local a=HEAD; case \"$1\" in -* ) ;; ?* ) a=$1; shift;; esac; git push origin \"$a:$(git bc)\" \"$@\"; }; f"
+  pp = !git pa && git pt
+  pt = !git oo | xargs -I '{}' git push --tags '{}'
+  rb = rebase --rebase-merges
+  rba = rebase --abort
+  rbc = rebase --continue
+  rbp = rebase --show-current-patch
+  rbs = rebase --skip
+  re = reset
+  ri = "!f() { git rb -i ${1:-HEAD^}^; }; f"
+  rr = rb -i --root
+  s = status
+  ss = status --short
+  st = stash
+  sta = stash apply --index
+  stb = stash branch
+  std = stash drop
+  stl = stash list
+  stp = stash push --patch
+  sts = stash push
+  stt = stash pop --index
+  stw = stash show --patch --no-prefix
+  t = tag
+  td = describe --contains
+  tl = tag -n1 -l
+  u = pull
+  ua = !git remote | xargs -I '{}' git uy '{}'
+  uf = !git remote | xargs -I '{}' git uy --ff-only '{}'
+  ur = !git remote | xargs -I '{}' git uy --rebase=merges '{}'
+# uu = "!git ly $(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
+  uu = uf
+  uy = "!f() { git pull \"$@\" $(git bc) && git lh && git fetch; }; f"
+  v = revert
+  w = show --pretty=fuller --no-prefix
+  wb = "!f() { git ww $(git log --reverse --pretty=%H ${1:-master}...); }; f"
+  wc = "!f() { while :; do git whatchanged \"${1:-HEAD}^!\"; [ $# -gt 1 ] && shift || break; done; }; f"
+  wm = "!f() { local a=$1; shift; GIT_PAGER=less git diff \"$@\" $(git show $a | sed -n \"/^Merge:/{s/.*: *//;s/ /.../;p;q}\"); }; f"
+  wp = "!f() { git wb ${1:-origin}/$(git bc); }; f"
+  wt = worktree add
+  wtl = worktree list
+  wtm = worktree move
+  wtp = worktree prune -v
+  wtr = worktree remove
+  ww = "!f() { while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
+  www = "!f() { while :; do GIT_PAGER=less git w -w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
+  x = commit --amend
+  xa = !cd -- \"${GIT_PREFIX:-.}\" && git x -v -a
+  z = checkout-index -u -f --
+  zz = checkout -f --
 
   find-merge = "!f() { { git rev-list $1..${2:-HEAD} --ancestry-path | cat -n; git rev-list $1..${2:-HEAD} --first-parent | cat -n; } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2; }; f"
-  log-merge  = "!f() { local m=$(git find-merge \"$@\") && [ -n \"$m\" ] && git ly \"$m^!\"; }; f"
+  log-merge = "!f() { local m=$(git find-merge \"$@\") && [ -n \"$m\" ] && git ly \"$m^!\"; }; f"
 
   last-by = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}t %${a}I %${a}E\" -1 -- \"$@\"; }; f"
   last-au = last-by a
   last-co = last-by c
 
-  top-by  = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}N <%${a}E>\" -- \"$@\" | sort | uniq -c | sort -rn; }; f"
-  top-au  = top-by a
-  top-co  = top-by c
+  top-by = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}N <%${a}E>\" -- \"$@\" | sort | uniq -c | sort -rn; }; f"
+  top-au = top-by a
+  top-co = top-by c
 
 [core]
   attributesFile = ~/.gitattributes
-  excludesfile   = ~/.gitignore
+  excludesfile = ~/.gitignore
 
 [include]
   path = ~/.gitconfig.mine
