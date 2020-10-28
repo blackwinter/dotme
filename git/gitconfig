@@ -88,7 +88,7 @@
   lv   = !cd -- \"${GIT_PREFIX:-.}\" && git la -p
   lw   = !cd -- \"${GIT_PREFIX:-.}\" && git ly --follow
   lx   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --pickaxe-regex -S\"$a\" \"$@\"; }; f"
-  ly   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; git log --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%an %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/[-]/;s/\\[>>>>\\]/[+]/\" | tac; }; f"
+  ly   = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/\" | tac; }; f"
   m    =      merge
   mc   =      merge --continue
   mf   =      merge --ff-only
@@ -112,6 +112,7 @@
   rbs  =      rebase --skip
   re   =      reset
   ri   = "!f() { git rb -i ${1:-HEAD^}^; }; f"
+  rr   =      rb -i --root
   s    =      status
   ss   =      status --short
   st   =      stash
