@@ -18,6 +18,9 @@
   added = yellow
   changed = green
   untracked = cyan
+[core]
+  attributesFile = ~/.gitattributes
+  excludesfile = ~/.gitignore
 [diff]
   algorithm = patience
   colorMoved = dimmed-zebra
@@ -26,6 +29,8 @@
 [diff "gzip"]
   binary = true
   textconv = /bin/zcat
+[init]
+  defaultBranch = master
 [merge]
   conflictstyle = diff3
 [push]
@@ -95,6 +100,7 @@
   lv = !cd -- \"${GIT_PREFIX:-.}\" && git la -p
   lw = !cd -- \"${GIT_PREFIX:-.}\" && git ly --follow
   lx = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --pickaxe-regex -S\"$a\" \"$@\"; }; f"
+  lxx = !cd -- \"${GIT_PREFIX:-.}\" && git lx --follow
   ly = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --show-pulls --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/\" | tac; }; f"
   m = merge
   mc = merge --continue
@@ -169,10 +175,6 @@
   top-by = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}N <%${a}E>\" -- \"$@\" | sort | uniq -c | sort -rn; }; f"
   top-au = top-by a
   top-co = top-by c
-
-[core]
-  attributesFile = ~/.gitattributes
-  excludesfile = ~/.gitignore
 
 [include]
   path = ~/.gitconfig.mine
