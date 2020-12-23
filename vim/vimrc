@@ -21,6 +21,7 @@ set modeline
 set nofoldenable
 set noloadplugins
 set pastetoggle=<F11>
+set ruler
 set scrolloff=3
 set shiftwidth=2
 set showcmd
