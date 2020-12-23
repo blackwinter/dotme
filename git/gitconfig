@@ -146,7 +146,7 @@
   ur = !git remote | xargs -I '{}' git uy --rebase=merges '{}'
 # uu = "!git ly $(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
   uu = uf
-  uy = "!f() { git pull \"$@\" $(git bc) && git lh && git fetch; }; f"
+  uy = "!f() { git pull \"$@\" $(git bc) && git lh && git fetch --tags; }; f"
   v = revert
   w = show --pretty=fuller --no-prefix
   wb = "!f() { git ww $(git log --reverse --pretty=%H ${1:-master}...); }; f"
