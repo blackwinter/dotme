@@ -45,7 +45,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
   \| exe "normal g'\"" | endif
 
 highlight RedundantSpaces term=standout ctermbg=yellow guibg=yellow
-match RedundantSpaces /\s\+$\| \+\ze\t/
+match RedundantSpaces /\(\s\|\%u00a0\)\+$\| \+\ze\t/
 
 au BufRead,BufNewFile *.conf.mt                                                       set filetype=conf
 au BufRead,BufNewFile *.fix                                                           set filetype=metafacture-fix
