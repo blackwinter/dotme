@@ -67,7 +67,7 @@
   cp = cherry-pick
   cx = cherry-pick -x
   d = diff --no-prefix
-  db = "!f() { GIT_PAGER=less git d ${1:-master}...; }; f"
+  db = "!f() { GIT_PAGER=less git d ${1:-$(git config init.defaultBranch)}...; }; f"
   dc = diff --no-prefix --cached
   dd = !GIT_PAGER=less git d
   ddc = !GIT_PAGER=less git dc
@@ -83,7 +83,7 @@
   h = help
   l = !cd -- \"${GIT_PREFIX:-.}\" && git ly -20
   la = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git log --reverse
-  lb = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly ${a:-master}... \"$@\"; }; f"
+  lb = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly ${a:-$(git config init.defaultBranch)}... \"$@\"; }; f"
   lc = whatchanged --reverse -20
   lf = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git whatchanged
   lg = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly -G\"$a\" \"$@\"; }; f"
@@ -91,7 +91,7 @@
   li = !cd -- \"${GIT_PREFIX:-.}\" && git ls-files -oi --exclude-standard | sed /^\\\\.\\\\?local\\\\//d
   ll = log --reverse -20
   lm = ls-files -m --exclude-standard
-  lo = "!f() { local a=$1; [ $# -gt 0 ] && shift; git lb origin/${a:-master} \"$@\"; }; f"
+  lo = "!f() { local a=$1; [ $# -gt 0 ] && shift; git lb origin/${a:-$(git config init.defaultBranch)} \"$@\"; }; f"
   lol = !cd -- \"${GIT_PREFIX:-.}\" && git ly --graph --date-order -32
   lp = "!f() { git lb ${1:-origin}/$(git bc); }; f"
   lr = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --grep=\"$a\" -E \"$@\"; }; f"
@@ -111,13 +111,11 @@
   oo = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
   op = !git oo | xargs -I '{}' git o prune '{}'
   p = push
-  pa = !git oo | xargs -I '{}' git push '{}' $(git bc)
-  pd = push origin --delete
+  pd = "!f() { git push ${2:-origin} --delete $1; }; f"
   pf = !git po --force-with-lease
   pff = !git oo | xargs -I '{}' git push '{}' $(git bc) --force-with-lease
   po = "!f() { local a=HEAD; case \"$1\" in -* ) ;; ?* ) a=$1; shift;; esac; git push origin \"$a:$(git bc)\" \"$@\"; }; f"
-  pp = !git pa && git pt
-  pt = !git oo | xargs -I '{}' git push --tags '{}'
+  pp = "!f() { local a=HEAD b=$(git bc); case \"$1\" in -* ) ;; ?* ) a=$1; shift;; esac; git oo | xargs -I '{}' git push --tags '{}' \"$a:$b\" \"$@\"; }; f"
   rb = rebase --rebase-merges
   rba = rebase --abort
   rbc = rebase --continue
@@ -149,7 +147,7 @@
   uy = "!f() { git pull \"$@\" $(git bc) && git lh && git fetch --tags; }; f"
   v = revert
   w = show --pretty=fuller --no-prefix
-  wb = "!f() { git ww $(git log --reverse --pretty=%H ${1:-master}...); }; f"
+  wb = "!f() { git ww $(git log --reverse --pretty=%H ${1:-$(git config init.defaultBranch)}...); }; f"
   wc = "!f() { while :; do git whatchanged \"${1:-HEAD}^!\"; [ $# -gt 1 ] && shift || break; done; }; f"
   wm = "!f() { local a=$1; shift; GIT_PAGER=less git diff \"$@\" $(git show $a | sed -n \"/^Merge:/{s/.*: *//;s/ /.../;p;q}\"); }; f"
   wp = "!f() { git wb ${1:-origin}/$(git bc); }; f"
