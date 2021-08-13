@@ -32,11 +32,11 @@ alias jrake="jruby -S rake"
 
 alias  curl="curl -sSL"
 alias  diff="_diff -u"
-alias disks="sudo fdisk -l | sed -n 's/,.*//; /\/dev\/ram/n; s:^Disk /:/:p'"
+alias disks="sudo fdisk -l | sed -n 's/,.*//; /\/dev\/ram/n; /\/dev\/loop/n; s:^Disk /:/:p' | sort"
 alias  help="help -m"
 alias  make="make -j$(nproc)"
 alias  uuid="sudo blkid -o value -s UUID"
-alias whois="whois -H -T dn"
+alias whois="whois -H"
 
 alias cl="clear; l"
 alias ct="clear; t"
@@ -139,11 +139,17 @@ function pdfcat() {
 }
 
 function date2epoch() {
-  date "+%s" -d "$1"
+  while [ -n "$1" ]; do
+    date "+%s" -d "$1"
+    shift
+  done
 }
 
 function epoch2date() {
-  date +"%Y/%m/%d %H:%M:%S" -d "@${1:0:10}"
+  while [ -n "$1" ]; do
+    date +"%Y-%m-%d %H:%M:%S" -d "@${1:0:10}"
+    shift
+  done
 }
 
 ### LOAD CUSTOM FILE
