@@ -101,12 +101,17 @@
   lw = !cd -- \"${GIT_PREFIX:-.}\" && git ly --follow
   lx = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --pickaxe-regex -S\"$a\" \"$@\"; }; f"
   lxx = !cd -- \"${GIT_PREFIX:-.}\" && git lx --follow
-  ly = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --show-pulls --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/\" | tac; }; f"
+  ly = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --show-pulls --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/;s/ *$//\" | tac; }; f"
   m = merge
   mc = merge --continue
+  md = "!f() { local a=$1; [ $# -gt 0 ] && shift; git dd $a^..$a \"$@\"; }; f"
   mf = merge --ff-only
   mine = !cd -- \"${GIT_PREFIX:-.}\" && git ly --author=$(git config user.email)
+  ml = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly $a^..$a \"$@\"; }; f"
+  mm = "!f() { local m=\"$(git log --pretty=format:%P $1^! | tr -cd ' ')\"; [ -n \"$m\" ] && echo $1 || { git rev-list $1..${2:-HEAD} --merges --ancestry-path | cat -n; git rev-list $1..${2:-HEAD} --merges --first-parent | cat -n; } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2; }; f"
   mn = merge --no-ff
+  mw = "!f() { local a=$1; [ $# -gt 0 ] && shift; local m=$(git mm $a); [ -n \"$m\" ] && git w $m \"$@\"; }; f"
+  mww = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ww $(git log --pretty=format:%H --reverse $a^..$a); }; f"
   o = remote -v
   oo = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
   op = !git oo | xargs -I '{}' git o prune '{}'
@@ -138,6 +143,7 @@
   t = tag
   td = describe --contains
   tl = tag -n1 -l
+  tv = td --match 'version-*'
   u = pull
   ua = !git remote | xargs -I '{}' git uy '{}'
   uf = !git remote | xargs -I '{}' git uy --ff-only '{}'
@@ -160,11 +166,8 @@
   www = "!f() { while :; do GIT_PAGER=less git w -w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
   x = commit --amend
   xa = !cd -- \"${GIT_PREFIX:-.}\" && git x -v -a
-  z = checkout-index -u -f --
+  z = restore
   zz = checkout -f --
-
-  find-merge = "!f() { { git rev-list $1..${2:-HEAD} --ancestry-path | cat -n; git rev-list $1..${2:-HEAD} --first-parent | cat -n; } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2; }; f"
-  log-merge = "!f() { local m=$(git find-merge \"$@\") && [ -n \"$m\" ] && git ly \"$m^!\"; }; f"
 
   last-by = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}t %${a}I %${a}E\" -1 -- \"$@\"; }; f"
   last-au = last-by a
