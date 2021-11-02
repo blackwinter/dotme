@@ -63,13 +63,13 @@ au FileType * set comments=""
 au FileType gitcommit set tw<
 
 au FileType html,xhtml,eruby let b:closetag_html_style=1
-au Filetype html,xhtml,eruby,xml,xsl ru macros/closetag.vim
+au Filetype html,xhtml,eruby,xml,xsl ru closetag/macros/closetag.vim
 
 au FileType ruby set iskeyword+=33,63
 
 au FileType java,groovy set shiftwidth=4
 
-ru! macros/matchit.vim macros/ll.vim plugin/gzip.vim plugin/supertab.vim
+ru! macros/matchit.vim macros/ll.vim plugin/gzip.vim supertab/plugin/supertab.vim
 
 imap <C-up> <C-x><C-y>
 imap <C-down> <C-x><C-e>
