@@ -22,7 +22,7 @@
   attributesFile = ~/.gitattributes
   excludesfile = ~/.gitignore
 [diff]
-  algorithm = patience
+  algorithm = histogram
   colorMoved = dimmed-zebra
   compactionHeuristic = true
   relative = true
@@ -60,10 +60,10 @@
   bss = bisect start
   c = commit -v
   ca = commit -v --all
-  cb = checkout -b
+  cb = switch -c
   ci = commit -v --interactive
   cmp = "!f() { git merge-base --is-ancestor $1 ${2:-HEAD}; }; f"
-  co = checkout
+  co = switch
   cp = cherry-pick
   cx = cherry-pick -x
   d = diff --no-prefix
@@ -106,7 +106,7 @@
   mc = merge --continue
   md = "!f() { local a=$1; [ $# -gt 0 ] && shift; git dd $a^..$a \"$@\"; }; f"
   mf = merge --ff-only
-  mine = !cd -- \"${GIT_PREFIX:-.}\" && git ly --author=$(git config user.email)
+  mine = "!cd -- \"${GIT_PREFIX:-.}\" && git ly --author=$(git check-mailmap \"<$(git config user.email)>\" | sed \"s/.*<//;s/>//\")"
   ml = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly $a^..$a \"$@\"; }; f"
   mm = "!f() { local m=\"$(git log --pretty=format:%P $1^! | tr -cd ' ')\"; [ -n \"$m\" ] && echo $1 || { git rev-list $1..${2:-HEAD} --merges --ancestry-path | cat -n; git rev-list $1..${2:-HEAD} --merges --first-parent | cat -n; } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2; }; f"
   mn = merge --no-ff
@@ -142,8 +142,10 @@
   stw = stash show --patch --no-prefix
   t = tag
   td = describe --contains
-  tl = tag -n1 -l
-  tv = td --match 'version-*'
+  tl = tag -l --sort taggerdate -n1
+  tll = tl -n64
+  tv = "!f() { git td --match \"version-*\" \"$@\"; }; f"
+  ty = "!f() { git tag -l --sort=taggerdate --color=always --format=\"%(color:yellow)%(align:32)%(refname:strip=2)%(end) %(color:green)%(taggerdate:iso) %(color:cyan)%(align:16)%(taggername)%(end) %(color:reset)%(contents:subject)\" \"$@\"; }; f"
   u = pull
   ua = !git remote | xargs -I '{}' git uy '{}'
   uf = !git remote | xargs -I '{}' git uy --ff-only '{}'
