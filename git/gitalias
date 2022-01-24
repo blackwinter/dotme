@@ -1,0 +1,263 @@
+#! /bin/bash
+
+abbrev_length=7
+author_length=16
+branch_length=46
+line_length=202
+
+author_color=cyan
+branch_color=bold
+date_color=green
+hash_color=yellow
+upstream_color=magenta
+
+cmd=$1; shift
+opt=()
+arg=()
+
+while [ -n "$1" ]; do
+  case "$1" in
+    -- ) arg+=("$@"); break;;
+    -* ) opt+=("$1");;
+    *  ) arg+=("$1");;
+  esac
+
+  shift
+done
+
+function shift_arg() {
+  arg=("${arg[@]:${1:-1}}")
+}
+
+function default_branch() {
+  git config init.defaultBranch
+}
+
+function current_branch() {
+  git rev-parse --symbolic --abbrev-ref "$(git symbolic-ref HEAD 2> /dev/null)"
+}
+
+case "$cmd" in
+  blame-interactive )
+    rev=
+
+    while :; do
+      git blame -n --abbrev="$abbrev_length" $rev "${arg[@]}"
+
+      echo -n '> ' >&2
+      read -e
+
+      [ -z "$REPLY" ] && echo >&2 && break
+      rev="$REPLY^"
+    done
+
+    [ -n "$rev" ] && git whatchanged "$rev!" >&2
+    ;;
+  current-branch )
+    current_branch
+    ;;
+  diff-branch )
+    git myalias paged d "${opt[@]}" "${arg[0]:-$(default_branch)}..."
+    ;;
+  diff-merge )
+    m=$(git mm "${arg[0]}"); shift_arg
+    [ -n "$m" ] && git dd "${opt[@]}" "$m^..$m" "${arg[@]}"
+    ;;
+  diff-push )
+    git db "${opt[@]}" "${arg[0]:-origin}/$(current_branch)"
+    ;;
+  fetch-all )
+    git remote | xargs -I '{}' git fetch '{}'
+    ;;
+  find-merge )
+    c=${arg[0]}; d=${arg[1]:-HEAD}; shift_arg 2
+
+    [ -n "$c" ] || exit 1
+    m="$(git log --pretty=format:%P "$c^!" | tr -cd ' ')"
+
+    [ -n "$m" ] && echo "$c" || {
+      git rev-list "$c..$d" --merges --ancestry-path | cat -n;
+      git rev-list "$c..$d" --merges --first-parent  | cat -n;
+    } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2
+    ;;
+  grep-aliases )
+    git config -l | grep "${opt[@]}" "^alias\\.${arg[0]}"
+    ;;
+  is-ancestor )
+    [ ${#arg[@]} -gt 0 ] || exit 1
+    git merge-base "${opt[@]}" --is-ancestor "${arg[0]}" ${arg[1]:-HEAD}
+    ;;
+  last-author )
+    git myalias last-by a
+    ;;
+  last-by )
+    a=${arg[0]}; shift_arg
+    [ -n "$a" ] || exit 1
+    git log "${opt[@]}" --pretty="%${a}t %${a}I %${a}N <%${a}E>" -1 -- "${arg[@]}"
+    ;;
+  last-committer )
+    git myalias last-by c
+    ;;
+  list-ignored )
+    git ls-files -oi --exclude-standard | sed '/^\.\?local\//d'
+    ;;
+  log-author )
+    a=${arg[0]}; shift_arg
+    [ -n "$a" ] || exit 1
+    git ly "${opt[@]}" --author="$(git check-mailmap "<$a>" | sed 's/.*<//;s/>//')" "${arg[@]}"
+    ;;
+  log-branch )
+    b=${arg[0]}; shift_arg
+    git ly "${opt[@]}" "${b:-$(default_branch)}..." "${arg[@]}"
+    ;;
+  log-graph )
+    git ly "${opt[@]}" --graph --date-order -"$(($(tput lines) - 6))" "${arg[@]}" | tac
+    ;;
+  log-grep )
+    [ ${#arg[@]} -gt 0 ] || exit 1
+    git ly "${opt[@]}" -G "${arg[@]}"
+    ;;
+  log-grep-message )
+    [ ${#arg[@]} -gt 0 ] || exit 1
+    git ly "${opt[@]}" -E --grep "${arg[@]}"
+    ;;
+  log-merge )
+    m=$(git mm "${arg[0]}"); shift_arg
+    [ -n "$m" ] && git ly "${opt[@]}" "$m^..$m" "${arg[@]}"
+    ;;
+  log-mine )
+    git myalias log-author "${opt[@]}" "$(git config user.email)" "${arg[@]}"
+    ;;
+  log-pickaxe )
+    [ ${#arg[@]} -gt 0 ] || exit 1
+    git ly "${opt[@]}" --pickaxe-regex -S "${arg[@]}"
+    ;;
+  log-pretty )
+    format='tformat:%C('"$hash_color"')%h %C'"$date_color"'%ai %C('"$author_color"')%<('"$author_length"',trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s'
+
+    left=$(tput bold)$(tput setaf 1)
+    right=$(tput bold)$(tput setaf 4)
+    reset=$(tput sgr0)
+
+    git log "${opt[@]}" --show-pulls --abbrev="$abbrev_length" --color=always --pretty="$format" "${arg[@]}"\
+      | sed "s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/;s/ *$//" | tac
+    ;;
+  log-push )
+    o=${arg[0]}; shift_arg
+    git lb "${opt[@]}" "${o:-origin}/$(current_branch)" "${arg[@]}"
+    ;;
+  log-remote )
+    b=${arg[0]}; shift_arg
+    git lb "${opt[@]}" "origin/${b:-$(default_branch)}" "${arg[@]}"
+    ;;
+  paged )
+    c=${arg[0]}; shift_arg
+    [ -n "$c" ] || exit 1
+    GIT_PAGER=less git "$c" "${opt[@]}" "${arg[@]}"
+    ;;
+  pretty-branches )
+    format='%(if)%(HEAD)%(then)%(color:reverse)%(else)%(color:'"$branch_color"')%(end)%(align:'"$branch_length"')%(refname:lstrip=2)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(if)%(upstream)%(then)%(color:reset)[%(color:'"$upstream_color"')%(upstream:lstrip=2)%(color:reset)] %(end)%(color:reset)%(contents:subject)'
+
+    git branch "${opt[@]}" --list --color=always --format "$format" "${arg[@]}"\
+      | sed -E '/^.{4}[0-9]-/d;s/(.{'"$line_length"'}).*/\1/'
+    ;;
+  pretty-tags )
+    format='%(color:'"$hash_color"')%(align:32)%(refname:strip=2)%(end) %(color:'"$date_color"')%(taggerdate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(taggername)%(end) %(color:reset)%(contents:subject)'
+    git tag -l --sort=taggerdate --color=always --format="$format" "${arg[@]}"
+    ;;
+  prune-all )
+    git remote | xargs -I '{}' git o prune '{}'
+    ;;
+  pull-all )
+    git remote | xargs -I '{}' git uy "${opt[@]}" '{}'
+    ;;
+  pull-all-force )
+    git myalias pull-all --ff-only
+    ;;
+  pull-all-rebase )
+    git myalias pull-all --rebase=merges
+    ;;
+  pull-pretty )
+    git pull "${opt[@]}" "${arg[@]}" "$(current_branch)" && git lh && git fetch --tags
+    ;;
+  push-all )
+    b=${arg[0]}; shift_arg
+    git oo | xargs -I '{}' git push "${opt[@]}" --tags '{}' "${b:-HEAD}:$(current_branch)" "${arg[@]}"
+    ;;
+  push-all-force )
+    git oo | xargs -I '{}' git push "${opt[@]}" '{}' "$(current_branch)" --force-with-lease
+    ;;
+  push-delete )
+    [ ${#arg[@]} -gt 0 ] || exit 1
+    git push "${opt[@]}" "${arg[1]:-origin}" --delete "${arg[0]}"
+    ;;
+  push-remote )
+    b=${arg[0]}; shift_arg
+    git push "${opt[@]}" origin "${b:-HEAD}:$(current_branch)" "${arg[@]}"
+    ;;
+  pushable-remotes )
+    git o | grep -v 'https\?://' | cut -f1 | sort -u
+    ;;
+  rebase-interactive )
+    git rb "${opt[@]}" -i "${arg[0]:-HEAD^}^"
+    ;;
+  remote-branches )
+    format='%(align:24)%(refname:rstrip=-3)%(end) %(color:'"$branch_color"')%(align:'"$branch_length"')%(refname:lstrip=3)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(color:reset)%(contents:subject)'
+
+    git branch "${opt[@]}" -r --color=always --format "$format" "${arg[@]}"\
+      | cut -d/ -f3- | sed -E 's/(.{'"$line_length"'}).*/\1/'
+    ;;
+  reset )
+    git re "${opt[@]}" "${arg[0]:-HEAD}"
+    ;;
+  reset-parent )
+    git re "${opt[@]}" "${arg[0]:-HEAD}^"
+    ;;
+  show-all )
+    while :; do
+      git myalias paged w "${opt[@]}" "${arg[0]:-HEAD}"
+      [ ${#arg[@]} -gt 1 ] && shift_arg || break
+    done
+    ;;
+  show-branch )
+    git ww "${opt[@]}" $(git log --right-only --reverse --pretty=%H "${arg[0]:-$(default_branch)}...")
+    ;;
+  show-merge )
+    m=$(git mm "${arg[0]}"); shift_arg
+    [ -n "$m" ] && git w "${opt[@]}" "$m" "${arg[@]}"
+    ;;
+  show-merge-commits )
+    m=$(git mm "${arg[0]}"); shift_arg
+    [ -n "$m" ] && git ww "${opt[@]}" "$(git log --reverse --pretty=%H "$m^..$m")"
+    ;;
+  show-merge-diff )
+    m=$(git mm "${arg[0]}"); shift_arg
+    [ -n "$m" ] && git myalias paged diff "${opt[@]}" "${arg[@]}" "$(git show "$m" | sed -n '/^Merge:/{s/.*: *//;s/ /.../;p;q}')"
+    ;;
+  show-push )
+    git wb "${opt[@]}" "${arg[0]:-origin}/$(current_branch)"
+    ;;
+  show-whatchanged )
+    while :; do
+      git whatchanged "${opt[@]}" "${arg[0]:-HEAD}^!"
+      [ ${#arg[@]} -gt 1 ] && shift_arg || break
+    done
+    ;;
+  top-author )
+    git myalias top-by a
+    ;;
+  top-by )
+    a=${arg[0]}; shift_arg
+    [ -n "$a" ] || exit 1
+    git log "${opt[@]}" --pretty="%${a}N <%${a}E>" -- "${arg[@]}" | sort | uniq -c | sort -rn
+    ;;
+  top-committer )
+    git myalias top-by c
+    ;;
+  version-tags )
+    git td "${opt[@]}" --match 'version-*' "${arg[@]}"
+    ;;
+  * )
+    git "$cmd" "${opt[@]}" "${arg[@]}"
+    ;;
+esac

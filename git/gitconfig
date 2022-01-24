@@ -42,18 +42,20 @@
   stat = true
 
 [alias]
+  myalias = !cd -- \"${GIT_PREFIX:-.}\" && bash ~/.gitalias
+
   a = add
-  al = "!f() { git config -l | grep \"^alias\\.$1\"; }; f"
+  al = myalias grep-aliases
   au = add -u .
   b = branch
-  bb = "!f() { git branch --list --color=always --format '%(if)%(HEAD)%(then)%(color:reverse)%(else)%(color:bold)%(end)%(align:46)%(refname:lstrip=2)%(end)%(color:reset) %(color:yellow)%(objectname:short=7) %(color:green)%(authordate:iso) %(color:cyan)%(align:21)%(authorname)%(end) %(if)%(upstream)%(then)%(color:reset)[%(color:magenta)%(upstream:lstrip=2)%(color:reset)] %(end)%(color:reset)%(contents:subject)' \"$@\" | sed -E '/^.{4}[0-9]-/d;s/(.{202}).*/\\1/'; }; f"
-  bc = !git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD 2> /dev/null)
+  bb = myalias pretty-branches
+  bc = myalias current-branch
   bd = b -d
   bdd = b -D
-  bl = !git bb '*'
+  bi = myalias blame-interactive
   bm = branch -v --merged
   bn = branch -v --no-merged
-  br = "!f() { git branch -r --color=always --format '%(align:24)%(refname:rstrip=-3)%(end) %(color:bold)%(align:46)%(refname:lstrip=3)%(end)%(color:reset) %(color:yellow)%(objectname:short=7) %(color:green)%(authordate:iso) %(color:cyan)%(align:21)%(authorname)%(end) %(color:reset)%(contents:subject)' | cut -d/ -f3- | sed -E 's/(.{202}).*/\\1/'; }; f"
+  br = myalias remote-branches
   bsb = bisect bad
   bsg = bisect good
   bsr = bisect reset
@@ -62,72 +64,72 @@
   ca = commit -v --all
   cb = switch -c
   ci = commit -v --interactive
-  cmp = "!f() { git merge-base --is-ancestor $1 ${2:-HEAD}; }; f"
+  cmp = myalias is-ancestor
   co = switch
   cp = cherry-pick
   cx = cherry-pick -x
   d = diff --no-prefix
-  db = "!f() { GIT_PAGER=less git d ${1:-$(git config init.defaultBranch)}...; }; f"
+  db = myalias diff-branch
   dc = diff --no-prefix --cached
-  dd = !GIT_PAGER=less git d
-  ddc = !GIT_PAGER=less git dc
-  ddi = !GIT_PAGER=less git di
+  dd = myalias paged d
+  ddc = myalias paged dc
+  ddi = myalias paged di
   di = diff --no-prefix HEAD
-  dp = "!f() { git db ${1:-origin}/$(git bc); }; f"
-  e = "!f() { git re ${1:-HEAD}; }; f"
-  ee = "!f() { git re --soft ${1:-HEAD}^; }; f"
-  eh = "!f() { git re --hard ${1:-HEAD}^; }; f"
+  dp = myalias diff-push
+  e = myalias reset
+  ee = myalias reset-parent --soft
+  eh = myalias reset-parent --hard
   f = fetch
-  fa = !git remote | xargs -I '{}' git fetch '{}'
+  fa = myalias fetch-all
   g = grep -E -n
   h = help
-  l = !cd -- \"${GIT_PREFIX:-.}\" && git ly -20
-  la = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git log --reverse
-  lb = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly ${a:-$(git config init.defaultBranch)}... \"$@\"; }; f"
+  l = ly -20
+  la = myalias paged log --reverse
+  lb = myalias log-branch
   lc = whatchanged --reverse -20
-  lf = !cd -- \"${GIT_PREFIX:-.}\" && GIT_PAGER=less git whatchanged
-  lg = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly -G\"$a\" \"$@\"; }; f"
+  lf = myalias paged whatchanged --reverse
+  lg = myalias log-grep
   lh = ly ORIG_HEAD...
-  li = !cd -- \"${GIT_PREFIX:-.}\" && git ls-files -oi --exclude-standard | sed /^\\\\.\\\\?local\\\\//d
+  li = myalias list-ignored
   ll = log --reverse -20
   lm = ls-files -m --exclude-standard
-  lo = "!f() { local a=$1; [ $# -gt 0 ] && shift; git lb origin/${a:-$(git config init.defaultBranch)} \"$@\"; }; f"
-  lol = !cd -- \"${GIT_PREFIX:-.}\" && git ly --graph --date-order -32
-  lp = "!f() { git lb ${1:-origin}/$(git bc); }; f"
-  lr = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --grep=\"$a\" -E \"$@\"; }; f"
-  ls = !cd -- \"${GIT_PREFIX:-.}\" && git l --stat
+  lo = myalias log-remote
+  lol = myalias log-graph
+  lp = myalias log-push
+  lr = myalias log-grep-message
+  ls = l --stat
   lu = ls-files -o --exclude-standard
-  lv = !cd -- \"${GIT_PREFIX:-.}\" && git la -p
-  lw = !cd -- \"${GIT_PREFIX:-.}\" && git ly --follow
-  lx = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git ly --pickaxe-regex -S\"$a\" \"$@\"; }; f"
-  lxx = !cd -- \"${GIT_PREFIX:-.}\" && git lx --follow
-  ly = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local left=$(tput bold)$(tput setaf 1) right=$(tput bold)$(tput setaf 4) reset=$(tput sgr0); git log --show-pulls --abbrev=7 --color=always --pretty=tformat:\"%C(yellow)%h %Cgreen%ai %C(cyan)%<(16,trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s\" \"$@\" | sed \"s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/;s/ *$//\" | tac; }; f"
+  lv = la -p
+  lw = ly --follow
+  lx = myalias log-pickaxe
+  lxx = lx --follow
+  ly = myalias log-pretty
   m = merge
   mc = merge --continue
-  md = "!f() { local a=$1; [ $# -gt 0 ] && shift; git dd $a^..$a \"$@\"; }; f"
+  md = myalias diff-merge
   mf = merge --ff-only
-  mine = "!cd -- \"${GIT_PREFIX:-.}\" && git ly --author=$(git check-mailmap \"<$(git config user.email)>\" | sed \"s/.*<//;s/>//\")"
-  ml = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ly $a^..$a \"$@\"; }; f"
-  mm = "!f() { local m=\"$(git log --pretty=format:%P $1^! | tr -cd ' ')\"; [ -n \"$m\" ] && echo $1 || { git rev-list $1..${2:-HEAD} --merges --ancestry-path | cat -n; git rev-list $1..${2:-HEAD} --merges --first-parent | cat -n; } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2; }; f"
+  mine = myalias log-mine
+  ml = myalias log-merge
+  mm = myalias find-merge
   mn = merge --no-ff
-  mw = "!f() { local a=$1; [ $# -gt 0 ] && shift; local m=$(git mm $a); [ -n \"$m\" ] && git w $m \"$@\"; }; f"
-  mww = "!f() { local a=$1; [ $# -gt 0 ] && shift; git ww $(git log --pretty=format:%H --reverse $a^..$a); }; f"
+  mw = myalias show-merge
+  mww = myalias show-merge-commits
   o = remote -v
-  oo = !git o | grep '@\\|\\bfile:/' | cut -f1 | sort -u
-  op = !git oo | xargs -I '{}' git o prune '{}'
+  oo = myalias pushable-remotes
+  op = myalias prune-all
   p = push
-  pd = "!f() { git push ${2:-origin} --delete $1; }; f"
-  pf = !git po --force-with-lease
-  pff = !git oo | xargs -I '{}' git push '{}' $(git bc) --force-with-lease
-  po = "!f() { local a=HEAD; case \"$1\" in -* ) ;; ?* ) a=$1; shift;; esac; git push origin \"$a:$(git bc)\" \"$@\"; }; f"
-  pp = "!f() { local a=HEAD b=$(git bc); case \"$1\" in -* ) ;; ?* ) a=$1; shift;; esac; git oo | xargs -I '{}' git push --tags '{}' \"$a:$b\" \"$@\"; }; f"
+  pd = myalias push-delete
+  pf = po --force-with-lease
+  pff = myalias push-all-force
+  po = myalias push-remote
+  pp = myalias push-all
   rb = rebase --rebase-merges
   rba = rebase --abort
   rbc = rebase --continue
   rbp = rebase --show-current-patch
   rbs = rebase --skip
   re = reset
-  ri = "!f() { git rb -i ${1:-HEAD^}^; }; f"
+  ri = myalias rebase-interactive
   rr = rb -i --root
   s = status
   ss = status --short
@@ -144,40 +146,36 @@
   td = describe --contains
   tl = tag -l --sort taggerdate -n1
   tll = tl -n64
-  tv = "!f() { git td --match \"version-*\" \"$@\"; }; f"
-  ty = "!f() { git tag -l --sort=taggerdate --color=always --format=\"%(color:yellow)%(align:32)%(refname:strip=2)%(end) %(color:green)%(taggerdate:iso) %(color:cyan)%(align:16)%(taggername)%(end) %(color:reset)%(contents:subject)\" \"$@\"; }; f"
+  tv = myalias version-tags
+  ty = myalias pretty-tags
   u = pull
-  ua = !git remote | xargs -I '{}' git uy '{}'
-  uf = !git remote | xargs -I '{}' git uy --ff-only '{}'
-  ur = !git remote | xargs -I '{}' git uy --rebase=merges '{}'
-# uu = "!git ly $(git -c color.ui=always uf | tee /dev/tty | awk '/^Updating/{f=1;print $2};END{if(!f)print \"-0\"}')"
+  uf = myalias pull-all-force
+  ur = myalias pull-all-rebase
   uu = uf
-  uy = "!f() { git pull \"$@\" $(git bc) && git lh && git fetch --tags; }; f"
+  uy = myalias pull-pretty
   v = revert
   w = show --pretty=fuller --no-prefix
-  wb = "!f() { git ww $(git log --reverse --pretty=%H ${1:-$(git config init.defaultBranch)}...); }; f"
-  wc = "!f() { while :; do git whatchanged \"${1:-HEAD}^!\"; [ $# -gt 1 ] && shift || break; done; }; f"
-  wm = "!f() { local a=$1; shift; GIT_PAGER=less git diff \"$@\" $(git show $a | sed -n \"/^Merge:/{s/.*: *//;s/ /.../;p;q}\"); }; f"
-  wp = "!f() { git wb ${1:-origin}/$(git bc); }; f"
+  wb = myalias show-branch
+  wc = myalias show-whatchanged
+  wm = myalias show-merge-diff
+  wp = myalias show-push
   wt = worktree add
   wtl = worktree list
   wtm = worktree move
   wtp = worktree prune -v
   wtr = worktree remove
-  ww = "!f() { while :; do GIT_PAGER=less git w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
-  www = "!f() { while :; do GIT_PAGER=less git w -w \"${1:-HEAD}\"; [ $# -gt 1 ] && shift || break; done; }; f"
+  ww = myalias show-all
+  www = ww -w
   x = commit --amend
-  xa = !cd -- \"${GIT_PREFIX:-.}\" && git x -v -a
+  xa = x -v -a
   z = restore
   zz = checkout -f --
 
-  last-by = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}t %${a}I %${a}E\" -1 -- \"$@\"; }; f"
-  last-au = last-by a
-  last-co = last-by c
+  last-au = myalias last-author
+  last-co = myalias last-committer
 
-  top-by = "!f() { cd -- \"${GIT_PREFIX:-.}\" || exit 1; local a=$1; shift; git log --pretty=\"%${a}N <%${a}E>\" -- \"$@\" | sort | uniq -c | sort -rn; }; f"
-  top-au = top-by a
-  top-co = top-by c
+  top-au = myalias top-author
+  top-co = myalias top-committer
 
 [include]
   path = ~/.gitconfig.mine
