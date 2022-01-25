@@ -115,11 +115,11 @@ case "$cmd" in
     ;;
   log-grep )
     [ ${#arg[@]} -gt 0 ] || exit 1
-    git ly "${opt[@]}" -G "${arg[@]}"
+    git ly "${opt[@]}" -G"${arg[@]}"
     ;;
   log-grep-message )
     [ ${#arg[@]} -gt 0 ] || exit 1
-    git ly "${opt[@]}" -E --grep "${arg[@]}"
+    git ly "${opt[@]}" -E --grep="${arg[@]}"
     ;;
   log-merge )
     m=$(git mm "${arg[0]}"); shift_arg
@@ -130,7 +130,7 @@ case "$cmd" in
     ;;
   log-pickaxe )
     [ ${#arg[@]} -gt 0 ] || exit 1
-    git ly "${opt[@]}" --pickaxe-regex -S "${arg[@]}"
+    git ly "${opt[@]}" --pickaxe-regex -S"${arg[@]}"
     ;;
   log-pretty )
     format='tformat:%C('"$hash_color"')%h %C'"$date_color"'%ai %C('"$author_color"')%<('"$author_length"',trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s'
