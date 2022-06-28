@@ -50,8 +50,8 @@
   b = branch
   bb = myalias pretty-branches
   bc = myalias current-branch
-  bd = b -d
-  bdd = b -D
+  bd = myalias delete-branch
+  bdd = bd -f
   bi = myalias blame-interactive
   bm = branch -v --merged
   bn = branch -v --no-merged
@@ -63,9 +63,10 @@
   c = commit -v
   ca = commit -v --all
   cb = switch -c
+  cd = switch -d
   ci = commit -v --interactive
   cmp = myalias is-ancestor
-  co = switch
+  co = myalias switch
   cp = cherry-pick
   cx = cherry-pick -x
   d = diff --no-prefix
@@ -144,16 +145,18 @@
   stw = stash show --patch --no-prefix
   t = tag
   td = describe --contains
-  tl = tag -l --sort taggerdate -n1
+  tl = tag -l --sort=taggerdate -n1
   tll = tl -n64
   tv = myalias version-tags
   ty = myalias pretty-tags
   u = pull
   uf = myalias pull-all-force
+  uo = uy origin
   ur = myalias pull-all-rebase
   uu = uf
   uy = myalias pull-pretty
   v = revert
+  vc = revert --continue
   w = show --pretty=fuller --no-prefix
   wb = myalias show-branch
   wc = myalias show-whatchanged

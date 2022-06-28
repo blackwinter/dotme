@@ -17,9 +17,9 @@ arg=()
 
 while [ -n "$1" ]; do
   case "$1" in
-    -- ) arg+=("$@"); break;;
-    -* ) opt+=("$1");;
-    *  ) arg+=("$1");;
+    --  ) arg+=("$@"); break;;
+    -?* ) opt+=("$1");;
+    *   ) arg+=("$1");;
   esac
 
   shift
@@ -35,6 +35,10 @@ function default_branch() {
 
 function current_branch() {
   git rev-parse --symbolic --abbrev-ref "$(git symbolic-ref HEAD 2> /dev/null)"
+}
+
+function previous_branch() {
+  tac .git/logs/HEAD | sed -n 's/.*\tcheckout: moving from \(.*\) to .*/\1/p;T;q'
 }
 
 case "$cmd" in
@@ -55,6 +59,16 @@ case "$cmd" in
     ;;
   current-branch )
     current_branch
+    ;;
+  delete-branch )
+    b=${arg[0]}; shift_arg
+
+    case "$b" in
+      - ) b=$(previous_branch);;
+      = ) b=$(default_branch);;
+    esac
+
+    git branch "${opt[@]}" --delete "$b" "${arg[@]}"
     ;;
   diff-branch )
     git myalias paged d "${opt[@]}" "${arg[0]:-$(default_branch)}..."
@@ -81,7 +95,13 @@ case "$cmd" in
     } | sort -s -k2 | uniq -d -f1 | sort -n | tail -1 | cut -f2
     ;;
   grep-aliases )
-    git config -l | grep "${opt[@]}" "^alias\\.${arg[0]}"
+    git config -l | grep "${opt[@]}" "^alias\\.${arg[0]}" | while read -r l; do
+      echo "$l"
+
+      if [[ "$l" =~ =myalias\ ([^ ]*) ]]; then
+        sed -n '/^ *'"${BASH_REMATCH[1]}"' )$/,/^ *;;$/s/^ /#/p' "$0"
+      fi
+    done
     ;;
   is-ancestor )
     [ ${#arg[@]} -gt 0 ] || exit 1
@@ -108,6 +128,12 @@ case "$cmd" in
     ;;
   log-branch )
     b=${arg[0]}; shift_arg
+
+    case "$b" in
+      - ) b=$(previous_branch);;
+      = ) b=$(default_branch);;
+    esac
+
     git ly "${opt[@]}" "${b:-$(default_branch)}..." "${arg[@]}"
     ;;
   log-graph )
@@ -172,10 +198,10 @@ case "$cmd" in
     git remote | xargs -I '{}' git uy "${opt[@]}" '{}'
     ;;
   pull-all-force )
-    git myalias pull-all --ff-only
+    git myalias pull-all --ff-only "${arg[@]}"
     ;;
   pull-all-rebase )
-    git myalias pull-all --rebase=merges
+    git myalias pull-all --rebase=merges "${arg[@]}"
     ;;
   pull-pretty )
     git pull "${opt[@]}" "${arg[@]}" "$(current_branch)" && git lh && git fetch --tags
@@ -188,8 +214,7 @@ case "$cmd" in
     git oo | xargs -I '{}' git push "${opt[@]}" '{}' "$(current_branch)" --force-with-lease
     ;;
   push-delete )
-    [ ${#arg[@]} -gt 0 ] || exit 1
-    git push "${opt[@]}" "${arg[1]:-origin}" --delete "${arg[0]}"
+    git push "${opt[@]}" "${arg[1]:-origin}" --delete "${arg[0]:-$(current_branch)}"
     ;;
   push-remote )
     b=${arg[0]}; shift_arg
@@ -220,7 +245,14 @@ case "$cmd" in
     done
     ;;
   show-branch )
-    git ww "${opt[@]}" $(git log --right-only --reverse --pretty=%H "${arg[0]:-$(default_branch)}...")
+    b=${arg[0]}; shift_arg
+
+    case "$b" in
+      - ) b=$(previous_branch);;
+      = ) b=$(default_branch);;
+    esac
+
+    git ww "${opt[@]}" $(git log --right-only --reverse --pretty=%H "${b:-$(default_branch)}...")
     ;;
   show-merge )
     m=$(git mm "${arg[0]}"); shift_arg
@@ -243,8 +275,18 @@ case "$cmd" in
       [ ${#arg[@]} -gt 1 ] && shift_arg || break
     done
     ;;
+  switch )
+    b=${arg[0]}; shift_arg
+
+    case "$b" in
+      . ) b=$(current_branch);;
+      = ) b=$(default_branch);;
+    esac
+
+    git "$cmd" "${opt[@]}" "${b:-$(default_branch)}" "${arg[@]}"
+    ;;
   top-author )
-    git myalias top-by a
+    git myalias top-by a "${arg[@]}"
     ;;
   top-by )
     a=${arg[0]}; shift_arg
@@ -252,7 +294,7 @@ case "$cmd" in
     git log "${opt[@]}" --pretty="%${a}N <%${a}E>" -- "${arg[@]}" | sort | uniq -c | sort -rn
     ;;
   top-committer )
-    git myalias top-by c
+    git myalias top-by c "${arg[@]}"
     ;;
   version-tags )
     git td "${opt[@]}" --match 'version-*' "${arg[@]}"
