@@ -286,15 +286,15 @@ case "$cmd" in
     git "$cmd" "${opt[@]}" "${b:-$(default_branch)}" "${arg[@]}"
     ;;
   top-author )
-    git myalias top-by a "${arg[@]}"
+    git myalias top-by "${opt[@]}" a "${arg[@]}"
     ;;
   top-by )
     a=${arg[0]}; shift_arg
     [ -n "$a" ] || exit 1
-    git log "${opt[@]}" --pretty="%${a}N <%${a}E>" -- "${arg[@]}" | sort | uniq -c | sort -rn
+    git log "${opt[@]}" --no-merges --pretty="%${a}N <%${a}E>" -- "${arg[@]}" | sort | uniq -c | sort -rn
     ;;
   top-committer )
-    git myalias top-by c "${arg[@]}"
+    git myalias top-by "${opt[@]}" c "${arg[@]}"
     ;;
   version-tags )
     git td "${opt[@]}" --match 'version-*' "${arg[@]}"
