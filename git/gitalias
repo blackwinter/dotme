@@ -3,7 +3,8 @@
 abbrev_length=7
 author_length=16
 branch_length=46
-line_length=202
+line_length=181
+message_length=96
 
 author_color=cyan
 branch_color=bold
@@ -159,7 +160,7 @@ case "$cmd" in
     git ly "${opt[@]}" --pickaxe-regex -S"${arg[@]}"
     ;;
   log-pretty )
-    format='tformat:%C('"$hash_color"')%h %C'"$date_color"'%ai %C('"$author_color"')%<('"$author_length"',trunc)%aN %Creset[%m%m%m%m] %<(120,trunc)%s'
+    format='tformat:%C('"$hash_color"')%h %C'"$date_color"'%ai %C('"$author_color"')%<('"$author_length"',trunc)%aN %Creset[%m%m%m%m] %<('"$message_length"',trunc)%s'
 
     left=$(tput bold)$(tput setaf 1)
     right=$(tput bold)$(tput setaf 4)
