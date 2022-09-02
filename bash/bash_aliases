@@ -119,10 +119,10 @@ alias .sl="svn log -r 1:HEAD"
 alias .ss="svn status --show-updates"
 
 function .ak() {
+  local k="/etc/apt/keyrings/$1.gpg"
   [ $# -ne 2 ] && echo "Usage: ${FUNCNAME[0]} <archive> <fingerprint>" && return 1
-  sudo gpg\
-    --no-default-keyring --keyring "/etc/apt/keyrings/$1.gpg"\
-    --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys "$2"
+  sudo gpg --no-default-keyring --keyring "$k"\
+    --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys "$2" && rm -f "$k~"
 }
 
 function .sg() {
