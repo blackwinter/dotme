@@ -42,6 +42,39 @@ function previous_branch() {
   tac .git/logs/HEAD | sed -n 's/.*\tcheckout: moving from \(.*\) to .*/\1/p;T;q'
 }
 
+function select_branch() {
+  local a=() b
+
+  for b in $(git branch --all --format '%(refname:lstrip=2)'); do
+    case "${b,,}" in
+      *"${1,,}"* ) a+=("$b");;
+    esac
+  done
+
+  case ${#a[@]} in
+    0 ) echo "$1";;
+    1 ) echo "${a[0]}";;
+    * )
+      select b in "${a[@]}"; do
+        echo "$b"
+        break
+      done
+      ;;
+  esac
+}
+
+function get_branch() {
+  local b="${1:-${2:-_}}"
+
+  case "$b" in
+    .  ) current_branch;;
+    -  ) previous_branch;;
+    _  ) default_branch;;
+    /* ) select_branch "${b:1}";;
+    *  ) echo "$1";;
+  esac
+}
+
 case "$cmd" in
   blame-interactive )
     rev=
@@ -63,16 +96,11 @@ case "$cmd" in
     ;;
   delete-branch )
     b=${arg[0]}; shift_arg
-
-    case "$b" in
-      - ) b=$(previous_branch);;
-      = ) b=$(default_branch);;
-    esac
-
-    git branch "${opt[@]}" --delete "$b" "${arg[@]}"
+    git branch "${opt[@]}" --delete "$(get_branch "$b" -)" "${arg[@]}"
     ;;
   diff-branch )
-    git myalias paged d "${opt[@]}" "${arg[0]:-$(default_branch)}..."
+    b=${arg[0]}; shift_arg
+    git d "${opt[@]}" "$(get_branch "$b")..."
     ;;
   diff-merge )
     m=$(git mm "${arg[0]}"); shift_arg
@@ -129,13 +157,7 @@ case "$cmd" in
     ;;
   log-branch )
     b=${arg[0]}; shift_arg
-
-    case "$b" in
-      - ) b=$(previous_branch);;
-      = ) b=$(default_branch);;
-    esac
-
-    git ly "${opt[@]}" "${b:-$(default_branch)}..." "${arg[@]}"
+    git ly "${opt[@]}" "$(get_branch "$b")..." "${arg[@]}"
     ;;
   log-graph )
     git ly "${opt[@]}" --graph --date-order -"$(($(tput lines) - 6))" "${arg[@]}" | tac
@@ -215,17 +237,30 @@ case "$cmd" in
     git oo | xargs -I '{}' git push "${opt[@]}" '{}' "$(current_branch)" --force-with-lease
     ;;
   push-delete )
-    git push "${opt[@]}" "${arg[1]:-origin}" --delete "${arg[0]:-$(current_branch)}"
+    b=${arg[0]}; shift_arg
+    git push "${opt[@]}" "${arg[1]:-origin}" --delete "$(get_branch "$b" .)"
     ;;
   push-remote )
     b=${arg[0]}; shift_arg
-    git push "${opt[@]}" origin "${b:-HEAD}:$(current_branch)" "${arg[@]}"
+    t=${arg[0]}; shift_arg
+    git push "${opt[@]}" origin "${b:-HEAD}:${t:-$(current_branch)}" "${arg[@]}"
     ;;
   pushable-remotes )
     git o | grep -v 'https\?://' | cut -f1 | sort -u
     ;;
+  rebase-branch )
+    b=${arg[0]}; shift_arg
+    git rebase "${opt[@]}" --rebase-merges "$(get_branch "$b")" "${arg[@]}"
+    ;;
   rebase-interactive )
-    git rb "${opt[@]}" -i "${arg[0]:-HEAD^}^"
+    git myalias rebase-branch "${opt[@]}" -i "${arg[0]:-HEAD^}^"
+    ;;
+  rebase-interactive-branch )
+    b=${arg[0]}; shift_arg
+    git myalias rebase-interactive "${opt[@]}" "$(get_branch "$b")"
+    ;;
+  rebase-interactive-remote )
+    git myalias rebase-interactive "${opt[@]}" "${arg[0]:-origin}/$(current_branch)"
     ;;
   remote-branches )
     format='%(align:24)%(refname:rstrip=-3)%(end) %(color:'"$branch_color"')%(align:'"$branch_length"')%(refname:lstrip=3)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(color:reset)%(contents:subject)'
@@ -239,6 +274,9 @@ case "$cmd" in
   reset-parent )
     git re "${opt[@]}" "${arg[0]:-HEAD}^"
     ;;
+  reset-remote )
+    git re "${opt[@]}" "${arg[0]:-origin}/$(current_branch)" --hard
+    ;;
   show-all )
     while :; do
       git myalias paged w "${opt[@]}" "${arg[0]:-HEAD}"
@@ -247,13 +285,7 @@ case "$cmd" in
     ;;
   show-branch )
     b=${arg[0]}; shift_arg
-
-    case "$b" in
-      - ) b=$(previous_branch);;
-      = ) b=$(default_branch);;
-    esac
-
-    git ww "${opt[@]}" $(git log --right-only --reverse --pretty=%H "${b:-$(default_branch)}...")
+    git ww "${opt[@]}" $(git log --right-only --reverse --pretty=%H "$(get_branch "$b")...")
     ;;
   show-merge )
     m=$(git mm "${arg[0]}"); shift_arg
@@ -278,13 +310,7 @@ case "$cmd" in
     ;;
   switch )
     b=${arg[0]}; shift_arg
-
-    case "$b" in
-      . ) b=$(current_branch);;
-      = ) b=$(default_branch);;
-    esac
-
-    git "$cmd" "${opt[@]}" "${b:-$(default_branch)}" "${arg[@]}"
+    git "$cmd" "${opt[@]}" "$(get_branch "$b")" "${arg[@]}"
     ;;
   top-author )
     git myalias top-by "${opt[@]}" a "${arg[@]}"
