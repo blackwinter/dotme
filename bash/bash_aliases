@@ -58,17 +58,15 @@ alias  jc="sudo journalctl"
 alias  jj="jc --since today"
 alias  jk="jc --since yesterday --until today"
 alias  sc="sudo systemctl --no-pager --full"
+alias sdi="_sc disable"
+alias sdr="sc daemon-reload"
+alias sen="_sc enable"
 alias  sk="_sc kill"
-alias _sk="sc kill"
 alias  so="_sc reload"
-alias _so="sc reload"
 alias  sp="_sc stop"
-alias _sp="sc stop"
 alias  sr="_sc restart"
-alias _sr="sc restart"
 alias  ss="sc status -l"
 alias  st="_sc start"
-alias _st="sc start"
 
 function _sc() {
   local c=$1; shift
@@ -122,7 +120,7 @@ function .ak() {
   local k="/etc/apt/keyrings/$1.gpg"
   [ $# -ne 2 ] && echo "Usage: ${FUNCNAME[0]} <archive> <fingerprint>" && return 1
   sudo gpg --no-default-keyring --keyring "$k"\
-    --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys "$2" && rm -f "$k~"
+    --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys "$2" && sudo rm -f "$k~"
 }
 
 function .sg() {
