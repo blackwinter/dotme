@@ -29,6 +29,9 @@
 [diff "gzip"]
   binary = true
   textconv = /bin/zcat
+[diff "lmdb"]
+  binary = true
+  textconv = ~/bin/lmdbdump
 [init]
   defaultBranch = master
 [merge]
@@ -73,6 +76,7 @@
   db = myalias diff-branch
   dc = diff --no-prefix --cached
   dd = myalias paged d
+  ddb = myalias paged db
   ddc = myalias paged dc
   ddi = myalias paged di
   di = diff --no-prefix HEAD
@@ -80,6 +84,7 @@
   e = myalias reset
   ee = myalias reset-parent --soft
   eh = myalias reset-parent --hard
+  eo = myalias reset-remote
   f = fetch
   fa = myalias fetch-all
   g = grep -E -n
@@ -124,13 +129,16 @@
   pff = myalias push-all-force
   po = myalias push-remote
   pp = myalias push-all
-  rb = rebase --rebase-merges
+  rb = myalias rebase-branch
   rba = rebase --abort
   rbc = rebase --continue
   rbp = rebase --show-current-patch
   rbs = rebase --skip
   re = reset
   ri = myalias rebase-interactive
+  rib = myalias rebase-interactive-branch
+  rio = myalias rebase-interactive-remote
+  rip = rib -
   rr = rb -i --root
   s = status
   ss = status --short
