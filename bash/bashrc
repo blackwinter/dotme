@@ -130,7 +130,7 @@ esac
 [ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
 
 # Color for grep
-export GREP_COLOR=${MY_COLOR/38/39}
+export GREP_COLORS="mt=${MY_COLOR/38/39}"
 
 export PATH
 export CDPATH="$CDPATH:$HOME"
