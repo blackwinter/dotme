@@ -34,6 +34,8 @@
   textconv = ~/bin/lmdbdump
 [init]
   defaultBranch = master
+[mailmap]
+  file = ~/.mailmap
 [merge]
   conflictstyle = diff3
 [push]
