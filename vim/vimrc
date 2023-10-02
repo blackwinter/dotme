@@ -9,10 +9,10 @@ set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vi
 set autoindent
 set autowrite
 set background=dark
-set backupdir=~/.vim/tmp,.,/tmp
+set backupdir=~/.vim/backup//,.,/tmp//
 set confirm
 set cryptmethod=blowfish
-set directory=~/.vim/tmp,.,/tmp
+set directory=~/.vim/swap//,.,/tmp//
 set expandtab
 set fileencodings=ucs-bom,utf-8,default,latin1,macintosh
 set history=1000
@@ -32,7 +32,7 @@ set tabstop=2
 set title
 set titlelen=80
 set titlestring=%F\ [%{&fileencoding}%Y%R%M]%(\ %a%)
-set undodir=~/.vim/tmp,.,/tmp
+set undodir=~/.vim/undo//,.,/tmp//
 set undofile
 set wildmode=longest,list,full
 
