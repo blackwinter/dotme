@@ -19,6 +19,7 @@
 .autotest
 .local
 .mailmap
+/DOX-*
 HEADER
 WCFILES
 tags
