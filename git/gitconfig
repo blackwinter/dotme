@@ -20,18 +20,23 @@
   untracked = cyan
 [core]
   attributesFile = ~/.gitattributes
-  excludesfile = ~/.gitignore
+  excludesFile = ~/.gitignore
 [diff]
   algorithm = histogram
   colorMoved = dimmed-zebra
+  colorMovedWs = allow-indentation-change
   compactionHeuristic = true
+  noPrefix = true
   relative = true
+  #context = 6
 [diff "gzip"]
   binary = true
   textconv = /bin/zcat
 [diff "lmdb"]
   binary = true
   textconv = ~/bin/lmdbdump
+[format]
+  noprefix = true
 [init]
   defaultBranch = master
 [mailmap]
@@ -70,18 +75,20 @@
   cb = switch -c
   cd = switch -d
   ci = commit -v --interactive
+  cm = myalias switch -m
   cmp = myalias is-ancestor
   co = myalias switch
   cp = cherry-pick
   cx = cherry-pick -x
-  d = diff --no-prefix
+  d = diff
   db = myalias diff-branch
-  dc = diff --no-prefix --cached
+  dc = diff --cached
   dd = myalias paged d
   ddb = myalias paged db
   ddc = myalias paged dc
   ddi = myalias paged di
-  di = diff --no-prefix HEAD
+  ddp = myalias paged dp
+  di = diff HEAD
   dp = myalias diff-push
   e = myalias reset
   ee = myalias reset-parent --soft
@@ -144,15 +151,15 @@
   rr = rb -i --root
   s = status
   ss = status --short
-  st = stash
+  st = stash push -m
   sta = stash apply --index
   stb = stash branch
   std = stash drop
   stl = stash list
   stp = stash push --patch
-  sts = stash push
   stt = stash pop --index
-  stw = stash show --patch --no-prefix
+  stw = stash show --patch
+  stww = myalias paged stw
   t = tag
   td = describe --contains
   tl = tag -l --sort=taggerdate -n1
@@ -160,6 +167,7 @@
   tv = myalias version-tags
   ty = myalias pretty-tags
   u = pull
+  ub = uo --rebase=merges
   uf = myalias pull-all-ff-only
   uo = uy origin
   ur = myalias pull-all-rebase
@@ -167,9 +175,10 @@
   uy = myalias pull-pretty
   v = revert
   vc = revert --continue
-  w = show --pretty=fuller --no-prefix
+  w = show --pretty=fuller
   wb = myalias show-branch
   wc = myalias show-whatchanged
+  wf = show --pretty= --name-only
   wm = myalias show-merge-diff
   wp = myalias show-push
   wt = worktree add
@@ -178,9 +187,9 @@
   wtp = worktree prune -v
   wtr = worktree remove
   ww = myalias show-all
-  www = ww -w
   x = commit --amend
   xa = x -v -a
+  xn = xa --no-edit
   z = restore
   zz = checkout -f --
 
