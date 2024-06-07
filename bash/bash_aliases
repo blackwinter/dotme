@@ -32,6 +32,7 @@ alias jrake="jruby -S rake"
 
 alias  curl="curl -sSL"
 alias  diff="_diff -u"
+alias diff0="_diff -U0"
 alias disks="sudo fdisk -l | sed -n 's/,.*//; /\/dev\/ram/n; /\/dev\/loop/n; s:^Disk /:/:p' | sort"
 alias  help="help -m"
 alias  make="make -j$(nproc)"
@@ -155,6 +156,8 @@ function epoch2date() {
     shift
   done
 }
+
+#__git_complete g git
 
 ### LOAD CUSTOM FILE
 [ -f ~/.bash_aliases.mine ] && . ~/.bash_aliases.mine
