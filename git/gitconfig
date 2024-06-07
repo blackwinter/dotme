@@ -160,7 +160,7 @@
   tv = myalias version-tags
   ty = myalias pretty-tags
   u = pull
-  uf = myalias pull-all-force
+  uf = myalias pull-all-ff-only
   uo = uy origin
   ur = myalias pull-all-rebase
   uu = uf

@@ -3,14 +3,21 @@
 abbrev_length=7
 author_length=16
 branch_length=46
-line_length=181
-message_length=96
+message_length=121
 
 author_color=cyan
 branch_color=bold
 date_color=green
 hash_color=yellow
 upstream_color=magenta
+
+red=$(tput setaf 1)
+blue=$(tput setaf 4)
+bold=$(tput bold)
+underline=$(tput smul)
+reset=$(tput sgr0)
+
+lines=$(tput lines)
 
 cmd=$1; shift
 opt=()
@@ -100,7 +107,7 @@ case "$cmd" in
     ;;
   diff-branch )
     b=${arg[0]}; shift_arg
-    git d "${opt[@]}" "$(get_branch "$b")..."
+    git d "${opt[@]}" "$(get_branch "$b")..." "${arg[@]}"
     ;;
   diff-merge )
     m=$(git mm "${arg[0]}"); shift_arg
@@ -160,7 +167,7 @@ case "$cmd" in
     git ly "${opt[@]}" "$(get_branch "$b")..." "${arg[@]}"
     ;;
   log-graph )
-    git ly "${opt[@]}" --graph --date-order -"$(($(tput lines) - 6))" "${arg[@]}" | tac
+    git ly "${opt[@]}" --graph --date-order -"$(($lines - 6))" "${arg[@]}" | tac
     ;;
   log-grep )
     [ ${#arg[@]} -gt 0 ] || exit 1
@@ -184,12 +191,8 @@ case "$cmd" in
   log-pretty )
     format='tformat:%C('"$hash_color"')%h %C'"$date_color"'%ai %C('"$author_color"')%<('"$author_length"',trunc)%aN %Creset[%m%m%m%m] %<('"$message_length"',trunc)%s'
 
-    left=$(tput bold)$(tput setaf 1)
-    right=$(tput bold)$(tput setaf 4)
-    reset=$(tput sgr0)
-
     git log "${opt[@]}" --show-pulls --abbrev="$abbrev_length" --color=always --pretty="$format" "${arg[@]}"\
-      | sed "s/\\[<<<<\\]/$left[-]$reset/;s/\\[>>>>\\]/$right[+]$reset/;s/ *$//" | tac
+      | sed "s/\\[<<<<\\]/$bold$red[-]$reset/;s/\\[>>>>\\]/$bold$blue[+]$reset/;s/ *$//" | tac
     ;;
   log-push )
     o=${arg[0]}; shift_arg
@@ -207,8 +210,7 @@ case "$cmd" in
   pretty-branches )
     format='%(if)%(HEAD)%(then)%(color:reverse)%(else)%(color:'"$branch_color"')%(end)%(align:'"$branch_length"')%(refname:lstrip=2)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(if)%(upstream)%(then)%(color:reset)[%(color:'"$upstream_color"')%(upstream:lstrip=2)%(color:reset)] %(end)%(color:reset)%(contents:subject)'
 
-    git branch "${opt[@]}" --list --color=always --format "$format" "${arg[@]}"\
-      | sed -E '/^.{4}[0-9]-/d;s/(.{'"$line_length"'}).*/\1/'
+    git branch "${opt[@]}" --list --color=always --format "$format" "${arg[@]}" | sed 's/^.\{4\}\([0-9]-\)/'"$underline"'\1/'
     ;;
   pretty-tags )
     format='%(color:'"$hash_color"')%(align:32)%(refname:strip=2)%(end) %(color:'"$date_color"')%(taggerdate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(taggername)%(end) %(color:reset)%(contents:subject)'
@@ -220,7 +222,7 @@ case "$cmd" in
   pull-all )
     git remote | xargs -I '{}' git uy "${opt[@]}" '{}'
     ;;
-  pull-all-force )
+  pull-all-ff-only )
     git myalias pull-all --ff-only "${arg[@]}"
     ;;
   pull-all-rebase )
@@ -263,10 +265,9 @@ case "$cmd" in
     git myalias rebase-interactive "${opt[@]}" "${arg[0]:-origin}/$(current_branch)"
     ;;
   remote-branches )
-    format='%(align:24)%(refname:rstrip=-3)%(end) %(color:'"$branch_color"')%(align:'"$branch_length"')%(refname:lstrip=3)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(color:reset)%(contents:subject)'
+    format='%(color:'"$upstream_color"')%(align:24)%(refname:rstrip=-3)%(end)%(color:reset) %(color:'"$branch_color"')%(align:'"$branch_length"')%(refname:lstrip=3)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(color:reset)%(contents:subject)'
 
-    git branch "${opt[@]}" -r --color=always --format "$format" "${arg[@]}"\
-      | cut -d/ -f3- | sed -E 's/(.{'"$line_length"'}).*/\1/'
+    git branch "${opt[@]}" -r --color=always --format "$format" "${arg[@]}" | sed 's:refs/remotes/::'
     ;;
   reset )
     git re "${opt[@]}" "${arg[0]:-HEAD}"
@@ -303,10 +304,8 @@ case "$cmd" in
     git wb "${opt[@]}" "${arg[0]:-origin}/$(current_branch)"
     ;;
   show-whatchanged )
-    while :; do
-      git whatchanged "${opt[@]}" "${arg[0]:-HEAD}^!"
-      [ ${#arg[@]} -gt 1 ] && shift_arg || break
-    done
+    r=${arg[0]}; shift_arg
+    git show --raw "${opt[@]}" "${r:-HEAD}" "${arg[@]}"
     ;;
   switch )
     b=${arg[0]}; shift_arg
