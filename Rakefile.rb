@@ -228,17 +228,17 @@ module DotMe
 
   def status_for(symlink, target)
     if File.symlink?(symlink)
-      if File.exists?(target)
+      if File.exist?(target)
         actual = Pathname.new(File.readlink(symlink)).realpath.to_s
         status = target == actual ? :TRACKED : :MISMATCH
       else
         status = :MISSING
       end
     else
-      if File.exists?(symlink)
-        status = File.exists?(target) ? :ALIEN : :UNTRACKED
+      if File.exist?(symlink)
+        status = File.exist?(target) ? :ALIEN : :UNTRACKED
       else
-        status = File.exists?(target) ? :NOT_FOUND : :UNTRACKED
+        status = File.exist?(target) ? :NOT_FOUND : :UNTRACKED
       end
     end
 
