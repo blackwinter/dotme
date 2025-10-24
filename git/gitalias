@@ -96,7 +96,7 @@ case "$cmd" in
       rev="$REPLY^"
     done
 
-    [ -n "$rev" ] && git whatchanged "$rev!" >&2
+    [ -n "$rev" ] && git show --raw "$rev" >&2
     ;;
   current-branch )
     current_branch
@@ -210,7 +210,7 @@ case "$cmd" in
   pretty-branches )
     format='%(if)%(HEAD)%(then)%(color:reverse)%(else)%(color:'"$branch_color"')%(end)%(align:'"$branch_length"')%(refname:lstrip=2)%(end)%(color:reset) %(color:'"$hash_color"')%(objectname:short='"$abbrev_length"') %(color:'"$date_color"')%(authordate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(authorname)%(end) %(if)%(upstream)%(then)%(color:reset)[%(color:'"$upstream_color"')%(upstream:lstrip=2)%(color:reset)] %(end)%(color:reset)%(contents:subject)'
 
-    git branch "${opt[@]}" --list --color=always --format "$format" "${arg[@]}" | sed 's/^.\{4\}\([0-9]-\)/'"$underline"'\1/'
+    git branch "${opt[@]}" --list --color=always --format "$format" "${arg[@]}" | sed 's/^.\{4\}\([0-9]-\)/\1/'
     ;;
   pretty-tags )
     format='%(color:'"$hash_color"')%(align:32)%(refname:strip=2)%(end) %(color:'"$date_color"')%(taggerdate:iso) %(color:'"$author_color"')%(align:'"$author_length"')%(taggername)%(end) %(color:reset)%(contents:subject)'
