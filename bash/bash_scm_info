@@ -69,8 +69,8 @@ function __bsi_git_version() {
   echo -ne "$1\033[33m$2${v:-<init>}$1\033[0m$2"
 
   local m
-  git diff --quiet           2> /dev/null || m+='M'
-  git diff --quiet --cached  2> /dev/null || m+='*'
+  git diff --quiet           &> /dev/null || m+='M'
+  git diff --quiet --cached  &> /dev/null || m+='*'
   [ -z "$m" ] || echo -ne "|$1\033[32m$2$m$1\033[0m$2"
 }
 
