@@ -101,8 +101,8 @@
   l = ly -20
   la = myalias paged log --reverse
   lb = myalias log-branch
-  lc = whatchanged --reverse -20
-  lf = myalias paged whatchanged --reverse
+  lc = log --raw --reverse -20
+  lf = myalias paged log --raw --reverse
   lg = myalias log-grep
   lh = ly ORIG_HEAD...
   li = myalias list-ignored
@@ -191,7 +191,8 @@
   xa = x -v -a
   xn = xa --no-edit
   z = restore
-  zz = checkout -f --
+  zz = z .
+  zzz = checkout -f --
 
   last-au = myalias last-author
   last-co = myalias last-committer
